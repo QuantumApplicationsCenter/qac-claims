@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/QuantumApplicationsCenter/qac-claims/schemas/results.schema.json",
+  "title": "Machine-written reproduction results (reproductions/<id>/results.json)",
+  "description": "Written by the reproduction's code (the final cell of notebook.ipynb, or reproduce.py). Never edited by hand. Every number the public record attributes to QAC comes from here.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "claim_id",
+    "reproduction_id",
+    "generated_at",
+    "producer",
+    "tooling",
+    "inputs",
+    "logical",
+    "physical"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "reproduction_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "generated_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entrypoint"
+      ],
+      "properties": {
+        "entrypoint": {
+          "enum": [
+            "notebook.ipynb",
+            "reproduce.py"
+          ]
+        },
+        "cell_tag": {
+          "type": "string"
+        }
+      }
+    },
+    "tooling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "python",
+        "packages"
+      ],
+      "properties": {
+        "python": {
+          "type": "string"
+        },
+        "packages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "required": [
+            "qdk-chemistry",
+            "qdk"
+          ]
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hamiltonian",
+        "target_precision_hartree",
+        "trial_state"
+      ],
+      "properties": {
+        "hamiltonian": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "orbitals",
+            "electrons"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "synthetic_dfthc",
+                "molecular_dfthc",
+                "molecular_df"
+              ]
+            },
+            "orbitals": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "electrons": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "R": {
+              "type": "integer"
+            },
+            "B": {
+              "type": "integer"
+            },
+            "C": {
+              "type": "integer"
+            },
+            "lambda_eff": {
+              "type": "number"
+            },
+            "coefficient_bit_precision": {
+              "type": "integer"
+            },
+            "rotation_bit_precision": {
+              "type": "integer"
+            },
+            "seed": {
+              "type": "integer"
+            }
+          }
+        },
+        "target_precision_hartree": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "trial_state": {
+          "type": "string"
+        }
+      }
+    },
+    "logical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "walk_steps",
+        "num_qubits",
+        "t_count",
+        "rotation_count",
+        "rotation_depth",
+        "ccz_count",
+        "ccix_count",
+        "measurement_count",
+        "toffoli_count"
+      ],
+      "properties": {
+        "walk_steps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "num_qubits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "t_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rotation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rotation_depth": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ccz_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ccix_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "measurement_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "toffoli_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "ccz_count + ccix_count"
+        }
+      }
+    },
+    "physical": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scenario_id",
+          "architecture",
+          "code",
+          "factories",
+          "synthesis",
+          "physical_qubits",
+          "compute_qubits",
+          "factory_qubits",
+          "memory_qubits",
+          "runtime_seconds",
+          "error_budget",
+          "achieved_error"
+        ],
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "architecture": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "physical_error_rate",
+              "gate_time_ns",
+              "measurement_time_ns"
+            ],
+            "properties": {
+              "physical_error_rate": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1
+              },
+              "gate_time_ns": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "measurement_time_ns": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          "code": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "family",
+              "distance",
+              "cycle_time_ns"
+            ],
+            "properties": {
+              "family": {
+                "enum": [
+                  "surface"
+                ]
+              },
+              "distance": {
+                "type": "integer",
+                "minimum": 3
+              },
+              "distance_source": {
+                "enum": [
+                  "imposed",
+                  "selected_by_tool"
+                ]
+              },
+              "cycle_time_ns": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          "factories": {
+            "type": "string",
+            "minLength": 1
+          },
+          "synthesis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_qubits": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "compute_qubits": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "factory_qubits": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "memory_qubits": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "runtime_seconds": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "error_budget": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1
+          },
+          "achieved_error": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    }
+  }
+}

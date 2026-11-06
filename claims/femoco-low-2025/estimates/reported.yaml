@@ -1,0 +1,32 @@
+schema_version: "1.0"
+kind: reported
+claim_id: femoco-low-2025
+figures:
+  logical_qubits:
+    value: 1137
+    unit: count
+    locator: Table V
+  toffoli_count:
+    value: 341000000
+    unit: count
+    locator: Table V
+    qualifier: rounded
+    note: Stated as 3.41e8
+  physical_qubits:
+    value: 3200000
+    unit: count
+    locator: "Sec. V, p. 14"
+    qualifier: rounded
+    note: Stated as 3.2 million
+  runtime_seconds:
+    value: 9720
+    unit: seconds
+    locator: "Sec. V, p. 14"
+    qualifier: approximate
+    note: Stated as about 2.7 hours
+  code_distance:
+    value: 27
+    unit: count
+    locator: "Sec. V, p. 14"
+notes:
+  - "Transcribed from Low et al., Phys. Rev. X 15, 041016 (2025): logical counts from Table V, physical estimate from Section V."

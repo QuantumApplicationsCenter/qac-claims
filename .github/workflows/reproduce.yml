@@ -1,0 +1,35 @@
+name: reproduce
+
+# Reruns every reproduction in its own pinned environment and fails if the results
+# differ from those committed. Each reproduction uses the Python version recorded in
+# its run.json and the packages in its requirements.lock.txt.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Rerun each reproduction
+        shell: bash
+        run: |
+          set -euo pipefail
+          status=0
+          for dir in claims/*/reproductions/*/; do
+            name="$(basename "$dir")"
+            python_version="$(python3 -c "import json,sys; print('.'.join(json.load(open(sys.argv[1]))['python'].split('.')[:2]))" "$dir/run.json")"
+            echo "::group::$dir (Python $python_version)"
+            uv venv --python "$python_version" "/tmp/venv-$name"
+            source "/tmp/venv-$name/bin/activate"
+            uv pip install -q -r "$dir/requirements.lock.txt"
+            uv pip install -q -e ".[execute]"
+            qacclaims execute "$dir" --automation github-actions || status=1
+            deactivate
+            echo "::endgroup::"
+          done
+          exit $status

@@ -1,0 +1,564 @@
+{
+  "schema_version": "1.0",
+  "id": "femoco-low-2025",
+  "title": "FeMoCo ground-state energy resource estimate via spectral amplification and DFTHC (Low et al., 2025)",
+  "short_title": "FeMoCo resource estimate (Low et al. 2025)",
+  "headline": "FeMoCo's ground-state energy could be estimated with about 3.2 million physical qubits in roughly 2.7 hours.",
+  "claim_type": "literature_resource_estimate",
+  "domain": "quantum_chemistry",
+  "taxonomy": "application",
+  "source": {
+    "type": "journal_article",
+    "title": "Fast Quantum Simulation of Electronic Structure by Spectral Amplification",
+    "authors": [
+      "Guang Hao Low",
+      "Robbie King",
+      "Dominic W. Berry",
+      "Qiushi Han",
+      "A. Eugene DePrince III",
+      "Alec F. White",
+      "Ryan Babbush",
+      "Rolando D. Somma",
+      "Nicholas C. Rubin"
+    ],
+    "author_list_complete": true,
+    "year": 2025,
+    "venue": {
+      "name": "Physical Review X",
+      "volume": "15",
+      "article": "041016"
+    },
+    "doi": "10.1103/pb2g-j9cw"
+  },
+  "assertion": {
+    "what_is_claimed": "Estimating the ground-state energy of the FeMoCo 54-orbital (Reiher) active space to 1 mHa precision needs about 3.41e8 Toffoli gates and 1,137 logical qubits using double-factorized tensor hypercontraction with BLISS and sum-of-squares spectrum amplification; under the paper's error-correction model (four CCZ factories, physical error rate 1e-3, 1 µs surface-code cycle, 10 µs reaction time, distance-27 patches) this costs about 3.2 million physical qubits and 2.7 hours.",
+    "workload": {
+      "system": "FeMoCo (Reiher 54-orbital active space)",
+      "active_space_orbitals": 54,
+      "active_space_electrons": 54,
+      "target_observable": "ground_state_energy",
+      "target_precision": {
+        "value": 0.001,
+        "unit": "hartree",
+        "locator": "Table V"
+      }
+    },
+    "method": "Sum-of-squares spectrum amplification (SOSSA) over a double-factorized tensor-hypercontraction (DFTHC) Hamiltonian with BLISS; qubitized phase estimation",
+    "architecture_assumed": "Surface code with four CCZ factories, following the error-correction model of Lee et al. (2021), the paper's Ref. 7"
+  },
+  "assumptions_as_reported": {
+    "physical_error_rate": {
+      "value": 0.001,
+      "unit": "dimensionless",
+      "locator": "Sec. V, p. 14"
+    },
+    "surface_code_cycle_time": {
+      "value": 1e-06,
+      "unit": "seconds",
+      "locator": "Sec. V, p. 14"
+    },
+    "reaction_time": {
+      "value": 1e-05,
+      "unit": "seconds",
+      "locator": "Sec. V, p. 14",
+      "note": "Decoder/feedback latency stated separately from the cycle time"
+    },
+    "code_distance": {
+      "value": 27,
+      "unit": "count",
+      "locator": "Sec. V, p. 14"
+    },
+    "ccz_factories": {
+      "value": 4,
+      "unit": "count",
+      "locator": "Sec. V, p. 14"
+    },
+    "target_precision": {
+      "value": 0.001,
+      "unit": "hartree",
+      "locator": "Table V"
+    },
+    "dfthc_rank_r": {
+      "value": 10,
+      "unit": "count",
+      "locator": "Table V"
+    },
+    "dfthc_b": {
+      "value": 27,
+      "unit": "count",
+      "locator": "Table V"
+    },
+    "dfthc_c": {
+      "value": 27,
+      "unit": "count",
+      "locator": "Table V"
+    },
+    "coefficient_bit_precision": {
+      "value": 9,
+      "unit": "bits",
+      "locator": "Fig. 6 and p. 36 (first pair satisfying the linear error bound of Eq. 43)"
+    },
+    "rotation_bit_precision": {
+      "value": 15,
+      "unit": "bits",
+      "locator": "Fig. 6 and p. 36"
+    },
+    "qec_scheme": {
+      "value": "surface code",
+      "locator": "Sec. V, p. 14"
+    }
+  },
+  "assessment": {
+    "reproduction_status": "partially_reproduced",
+    "summary_plain": "QAC rebuilt the circuit from the paper's published hyper-parameters and obtained 1,081 logical qubits and 3.56 × 10⁸ Toffoli gates, against the paper's 1,137 and 3.41 × 10⁸. With a different factory design and timing model, the physical estimate is 3.44 million qubits and 11.5 hours.",
+    "what_this_shows": [
+      "The paper's logical resource counts (qubits and Toffoli gates) are reproduced to within about 5% by an independent implementation of the same algorithmic ingredients.",
+      "Physical costs for the same logical circuit change by several times when the factory design, rotation synthesis, and timing model change, even with identical error rate, cycle time, and code distance."
+    ],
+    "what_this_does_not_show": [
+      "The Hamiltonian tensors are synthetic (random values of the paper's stated dimensions); the reproduction validates circuit structure and counts, not FeMoCo's chemistry or energies.",
+      "The paper's CCZ-factory architecture and 10 µs reaction time were not modeled, so the physical comparison is not like-for-like.",
+      "The surface-code distance of 27 was imposed as an input, not selected independently."
+    ],
+    "findings": [
+      {
+        "aspect": "logical_qubits",
+        "verdict": "within_factor",
+        "note": "Same algorithm and hyper-parameters; small differences in circuit construction."
+      },
+      {
+        "aspect": "toffoli_count",
+        "verdict": "within_factor",
+        "note": "Same algorithm and hyper-parameters; small differences in circuit construction."
+      },
+      {
+        "aspect": "physical_qubits",
+        "verdict": "within_factor",
+        "note": "Computed with different magic-state factories."
+      },
+      {
+        "aspect": "runtime_seconds",
+        "verdict": "differs",
+        "note": "Computed without a separate reaction time and with different factories."
+      },
+      {
+        "aspect": "code_distance",
+        "verdict": "not_compared",
+        "note": "Set to the paper's value as an input."
+      }
+    ],
+    "classical_status": "not_solved_classically_at_target_accuracy",
+    "classical_status_note": "Inherited from the earlier QAC assessment; recent classical DMRG/AFQMC work on this active space is under review."
+  },
+  "review": {
+    "prepared_by": [
+      {
+        "name": "Katerina Gratsea",
+        "affiliation": "UW–Madison"
+      }
+    ],
+    "reviewed_by": [
+      {
+        "name": "Matthew Otten",
+        "affiliation": "UW–Madison",
+        "github": "0tt3r",
+        "date": "2026-11-06"
+      }
+    ],
+    "approved_by": [
+      {
+        "name": "Matthew Otten",
+        "affiliation": "UW–Madison",
+        "github": "0tt3r",
+        "date": "2026-11-06"
+      }
+    ],
+    "information_cutoff": "2026-11-06"
+  },
+  "publication": {
+    "status": "published",
+    "first_published": "2026-11-06"
+  },
+  "links": [
+    {
+      "label": "Publication (DOI)",
+      "url": "https://doi.org/10.1103/pb2g-j9cw"
+    },
+    {
+      "label": "Ref. 7 of the paper (Lee et al., PRX Quantum 2, 030305, 2021)",
+      "url": "https://doi.org/10.1103/PRXQuantum.2.030305"
+    },
+    {
+      "label": "QDK Chemistry",
+      "url": "https://github.com/microsoft/qdk-chemistry"
+    },
+    {
+      "label": "QDK (resource estimator)",
+      "url": "https://github.com/microsoft/qdk"
+    }
+  ],
+  "reported": {
+    "figures": {
+      "logical_qubits": {
+        "value": 1137,
+        "unit": "count",
+        "locator": "Table V"
+      },
+      "toffoli_count": {
+        "value": 341000000,
+        "unit": "count",
+        "locator": "Table V",
+        "qualifier": "rounded",
+        "note": "Stated as 3.41e8"
+      },
+      "physical_qubits": {
+        "value": 3200000,
+        "unit": "count",
+        "locator": "Sec. V, p. 14",
+        "qualifier": "rounded",
+        "note": "Stated as 3.2 million"
+      },
+      "runtime_seconds": {
+        "value": 9720,
+        "unit": "seconds",
+        "locator": "Sec. V, p. 14",
+        "qualifier": "approximate",
+        "note": "Stated as about 2.7 hours"
+      },
+      "code_distance": {
+        "value": 27,
+        "unit": "count",
+        "locator": "Sec. V, p. 14"
+      }
+    },
+    "notes": [
+      "Transcribed from Low et al., Phys. Rev. X 15, 041016 (2025): logical counts from Table V, physical estimate from Section V."
+    ]
+  },
+  "reproductions": [
+    {
+      "id": "qdk-sossa-2026-11",
+      "tool": {
+        "name": "QDK Chemistry and the QDK resource estimator",
+        "role": "QDK Chemistry builds the spectrum-amplification phase-estimation circuit from the paper's DFTHC hyper-parameters and counts its logical resources; the QDK resource estimator converts those counts into physical qubits and runtime.",
+        "url": "https://github.com/microsoft/qdk-chemistry"
+      },
+      "headline_scenario": "litinski19-t-factories",
+      "scenarios": {
+        "litinski19-t-factories": {
+          "label": "Litinski (2019) T factories",
+          "description": "Four magic-state distillation factories producing T states, following Litinski (2019). Arbitrary rotations are synthesized with PSSPC and mapped to lattice-surgery operations. The comparison table uses this scenario.",
+          "references": [
+            {
+              "label": "Litinski, Magic State Distillation: Not as Costly as You Think, Quantum 3, 205 (2019)",
+              "url": "https://doi.org/10.22331/q-2019-12-02-205"
+            },
+            {
+              "label": "Beverland et al., Assessing requirements to scale to practical quantum advantage (PSSPC)",
+              "url": "https://arxiv.org/abs/2211.07629"
+            }
+          ]
+        },
+        "gsj24-ccx-factories": {
+          "label": "Gidney–Shutty–Jones (2024) CCX factories",
+          "description": "One T-state factory feeding seven factories that each convert eight T states into one CCX (Toffoli) state, following Gidney, Shutty, and Jones (2024). The logical circuit, error rate, cycle time, and code distance are the same as in the Litinski scenario.",
+          "references": [
+            {
+              "label": "Gidney, Shutty, and Jones, Magic state cultivation: growing T states as cheap as CNOT gates (2024)",
+              "url": "https://arxiv.org/abs/2409.17595"
+            },
+            {
+              "label": "Beverland et al., Assessing requirements to scale to practical quantum advantage (PSSPC)",
+              "url": "https://arxiv.org/abs/2211.07629"
+            }
+          ]
+        }
+      },
+      "figures": {
+        "logical_qubits": {
+          "value": 1081,
+          "unit": "count",
+          "source": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/results.json#/logical/num_qubits"
+        },
+        "toffoli_count": {
+          "value": 356382604,
+          "unit": "count",
+          "source": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/results.json#/logical/toffoli_count"
+        },
+        "physical_qubits": {
+          "value": 3443392,
+          "unit": "count",
+          "source": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/results.json#/physical/1/physical_qubits"
+        },
+        "runtime_seconds": {
+          "value": 41364.908415,
+          "unit": "seconds",
+          "source": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/results.json#/physical/1/runtime_seconds"
+        },
+        "code_distance": {
+          "value": 27,
+          "unit": "count",
+          "source": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/results.json#/physical/1/code/distance"
+        }
+      },
+      "deviations_from_reported": [
+        {
+          "aspect": "Hamiltonian tensors",
+          "reported": "Explicit FeMoCo molecular tensors, factorized and optimized by the authors",
+          "used": "Synthetic random tensors with the paper's stated dimensions (R, B, C) and effective normalization",
+          "why": "QDK Chemistry builds the resource-estimation circuit from tensor shapes. The compiled circuit's cost depends primarily on the dimensions, which the paper publishes, rather than on the tensor values."
+        },
+        {
+          "aspect": "Magic-state factories",
+          "reported": "Four CCZ factories, following the error-correction model of the paper's Ref. 7 (Lee et al., 2021)",
+          "used": "Four T factories following Litinski (2019); a scenario with CCX factories following Gidney, Shutty, and Jones (2024) is also recorded",
+          "why": "These are the factory models available in the QDK resource estimator. The paper's factory layout and stored-qubit count could not be reconstructed from public information.",
+          "references": [
+            {
+              "label": "Lee et al., Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction, PRX Quantum 2, 030305 (2021)",
+              "url": "https://doi.org/10.1103/PRXQuantum.2.030305"
+            },
+            {
+              "label": "Litinski, Magic State Distillation: Not as Costly as You Think, Quantum 3, 205 (2019)",
+              "url": "https://doi.org/10.22331/q-2019-12-02-205"
+            },
+            {
+              "label": "Gidney, Shutty, and Jones, Magic state cultivation (2024)",
+              "url": "https://arxiv.org/abs/2409.17595"
+            }
+          ]
+        },
+        {
+          "aspect": "Rotation synthesis",
+          "reported": "Not specified separately in the resource estimate",
+          "used": "PSSPC synthesis of arbitrary rotations (Beverland et al.), mapped to lattice-surgery operations",
+          "why": "The QDK resource estimator compiles rotations this way.",
+          "references": [
+            {
+              "label": "Beverland et al., Assessing requirements to scale to practical quantum advantage",
+              "url": "https://arxiv.org/abs/2211.07629"
+            }
+          ]
+        },
+        {
+          "aspect": "Reaction time",
+          "reported": "A separate 10 µs decoder and feedback reaction time, alongside the 1 µs cycle time",
+          "used": "No separate reaction time; a 1 µs code cycle with 100 ns gate and 500 ns measurement times",
+          "why": "The timing model used here has no separate reaction-time parameter."
+        }
+      ],
+      "interpretation": {
+        "label": "architecture_dependent",
+        "statement": "The logical counts agree closely with the paper's, which indicates that the algorithm was implemented as described. The physical estimates use a different factory design, rotation synthesis, and timing model from the paper's, so the physical-qubit and runtime ratios reflect those choices. A like-for-like physical comparison requires reconstructing the paper's factory layout, which is planned."
+      },
+      "notes": [
+        "The notebook estimates physical resources for two factory designs. Both share the same logical circuit, architecture, code, and error budget."
+      ],
+      "results": {
+        "schema_version": "1.0",
+        "claim_id": "femoco-low-2025",
+        "reproduction_id": "qdk-sossa-2026-11",
+        "generated_at": "2026-11-06T18:15:55+00:00",
+        "producer": {
+          "entrypoint": "notebook.ipynb",
+          "cell_tag": "results-export"
+        },
+        "tooling": {
+          "python": "3.10.22",
+          "packages": {
+            "qdk-chemistry": "2.3.0",
+            "qdk": "1.33.1",
+            "numpy": "2.2.6",
+            "scipy": "1.15.3"
+          }
+        },
+        "inputs": {
+          "hamiltonian": {
+            "kind": "synthetic_dfthc",
+            "orbitals": 54,
+            "electrons": 54,
+            "R": 10,
+            "B": 27,
+            "C": 27,
+            "lambda_eff": 21.3674,
+            "coefficient_bit_precision": 9,
+            "rotation_bit_precision": 15,
+            "seed": 42
+          },
+          "target_precision_hartree": 0.001,
+          "trial_state": "hartree_fock_placeholder"
+        },
+        "logical": {
+          "walk_steps": 33564,
+          "num_qubits": 1081,
+          "t_count": 129,
+          "rotation_count": 3154284,
+          "rotation_depth": 2918652,
+          "ccz_count": 356382604,
+          "ccix_count": 0,
+          "measurement_count": 401358380,
+          "toffoli_count": 356382604
+        },
+        "physical": [
+          {
+            "scenario_id": "gsj24-ccx-factories",
+            "architecture": {
+              "physical_error_rate": 0.001,
+              "gate_time_ns": 100,
+              "measurement_time_ns": 500
+            },
+            "code": {
+              "family": "surface",
+              "distance": 27,
+              "distance_source": "imposed",
+              "cycle_time_ns": 1000
+            },
+            "factories": "1×T, 7×CCX",
+            "synthesis": "PSSPC with CCX magic states; round-based T factory feeding GSJ24 8T->CCX factory; lattice surgery",
+            "physical_qubits": 3459980,
+            "compute_qubits": 3286992,
+            "factory_qubits": 172988,
+            "memory_qubits": 0,
+            "runtime_seconds": 41364.908415,
+            "error_budget": 0.01,
+            "achieved_error": 0.009751310735791921
+          },
+          {
+            "scenario_id": "litinski19-t-factories",
+            "architecture": {
+              "physical_error_rate": 0.001,
+              "gate_time_ns": 100,
+              "measurement_time_ns": 500
+            },
+            "code": {
+              "family": "surface",
+              "distance": 27,
+              "distance_source": "imposed",
+              "cycle_time_ns": 1000
+            },
+            "factories": "4×T",
+            "synthesis": "PSSPC with T magic states; Litinski 2019 T factories; lattice surgery",
+            "physical_qubits": 3443392,
+            "compute_qubits": 3286992,
+            "factory_qubits": 156400,
+            "memory_qubits": 0,
+            "runtime_seconds": 41364.908415,
+            "error_budget": 0.01,
+            "achieved_error": 0.009023191064070882
+          }
+        ]
+      },
+      "run": {
+        "schema_version": "1.0",
+        "reproduction_id": "qdk-sossa-2026-11",
+        "executed_at": "2026-11-06T18:15:56+00:00",
+        "executed_by": {
+          "name": "Matthew Otten",
+          "github": "0tt3r",
+          "automation": "claude-code (rerun after tooling change)"
+        },
+        "host": {
+          "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+          "machine": "x86_64"
+        },
+        "duration_seconds": 37.44,
+        "python": "3.10.22",
+        "lockfile": "requirements.lock.txt",
+        "entrypoint": "notebook.ipynb",
+        "entrypoint_sha256": "d53d258bfd71610e26312de535ce71c4d4095bce1cf0abed899d3da7ffe8c25c",
+        "results_sha256": "153301d71e2d3d3a145cd121759011f0223921e9ad9c0bd2a3ebc6e9b4d6063f",
+        "lockfile_sha256": "6ac459eb58dfa640e6fe524e18f22fc3677ff4b94554a72181f3b784bd976ec6",
+        "command": "/tmp/claude-1000/-home-mjotten-Documents-Projects-QAC-Dashboard/57d63d2b-bce2-49c9-9657-3bbf572a19dc/scratchpad/conda-qdk310/bin/python -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name=python3 --output executed.ipynb notebook.ipynb"
+      },
+      "artifacts": {
+        "code": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/notebook.ipynb",
+        "results": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/results.json",
+        "run": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/run.json",
+        "lockfile": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/requirements.lock.txt"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "aspect": "logical_qubits",
+      "unit": "count",
+      "reported": 1137,
+      "reproduced": 1081,
+      "ratio": 0.9507,
+      "reproduction_id": "qdk-sossa-2026-11"
+    },
+    {
+      "aspect": "toffoli_count",
+      "unit": "count",
+      "reported": 341000000,
+      "reproduced": 356382604,
+      "ratio": 1.0451,
+      "reproduction_id": "qdk-sossa-2026-11"
+    },
+    {
+      "aspect": "physical_qubits",
+      "unit": "count",
+      "reported": 3200000,
+      "reproduced": 3443392,
+      "ratio": 1.0761,
+      "reproduction_id": "qdk-sossa-2026-11"
+    },
+    {
+      "aspect": "runtime_seconds",
+      "unit": "seconds",
+      "reported": 9720,
+      "reproduced": 41364.908415,
+      "ratio": 4.2556,
+      "reproduction_id": "qdk-sossa-2026-11"
+    },
+    {
+      "aspect": "code_distance",
+      "unit": "count",
+      "reported": 27,
+      "reproduced": 27,
+      "ratio": 1.0,
+      "reproduction_id": "qdk-sossa-2026-11"
+    }
+  ],
+  "provenance": {
+    "build": {
+      "tool": "qacclaims",
+      "tool_version": "0.1.0"
+    },
+    "sources": [
+      {
+        "path": "claims/femoco-low-2025/claim.yaml",
+        "sha256": "e5b2d146aeabd9052559b56d73c427b7746709d99d1410ffa3ffbc8ddd09deb6"
+      },
+      {
+        "path": "claims/femoco-low-2025/estimates/reported.yaml",
+        "sha256": "d4b0062718153aa5d8569783f174a60b18d59f2a84aff189b6c1ede65c655031"
+      },
+      {
+        "path": "claims/femoco-low-2025/estimates/reproduction-qdk-sossa-2026-11.yaml",
+        "sha256": "a9558b2deacdc3074b0d984e1b1e6d8a0ea14701259c84ec927a8a50d708226b"
+      },
+      {
+        "path": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/results.json",
+        "sha256": "153301d71e2d3d3a145cd121759011f0223921e9ad9c0bd2a3ebc6e9b4d6063f"
+      },
+      {
+        "path": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/run.json",
+        "sha256": "5474e673f3e471037b293ab9a09cc194683bb590a53fd00a4debc9608aa15d9b"
+      },
+      {
+        "path": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/notebook.ipynb",
+        "sha256": "d53d258bfd71610e26312de535ce71c4d4095bce1cf0abed899d3da7ffe8c25c"
+      },
+      {
+        "path": "claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/requirements.lock.txt",
+        "sha256": "6ac459eb58dfa640e6fe524e18f22fc3677ff4b94554a72181f3b784bd976ec6"
+      },
+      {
+        "path": "claims/femoco-low-2025/narrative.md",
+        "sha256": "3d31ec6895dec3e0a18fe01d718190eac0757ac1cc533d09dc49b70294d2c1ce"
+      }
+    ]
+  },
+  "narrative_markdown": "# Reproducing the FeMoCo resource estimate of Low et al. (2025)\n\n*Katerina Gratsea and Matthew Otten, Quantum Applications Center, UW–Madison.*\n*Numbers in this page are rendered from the claim record; the record's numbers come from the executed notebook in `reproductions/qdk-sossa-2026-11/`.*\n\n## The claim\n\n[Low et al. (2025)](https://doi.org/10.1103/pb2g-j9cw) estimate the quantum resources needed to compute the ground-state\nenergy of FeMoCo in the 54-orbital (Reiher) active space. FeMoCo, the iron–molybdenum cofactor of\nnitrogenase, is a long-standing benchmark for quantum chemistry on quantum computers. Their algorithm combines\ndouble-factorized tensor hypercontraction (DFTHC) with BLISS and sum-of-squares spectrum amplification.\nRead literally, the paper claims:\n\n> FeMoCo's ground-state energy could be estimated with about 3.2 million physical qubits in roughly 2.7 hours.\n\nTwo layers of numbers sit behind that sentence.\n\n**Logical counts.** For a target precision of 0.001 Ha\n(Table V), the circuit needs about 3.41 × 10⁸ Toffoli gates and\n1,137 logical qubits. These follow from explicit molecular tensors\nthat the authors factorized and optimized, with DFTHC hyper-parameters\nR = 10, B = 27,\nC = 27, and bit precisions\nb_coeff = 9 and\nb_rot = 15, the first pair that satisfies the linear\nerror bound of their Eq. 43 (Fig. 6 and the discussion on p. 36).\n\n**Physical resources.** Assuming the error-correction model of their Ref. 7,\n[Lee et al. (2021)](https://doi.org/10.1103/PRXQuantum.2.030305) (four CCZ factories, a\nphysical error rate of 1 × 10⁻³, a surface-code cycle time of\n1 × 10⁻⁶ s, a reaction time of\n1 × 10⁻⁵ s, and distance-27\nsurface-code patches), they arrive at about 3.2 million physical qubits and\n2.7 hours (Section V, p. 14).\n\n## What QAC did\n\nWe rebuilt the computation with [QDK Chemistry](https://github.com/microsoft/qdk-chemistry)\n(version 2.3.0), whose DFTHC implementation aims to\nfollow Low et al., and estimated physical resources with the resource estimator in the\n[QDK](https://github.com/microsoft/qdk) (version 1.33.1).\nThe [executed notebook](https://github.com/QuantumApplicationsCenter/qac-claims/blob/main/claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/notebook.ipynb) walks through every step:\nblock encoding, spectrum amplification, the sum-of-squares qubit mapping, the circuit primitives, the\ntrial state, and finally logical and physical resource estimation.\n\n**Synthetic tensors.** The library's resource-estimation path does not build FeMoCo's molecular tensors.\nIt generates random tensors *of the same dimensions* as the paper's optimized factorization\n(R = 10, B = 27,\nC = 27, effective normalization\nλ_eff = 21.3674, seed 42)\nand the same bit precisions. This is a reasonable simplification for *counting* resources, because the\ncompiled circuit's complexity depends primarily on the tensor shapes rather than on the tensor values.\nFinding a compact, accurate DFTHC representation is a hard numerical optimization that the paper has\nalready done. It also means this reproduction says nothing about FeMoCo's energies: the spectrum of a random\ntensor is not the spectrum of nitrogenase.\n\n**Logical counts.** The rebuilt circuit uses 33,564 walk steps and comes out at\n3.56 × 10⁸ Toffoli gates and\n1,081 logical qubits, within\n+5% and -5% of the paper's\nfigures. We read this as reproducing, and validating, the paper's logical resource estimates with an\nindependent implementation of the same algorithmic ingredients.\n\n**Physical resources.** We then applied the physical assumptions the paper states (error rate\n1 × 10⁻³, a\n1000 ns surface-code cycle, and code distance\n27), with a different logical architecture. The main\nscenario uses four T factories following [Litinski (2019)](https://doi.org/10.22331/q-2019-12-02-205),\nsynthesizes arbitrary rotations with PSSPC ([Beverland et al.](https://arxiv.org/abs/2211.07629)),\nmaps operations to lattice-surgery instructions, and has no separate reaction time. Under these\nassumptions the machine needs 3.44 million physical qubits\n(3,443,392) and runs for\n11.5 hours. A second scenario, with the CCX factories of\n[Gidney, Shutty, and Jones (2024)](https://arxiv.org/abs/2409.17595), gives\n3.46 million qubits in the same time.\n\n## How to read the comparison\n\nThe logical counts compare the same algorithm with the same hyper-parameters, and they agree to within\nabout 5%. The physical figures were computed with\ndifferent factory designs and timing models, so their ratios\n(1.08× for physical qubits and\n4.3× for runtime) include the effect of those choices.\n\n## What this does not show, and what comes next\n\n- It does not reproduce FeMoCo's chemistry: the tensors are synthetic, and the distance-27\n  code was imposed as an input to match the paper rather than selected independently.\n- It does not reproduce the paper's physical estimate under the paper's own architecture. Low et al. use the\n  QEC scheme of their Ref. 7, but the number of stored qubits, and therefore the surface-code patch size,\n  appears to differ from the implementation shown in Fig. 10 of that reference. Once that information is\n  available we plan to implement their logical architecture and QEC scheme in the same framework, which\n  would make the physical-qubit and runtime comparison apples-to-apples.\n\n## Reproducing this result\n\nThe [notebook](https://github.com/QuantumApplicationsCenter/qac-claims/blob/main/claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/notebook.ipynb) runs in about 37 seconds on a laptop, in the\nenvironment pinned by `requirements.lock.txt` (Python 3.10.22).\nFrom a checkout of this repository:\n\n```bash\npython3.10 -m venv .venv && source .venv/bin/activate\npip install -r claims/femoco-low-2025/reproductions/qdk-sossa-2026-11/requirements.lock.txt\npip install -e \".[execute]\"\nqacclaims execute claims/femoco-low-2025/reproductions/qdk-sossa-2026-11\n```\n\nThe last command re-executes the notebook and reports any difference from the committed `results.json`.\n"
+}

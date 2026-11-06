@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/QuantumApplicationsCenter/qac-claims/schemas/index.schema.json",
+  "title": "Published claims index (dist/index.json)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at", "build", "claims"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "type": "string" },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "tool_version"],
+      "properties": { "tool": { "type": "string" }, "tool_version": { "type": "string" } }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "short_title", "headline", "domain", "taxonomy", "claim_type", "year", "publication_status", "reproduction_status", "path", "sha256"],
+        "properties": {
+          "id": { "type": "string" }, "title": { "type": "string" }, "short_title": { "type": "string" }, "headline": { "type": "string" },
+          "domain": { "type": "string" }, "taxonomy": { "type": "string" }, "claim_type": { "type": "string" },
+          "year": { "type": "integer" }, "publication_status": { "type": "string" }, "reproduction_status": { "type": "string" },
+          "path": { "type": "string" }, "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    }
+  }
+}

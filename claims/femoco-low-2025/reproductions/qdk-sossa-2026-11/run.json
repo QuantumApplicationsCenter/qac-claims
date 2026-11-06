@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "reproduction_id": "qdk-sossa-2026-11",
+  "executed_at": "2026-11-06T18:15:56+00:00",
+  "executed_by": {
+    "name": "Matthew Otten",
+    "github": "0tt3r",
+    "automation": "claude-code (rerun after tooling change)"
+  },
+  "host": {
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "machine": "x86_64"
+  },
+  "duration_seconds": 37.44,
+  "python": "3.10.22",
+  "lockfile": "requirements.lock.txt",
+  "entrypoint": "notebook.ipynb",
+  "entrypoint_sha256": "d53d258bfd71610e26312de535ce71c4d4095bce1cf0abed899d3da7ffe8c25c",
+  "results_sha256": "153301d71e2d3d3a145cd121759011f0223921e9ad9c0bd2a3ebc6e9b4d6063f",
+  "lockfile_sha256": "6ac459eb58dfa640e6fe524e18f22fc3677ff4b94554a72181f3b784bd976ec6",
+  "command": "/tmp/claude-1000/-home-mjotten-Documents-Projects-QAC-Dashboard/57d63d2b-bce2-49c9-9657-3bbf572a19dc/scratchpad/conda-qdk310/bin/python -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name=python3 --output executed.ipynb notebook.ipynb"
+}

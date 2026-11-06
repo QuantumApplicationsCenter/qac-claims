@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/QuantumApplicationsCenter/qac-claims/schemas/run.schema.json",
+  "title": "Execution provenance for a reproduction (reproductions/<id>/run.json)",
+  "description": "Written by `qacclaims execute`. Records who ran the reproduction, when, where, how long, and the digests that tie its code, results, and lockfile together.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "reproduction_id",
+    "executed_at",
+    "executed_by",
+    "duration_seconds",
+    "python",
+    "lockfile",
+    "entrypoint",
+    "entrypoint_sha256",
+    "results_sha256",
+    "lockfile_sha256",
+    "command"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "reproduction_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "executed_at": {
+      "type": "string"
+    },
+    "executed_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 3
+        },
+        "github": {
+          "type": "string"
+        },
+        "automation": {
+          "type": "string"
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "machine": {
+          "type": "string"
+        }
+      }
+    },
+    "duration_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "python": {
+      "type": "string"
+    },
+    "lockfile": {
+      "const": "requirements.lock.txt"
+    },
+    "results_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "lockfile_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "command": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "entrypoint": {
+      "enum": [
+        "notebook.ipynb",
+        "reproduce.py"
+      ]
+    },
+    "entrypoint_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

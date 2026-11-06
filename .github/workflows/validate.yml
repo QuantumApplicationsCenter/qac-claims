@@ -1,0 +1,21 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[test]"
+      - name: Schema and cross-file checks (DOIs resolved online)
+        run: qacclaims validate --online
+      - name: Committed dist/ must match a fresh build
+        run: qacclaims build --check
+      - run: pytest -q

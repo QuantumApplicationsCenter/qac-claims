@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/QuantumApplicationsCenter/qac-claims/schemas/estimate.schema.json",
+  "title": "QAC estimate record (claims/<id>/estimates/*.yaml)",
+  "description": "Two kinds. 'reported' transcribes the source's own figures with locators. 'reproduction' carries interpretation only; every number comes from the machine-written results.json it points at.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "kind",
+    "claim_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "kind": {
+      "enum": [
+        "reported",
+        "reproduction"
+      ]
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    }
+  },
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "claim_id",
+        "figures"
+      ],
+      "properties": {
+        "schema_version": true,
+        "kind": {
+          "const": "reported"
+        },
+        "claim_id": true,
+        "figures": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "logical_qubits": {
+              "$ref": "#/$defs/numericFigure"
+            },
+            "toffoli_count": {
+              "$ref": "#/$defs/numericFigure"
+            },
+            "t_count": {
+              "$ref": "#/$defs/numericFigure"
+            },
+            "physical_qubits": {
+              "$ref": "#/$defs/numericFigure"
+            },
+            "runtime_seconds": {
+              "$ref": "#/$defs/numericFigure"
+            },
+            "code_distance": {
+              "$ref": "#/$defs/numericFigure"
+            }
+          }
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    },
+    {
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "claim_id",
+        "reproduction_id",
+        "results_file",
+        "tool",
+        "headline_scenario",
+        "figure_map",
+        "deviations_from_reported",
+        "interpretation",
+        "scenarios"
+      ],
+      "properties": {
+        "schema_version": true,
+        "kind": {
+          "const": "reproduction"
+        },
+        "claim_id": true,
+        "reproduction_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "results_file": {
+          "type": "string",
+          "pattern": "^reproductions/[a-z0-9-]+/results\\.json$"
+        },
+        "tool": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "role"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "pattern": "^https://"
+            }
+          }
+        },
+        "headline_scenario": {
+          "type": "string",
+          "description": "scenario_id in results.json#/physical that the headline figures are read from."
+        },
+        "figure_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "description": "JSON pointers into results.json. This is the ONLY way a reproduction supplies a number.",
+          "properties": {
+            "logical_qubits": {
+              "$ref": "#/$defs/pointer"
+            },
+            "toffoli_count": {
+              "$ref": "#/$defs/pointer"
+            },
+            "t_count": {
+              "$ref": "#/$defs/pointer"
+            },
+            "physical_qubits": {
+              "$ref": "#/$defs/pointer"
+            },
+            "runtime_seconds": {
+              "$ref": "#/$defs/pointer"
+            },
+            "code_distance": {
+              "$ref": "#/$defs/pointer"
+            }
+          }
+        },
+        "deviations_from_reported": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "aspect",
+              "reported",
+              "used",
+              "why"
+            ],
+            "properties": {
+              "aspect": {
+                "type": "string",
+                "minLength": 3
+              },
+              "reported": {
+                "type": "string",
+                "minLength": 3
+              },
+              "used": {
+                "type": "string",
+                "minLength": 3
+              },
+              "why": {
+                "type": "string",
+                "minLength": 10
+              },
+              "references": {
+                "$ref": "#/$defs/references"
+              }
+            }
+          }
+        },
+        "interpretation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "statement"
+          ],
+          "properties": {
+            "label": {
+              "enum": [
+                "consistent",
+                "consistent_with_caveats",
+                "architecture_dependent",
+                "inconsistent",
+                "inconclusive"
+              ]
+            },
+            "statement": {
+              "type": "string",
+              "minLength": 40
+            }
+          }
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        },
+        "scenarios": {
+          "type": "object",
+          "description": "Human description of every physical scenario in results.json, keyed by scenario_id. Strings only.",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "description"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 60
+              },
+              "description": {
+                "type": "string",
+                "minLength": 20
+              },
+              "references": {
+                "$ref": "#/$defs/references"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "pointer": {
+      "type": "string",
+      "pattern": "^#(/[A-Za-z0-9_.-]+)+$"
+    },
+    "numericFigure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "unit",
+        "locator"
+      ],
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "enum": [
+            "count",
+            "seconds",
+            "hartree",
+            "dimensionless"
+          ]
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 3
+        },
+        "qualifier": {
+          "enum": [
+            "exact",
+            "approximate",
+            "upper_bound",
+            "lower_bound",
+            "rounded"
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "url"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 3
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://"
+          }
+        }
+      }
+    }
+  }
+}
