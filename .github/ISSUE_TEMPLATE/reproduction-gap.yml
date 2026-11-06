@@ -1,0 +1,63 @@
+name: Reproduction gap
+description: Record a figure in an existing claim that the reproduction does not match, and what would close the gap.
+title: "Gap: <claim id>, <figure>"
+labels: ["reproduction-gap"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form when a reproduction differs from the reported figure for a reason that could be
+        addressed: a model a tool does not provide, information the source does not give, or work we
+        have not done. If you think a recorded figure is simply wrong, use "Question or correction" instead.
+  - type: input
+    id: claim
+    attributes:
+      label: Claim
+      description: The claim id, as in claims/<claim-id>/.
+      placeholder: femoco-low-2025
+    validations:
+      required: true
+  - type: dropdown
+    id: figure
+    attributes:
+      label: Figure
+      options:
+        - Logical qubits
+        - Toffoli or T count
+        - Physical qubits
+        - Runtime
+        - Code distance
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: difference
+    attributes:
+      label: The difference
+      description: Reported and reproduced values, and the deviation listed in the record that accounts for it.
+      placeholder: "Runtime 2.7 hours reported, 11.5 hours reproduced. The paper includes a separate 10 µs reaction time; the reproduction's timing model has none."
+    validations:
+      required: true
+  - type: dropdown
+    id: cause
+    attributes:
+      label: Where the gap comes from
+      description: Choose the best current understanding; it can be changed as the issue is worked on.
+      options:
+        - The tool does not model it
+        - The source does not give enough information
+        - The reproduction has not done it yet
+        - Not yet known
+    validations:
+      required: true
+  - type: textarea
+    id: closing
+    attributes:
+      label: What would close it
+      description: The model, information, or work needed. If a tool is involved, describe the smallest calculation that shows the limitation, and link any issue opened with the tool's maintainers.
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to work on this.

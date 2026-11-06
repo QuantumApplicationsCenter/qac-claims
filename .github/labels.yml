@@ -1,0 +1,23 @@
+# Labels used by the issue forms. GitHub does not create labels from this file;
+# create them once under Issues > Labels (or with a label-sync tool).
+- name: reproduction-request
+  color: "2876c7"
+  description: A published claim proposed for a record and reproduction
+- name: reproduction-gap
+  color: "b07708"
+  description: A reproduced figure that does not match, and what would close the gap
+- name: claim-discussion
+  color: "6e7781"
+  description: A question about or correction to a record
+- name: "gap: tool"
+  color: "c5050c"
+  description: The tool used does not model what the source assumes
+- name: "gap: information"
+  color: "c5050c"
+  description: The source does not give enough information to reproduce the figure
+- name: "gap: ours"
+  color: "c5050c"
+  description: The reproduction has not yet done the work
+- name: good first issue
+  color: "16856b"
+  description: A small, well-defined reproduction or fix

@@ -1,0 +1,56 @@
+name: Reproduction request
+description: Propose a published claim for QAC to record and reproduce, or volunteer to reproduce it.
+title: "Reproduce: <first author> <year>, <workload>"
+labels: ["reproduction-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for a published claim about the resources a quantum computation needs
+        (qubits, gates, runtime) that has no record here yet. Check the existing claims and open
+        issues first. A claim is recorded with the figures its source reports, each with a page or
+        table reference, and compared with a reproduction whose figures come from runnable code.
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: DOI or arXiv identifier of the publication that makes the claim.
+      placeholder: "10.1103/pb2g-j9cw or arXiv:2409.17595"
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: The claim
+      description: What the source reports, in one or two sentences, with the main figures and where they appear.
+      placeholder: "FeMoCo's ground-state energy could be estimated with about 3.2 million physical qubits in 2.7 hours (Sec. V, p. 14)."
+    validations:
+      required: true
+  - type: textarea
+    id: figures
+    attributes:
+      label: Figures to compare
+      description: Which figures a reproduction should check, and the assumptions the source states for them.
+      placeholder: |
+        - Logical qubits and Toffoli count (Table V)
+        - Physical qubits and runtime, assuming physical error rate 1e-3 and a 1 µs cycle (Sec. V)
+  - type: textarea
+    id: approach
+    attributes:
+      label: Possible approach
+      description: Tools that could build the circuit or estimate its resources, and anything the source leaves unstated that a reproduction would have to assume.
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Expected difficulty
+      options:
+        - Small (a variant of an existing reproduction)
+        - Moderate (existing tools cover the method)
+        - Large (needs new circuit construction or a new error-correction model)
+        - Not sure
+  - type: checkboxes
+    id: volunteer
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to work on this reproduction.

@@ -1,0 +1,17 @@
+name: Question or correction
+description: Ask about a record, or report a figure, citation, or statement you think is wrong.
+labels: ["claim-discussion"]
+body:
+  - type: input
+    id: claim
+    attributes:
+      label: Claim
+      description: The claim id, if the question is about a specific record.
+      placeholder: femoco-low-2025
+  - type: textarea
+    id: question
+    attributes:
+      label: Question or correction
+      description: What you think is wrong, missing, or unclear, with the source for it where there is one.
+    validations:
+      required: true

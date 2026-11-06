@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: QAC claims website
+    url: https://qac.wqi.wisc.edu/
+    about: Read the published records before opening an issue.
