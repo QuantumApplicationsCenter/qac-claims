@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "claim_id": "femoco-low-2025-li76",
+  "reproduction_id": "qdk-sossa-2026-11",
+  "generated_at": "2026-11-13T05:04:00+00:00",
+  "producer": {
+    "entrypoint": "notebook.ipynb",
+    "cell_tag": "results-export"
+  },
+  "tooling": {
+    "python": "3.10.22",
+    "packages": {
+      "qdk-chemistry": "2.3.0",
+      "qdk": "1.33.1",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3"
+    }
+  },
+  "inputs": {
+    "hamiltonian": {
+      "kind": "synthetic_dfthc",
+      "orbitals": 76,
+      "electrons": 113,
+      "R": 15,
+      "B": 57,
+      "C": 19,
+      "lambda_eff": 43.6538,
+      "coefficient_bit_precision": 9,
+      "rotation_bit_precision": 15,
+      "seed": 42
+    },
+    "target_precision_hartree": 0.001,
+    "trial_state": "hartree_fock_placeholder"
+  },
+  "logical": {
+    "walk_steps": 68572,
+    "num_qubits": 1490,
+    "t_count": 132,
+    "rotation_count": 15217817,
+    "rotation_depth": 14599948,
+    "ccz_count": 1092626301,
+    "ccix_count": 0,
+    "measurement_count": 1223735982,
+    "toffoli_count": 1092626301
+  },
+  "physical": [
+    {
+      "scenario_id": "gsj24-ccx-factories",
+      "architecture": {
+        "physical_error_rate": 0.001,
+        "gate_time_ns": 100,
+        "measurement_time_ns": 500
+      },
+      "code": {
+        "family": "surface",
+        "distance": 27,
+        "distance_source": "imposed",
+        "cycle_time_ns": 1000
+      },
+      "factories": "1\u00d7T, 7\u00d7CCX",
+      "synthesis": "PSSPC (5-40 T states per rotation) with CCX magic states; round-based T factory feeding GSJ24 8T->CCX factory; lattice surgery; the estimator chose 23 T states per rotation",
+      "physical_qubits": 4676575,
+      "compute_qubits": 4503587,
+      "factory_qubits": 172988,
+      "memory_qubits": 0,
+      "runtime_seconds": 131021.054226,
+      "error_budget": 0.01,
+      "achieved_error": 0.008026696523470888
+    },
+    {
+      "scenario_id": "litinski19-t-factories",
+      "architecture": {
+        "physical_error_rate": 0.001,
+        "gate_time_ns": 100,
+        "measurement_time_ns": 500
+      },
+      "code": {
+        "family": "surface",
+        "distance": 27,
+        "distance_source": "imposed",
+        "cycle_time_ns": 1000
+      },
+      "factories": "4\u00d7T",
+      "synthesis": "PSSPC (5-40 T states per rotation) with T magic states; Litinski 2019 T factories; lattice surgery; the estimator chose 22 T states per rotation",
+      "physical_qubits": 4659987,
+      "compute_qubits": 4503587,
+      "factory_qubits": 156400,
+      "memory_qubits": 0,
+      "runtime_seconds": 130626.85563,
+      "error_budget": 0.01,
+      "achieved_error": 0.0074415678154625894
+    }
+  ]
+}

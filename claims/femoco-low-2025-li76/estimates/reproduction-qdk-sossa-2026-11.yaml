@@ -1,0 +1,79 @@
+schema_version: "1.0"
+kind: reproduction
+claim_id: femoco-low-2025-li76
+reproduction_id: qdk-sossa-2026-11
+results_file: reproductions/qdk-sossa-2026-11/results.json
+tool:
+  name: QDK Chemistry and the QDK resource estimator
+  role: QDK Chemistry builds the spectrum-amplification phase-estimation circuit from the paper's DFTHC hyper-parameters and counts its logical resources; the QDK resource estimator converts those counts into physical qubits and runtime.
+  url: https://github.com/microsoft/qdk-chemistry
+headline_scenario: litinski19-t-factories
+scenarios:
+  litinski19-t-factories:
+    label: Litinski (2019) T factories
+    description: Four magic-state distillation factories producing T states, following Litinski (2019). Arbitrary rotations are synthesized with PSSPC and mapped to lattice-surgery operations. The comparison table uses this scenario.
+    references:
+      - label: "Litinski, Magic State Distillation: Not as Costly as You Think, Quantum 3, 205 (2019)"
+        url: https://doi.org/10.22331/q-2019-12-02-205
+      - label: Beverland et al., Assessing requirements to scale to practical quantum advantage (PSSPC)
+        url: https://arxiv.org/abs/2211.07629
+  gsj24-ccx-factories:
+    label: Gidney–Shutty–Jones (2024) CCX factories
+    description: One T-state factory feeding seven factories that each convert eight T states into one CCX (Toffoli) state, following Gidney, Shutty, and Jones (2024). The logical circuit, error rate, cycle time, and code distance are the same as in the Litinski scenario.
+    references:
+      - label: "Gidney, Shutty, and Jones, Magic state cultivation: growing T states as cheap as CNOT gates (2024)"
+        url: https://arxiv.org/abs/2409.17595
+      - label: Beverland et al., Assessing requirements to scale to practical quantum advantage (PSSPC)
+        url: https://arxiv.org/abs/2211.07629
+figure_map:
+  logical_qubits: "#/logical/num_qubits"
+  toffoli_count: "#/logical/toffoli_count"
+  physical_qubits: "#/physical/1/physical_qubits"
+  runtime_seconds: "#/physical/1/runtime_seconds"
+  code_distance: "#/physical/1/code/distance"
+deviations_from_reported:
+  - aspect: Hamiltonian tensors
+    reported: Explicit FeMoCo molecular tensors, factorized and optimized by the authors
+    used: Synthetic random tensors with the paper's stated dimensions (R, B, C) and effective normalization
+    why: QDK Chemistry builds the resource-estimation circuit from tensor shapes. The compiled circuit's cost depends primarily on the dimensions, which the paper publishes, rather than on the tensor values.
+  - aspect: Magic-state factories
+    reported: Four CCZ factories, following the error-correction model of the paper's Ref. 7 (Lee et al., 2021)
+    used: Four T factories following Litinski (2019); a scenario with CCX factories following Gidney, Shutty, and Jones (2024) is also recorded
+    why: These are the factory models available in the QDK resource estimator. The paper's factory layout and stored-qubit count could not be reconstructed from public information.
+    references:
+      - label: "Lee et al., Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction, PRX Quantum 2, 030305 (2021)"
+        url: https://doi.org/10.1103/PRXQuantum.2.030305
+      - label: "Litinski, Magic State Distillation: Not as Costly as You Think, Quantum 3, 205 (2019)"
+        url: https://doi.org/10.22331/q-2019-12-02-205
+      - label: "Gidney, Shutty, and Jones, Magic state cultivation (2024)"
+        url: https://arxiv.org/abs/2409.17595
+  - aspect: Rotation synthesis
+    reported: Not specified separately in the resource estimate
+    used: PSSPC synthesis of arbitrary rotations (Beverland et al.), mapped to lattice-surgery operations
+    why: The QDK resource estimator compiles rotations this way.
+    references:
+      - label: Beverland et al., Assessing requirements to scale to practical quantum advantage
+        url: https://arxiv.org/abs/2211.07629
+  - aspect: Reaction time
+    reported: A separate 10 µs decoder and feedback reaction time, alongside the 1 µs cycle time
+    used: No separate reaction time; a 1 µs code cycle with 100 ns gate and 500 ns measurement times
+    why: The timing model used here has no separate reaction-time parameter.
+  - aspect: Rotation synthesis search range
+    reported: Not specified
+    used: PSSPC was allowed 5 to 40 T states per synthesized rotation, instead of the QDK resource estimator's default range of 5 to 20
+    why: >-
+      This circuit has about 1.5e7 arbitrary rotations. In the default range the estimated failure
+      probability is about 0.038 at every code distance and factory choice tried, above the 1% error
+      budget, which points to rotation-synthesis error; the estimator finds no estimate there. The wider range lets it spend more T states per rotation only where the budget
+      requires it. The 54-orbital record (femoco-low-2025) fits within the default range.
+interpretation:
+  label: architecture_dependent
+  statement: >-
+    The logical counts agree with the paper's to within about 10%, which indicates that the
+    algorithm was implemented as described. The physical estimates use a different factory design, rotation
+    synthesis, and timing model from the paper's, so the physical-qubit and runtime ratios reflect
+    those choices. A like-for-like physical comparison requires reconstructing the paper's factory
+    layout, which is planned.
+notes:
+  - The notebook estimates physical resources for two factory designs. Both share the same logical circuit, architecture, code, and error budget.
+  - The notebook is the 54-orbital record's (femoco-low-2025), with the 76-orbital active space's hyper-parameters, effective normalization, bit precisions, and electron count as inputs; the only other change is the rotation-synthesis search range above.
