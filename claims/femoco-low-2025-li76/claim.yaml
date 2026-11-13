@@ -1,0 +1,157 @@
+schema_version: "1.0"
+id: femoco-low-2025-li76
+title: FeMoCo 76-orbital (Li) ground-state energy resource estimate via spectral amplification and DFTHC (Low et al., 2025)
+short_title: FeMoCo 76-orbital resource estimate (Low et al. 2025)
+headline: The ground-state energy of FeMoCo's larger 76-orbital (Li) active space could be estimated with about 4.5 million physical qubits in roughly 8.6 hours.
+claim_type: literature_resource_estimate
+domain: quantum_chemistry
+taxonomy: application
+
+source:
+  type: journal_article
+  title: Fast Quantum Simulation of Electronic Structure by Spectral Amplification
+  authors:
+    - Guang Hao Low
+    - Robbie King
+    - Dominic W. Berry
+    - Qiushi Han
+    - A. Eugene DePrince III
+    - Alec F. White
+    - Ryan Babbush
+    - Rolando D. Somma
+    - Nicholas C. Rubin
+  author_list_complete: true
+  year: 2025
+  venue:
+    name: Physical Review X
+    volume: "15"
+    article: "041016"
+  doi: 10.1103/pb2g-j9cw
+
+assertion:
+  what_is_claimed: >-
+    Estimating the ground-state energy of the FeMoCo 76-orbital, 113-electron (Li et al.)
+    active space to 1 mHa precision needs about 9.99e8 Toffoli gates and 1,459 logical qubits
+    using double-factorized tensor hypercontraction with BLISS and sum-of-squares spectrum
+    amplification; under the paper's error-correction model (four CCZ factories, physical
+    error rate 1e-3, 1 µs surface-code cycle, 10 µs reaction time, distance-27 patches)
+    this costs about 4.5 million physical qubits and 8.6 hours.
+  workload:
+    system: FeMoCo (Li 76-orbital active space)
+    active_space_orbitals: 76
+    active_space_electrons: 113
+    target_observable: ground_state_energy
+    target_precision: { value: 1.0e-3, unit: hartree, locator: Table V }
+  method: Sum-of-squares spectrum amplification (SOSSA) over a double-factorized tensor-hypercontraction (DFTHC) Hamiltonian with BLISS; qubitized phase estimation
+  architecture_assumed: Surface code with four CCZ factories, following the error-correction model of Lee et al. (2021), the paper's Ref. 7
+
+assumptions_as_reported:
+  physical_error_rate:
+    value: 1.0e-3
+    unit: dimensionless
+    locator: "Sec. V, p. 14"
+  surface_code_cycle_time:
+    value: 1.0e-6
+    unit: seconds
+    locator: "Sec. V, p. 14"
+  reaction_time:
+    value: 1.0e-5
+    unit: seconds
+    locator: "Sec. V, p. 14"
+    note: Decoder/feedback latency stated separately from the cycle time
+  code_distance:
+    value: 27
+    unit: count
+    locator: "Sec. V, p. 14"
+  ccz_factories:
+    value: 4
+    unit: count
+    locator: "Sec. V, p. 14"
+  target_precision:
+    value: 1.0e-3
+    unit: hartree
+    locator: Table V
+  dfthc_rank_r:
+    value: 15
+    unit: count
+    locator: "Table V, [113e, 76o] column"
+  dfthc_b:
+    value: 57
+    unit: count
+    locator: "Table V, [113e, 76o] column"
+  dfthc_c:
+    value: 19
+    unit: count
+    locator: "Table V, [113e, 76o] column"
+  coefficient_bit_precision:
+    value: 9
+    unit: bits
+    locator: "Table X (p. 32, FeMoCo-76o113e rows) and the (·, ⌊3N/4⌋, ⌊N/4⌋) table on p. 38, (·, 57, 19) column"
+    note: The same in every FeMoCo-76 column of both tables; consistent with the 9,000 Select Toffolis = 8(N-1)b_rot listed there
+  rotation_bit_precision:
+    value: 15
+    unit: bits
+    locator: "Table X (p. 32, FeMoCo-76o113e rows) and the (·, ⌊3N/4⌋, ⌊N/4⌋) table on p. 38, (·, 57, 19) column"
+  qec_scheme:
+    value: surface code
+    locator: "Sec. V, p. 14"
+
+assessment:
+  reproduction_status: partially_reproduced
+  summary_plain: >-
+    QAC rebuilt the circuit from the paper's published hyper-parameters and obtained
+    {{ reproductions.0.figures.logical_qubits.value | n }} logical qubits and
+    {{ reproductions.0.figures.toffoli_count.value | sci }} Toffoli gates, against the paper's
+    {{ reported.figures.logical_qubits.value | n }} and {{ reported.figures.toffoli_count.value | sci }}.
+    With a different factory design and timing model, the physical estimate is
+    {{ reproductions.0.figures.physical_qubits.value | million }} qubits and
+    {{ reproductions.0.figures.runtime_seconds.value | hours }}.
+  what_this_shows:
+    - The paper's logical resource counts for the 76-orbital active space (qubits and Toffoli gates) are reproduced to within about 10% by an independent implementation of the same algorithmic ingredients.
+    - The 54-orbital reproduction carries over to the larger active space by changing only its inputs, apart from a wider rotation-synthesis search range needed to meet the error budget.
+    - Physical costs for the same logical circuit change by several times when the factory design, rotation synthesis, and timing model change, even with identical error rate, cycle time, and code distance.
+  what_this_does_not_show:
+    - The Hamiltonian tensors are synthetic (random values of the paper's stated dimensions); the reproduction validates circuit structure and counts, not FeMoCo's chemistry or energies.
+    - The paper's CCZ-factory architecture and 10 µs reaction time were not modeled, so the physical comparison is not like-for-like.
+    - The rotation-synthesis cost is not the estimator's default. To keep the total failure probability within 1%, it was allowed up to 40 T states per rotation instead of its default maximum of 20.
+    - The surface-code distance of 27 was imposed as an input, not selected independently.
+  findings:
+    - aspect: logical_qubits
+      verdict: within_factor
+      note: Same algorithm and hyper-parameters; small differences in circuit construction.
+    - aspect: toffoli_count
+      verdict: within_factor
+      note: Same algorithm and hyper-parameters; small differences in circuit construction.
+    - aspect: physical_qubits
+      verdict: within_factor
+      note: Computed with different magic-state factories and a wider rotation-synthesis search range.
+    - aspect: runtime_seconds
+      verdict: differs
+      note: Computed without a separate reaction time and with different factories.
+    - aspect: code_distance
+      verdict: not_compared
+      note: Set to the paper's value as an input.
+  classical_status: not_solved_classically_at_target_accuracy
+  classical_status_note: Carried over from the 54-orbital record; QAC has not independently assessed classical methods for the 76-orbital active space.
+
+review:
+  prepared_by:
+    - name: Davyn Paringkoan
+      affiliation: PlexTech, UC Berkeley
+      github: davynp
+  reviewed_by: []
+  approved_by: []
+  information_cutoff: "2026-11-12"
+
+links:
+  - label: Publication (DOI)
+    url: https://doi.org/10.1103/pb2g-j9cw
+  - label: Ref. 7 of the paper (Lee et al., PRX Quantum 2, 030305, 2021)
+    url: https://doi.org/10.1103/PRXQuantum.2.030305
+  - label: QDK Chemistry
+    url: https://github.com/microsoft/qdk-chemistry
+  - label: QDK (resource estimator)
+    url: https://github.com/microsoft/qdk
+
+publication:
+  status: review

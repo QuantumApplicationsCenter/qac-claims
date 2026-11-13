@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-06T18:20:33+00:00",
+  "generated_at": "2026-11-13T05:04:08+00:00",
   "build": {
     "tool": "qacclaims",
     "tool_version": "0.1.0"
@@ -19,6 +19,20 @@
       "reproduction_status": "partially_reproduced",
       "path": "claims/femoco-low-2025.json",
       "sha256": "9bda45e141717900e95a186f72a6f02b7f5e7c415ffa4e0efcbe17d147410333"
+    },
+    {
+      "id": "femoco-low-2025-li76",
+      "title": "FeMoCo 76-orbital (Li) ground-state energy resource estimate via spectral amplification and DFTHC (Low et al., 2025)",
+      "short_title": "FeMoCo 76-orbital resource estimate (Low et al. 2025)",
+      "headline": "The ground-state energy of FeMoCo's larger 76-orbital (Li) active space could be estimated with about 4.5 million physical qubits in roughly 8.6 hours.",
+      "domain": "quantum_chemistry",
+      "taxonomy": "application",
+      "claim_type": "literature_resource_estimate",
+      "year": 2025,
+      "publication_status": "review",
+      "reproduction_status": "partially_reproduced",
+      "path": "claims/femoco-low-2025-li76.json",
+      "sha256": "91079e5bcf80c4e107dbe51e6071a45cdf52b8380fc148e5bb618c69c39a6f7e"
     }
   ]
 }

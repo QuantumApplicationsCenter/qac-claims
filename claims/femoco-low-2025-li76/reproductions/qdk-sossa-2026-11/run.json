@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "reproduction_id": "qdk-sossa-2026-11",
+  "executed_at": "2026-11-13T05:04:01+00:00",
+  "executed_by": {
+    "name": "Davyn Paringkoan",
+    "github": "davynp"
+  },
+  "host": {
+    "platform": "macOS-26.2-arm64-arm-64bit",
+    "machine": "arm64"
+  },
+  "duration_seconds": 78.12,
+  "python": "3.10.22",
+  "lockfile": "requirements.lock.txt",
+  "entrypoint": "notebook.ipynb",
+  "entrypoint_sha256": "e18b535bbc3757701f6361fc4221577e7baf56ab87d5c1897c7cdb0e7ebb3a66",
+  "results_sha256": "a57ec126f365ff6f94dfa5d270b7fecbb628a77a0e4ae40fa5add6a29dff0013",
+  "lockfile_sha256": "6ac459eb58dfa640e6fe524e18f22fc3677ff4b94554a72181f3b784bd976ec6",
+  "command": "/Users/davyn/Documents/PlexTech/quantum_claims/qac-claims/.venv/bin/python -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=3600 --ExecutePreprocessor.kernel_name=python3 --output executed.ipynb notebook.ipynb"
+}

@@ -1,0 +1,32 @@
+schema_version: "1.0"
+kind: reported
+claim_id: femoco-low-2025-li76
+figures:
+  logical_qubits:
+    value: 1459
+    unit: count
+    locator: "Table V, [113e, 76o] column"
+  toffoli_count:
+    value: 999000000
+    unit: count
+    locator: "Table V, [113e, 76o] column"
+    qualifier: rounded
+    note: Stated as 9.99e8
+  physical_qubits:
+    value: 4500000
+    unit: count
+    locator: "Sec. V, p. 14"
+    qualifier: rounded
+    note: Stated as 4.5 million
+  runtime_seconds:
+    value: 30960
+    unit: seconds
+    locator: "Sec. V, p. 14"
+    qualifier: approximate
+    note: Stated as 8.6 hours
+  code_distance:
+    value: 27
+    unit: count
+    locator: "Sec. V, p. 14"
+notes:
+  - "Transcribed from Low et al., Phys. Rev. X 15, 041016 (2025): logical counts from Table V ([113e, 76o] column, the Li et al. active space), physical estimate from Section V. Page numbers follow arXiv:2502.15882."
