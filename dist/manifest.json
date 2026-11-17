@@ -1,12 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-06T18:20:33+00:00",
+  "generated_at": "2026-11-17T01:41:08+00:00",
   "build": {
     "tool": "qacclaims",
     "tool_version": "0.1.0"
   },
   "files": {
     "claims/femoco-low-2025.json": "9bda45e141717900e95a186f72a6f02b7f5e7c415ffa4e0efcbe17d147410333",
-    "index.json": "5be7ac0a8eee0a588edacb7dcebaebcf64c7e2e92f77907f7eaf194057e22ac3"
+    "claims/femoco-reiher-2017.json": "9fc436d5c2c9688ffbd39da1383b5cbce25b793da52b40582d89699805b86741",
+    "index.json": "fb67b8a43443016b94ecccd231c11e65f8ed7ba9f0b645c58f5cb88278edc340"
   }
 }

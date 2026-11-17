@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-06T18:20:33+00:00",
+  "generated_at": "2026-11-17T01:41:08+00:00",
   "build": {
     "tool": "qacclaims",
     "tool_version": "0.1.0"
@@ -19,6 +19,20 @@
       "reproduction_status": "partially_reproduced",
       "path": "claims/femoco-low-2025.json",
       "sha256": "9bda45e141717900e95a186f72a6f02b7f5e7c415ffa4e0efcbe17d147410333"
+    },
+    {
+      "id": "femoco-reiher-2017",
+      "title": "FeMoCo ground-state energy resource estimate via Trotter-based phase estimation (Reiher et al., 2017)",
+      "short_title": "FeMoCo resource estimate (Reiher et al. 2017)",
+      "headline": "FeMoCo's ground-state energy could be computed to 0.1 mHa in about 130 days with 111 logical qubits and 1.1 × 10¹⁵ T gates, or about 180 million physical qubits at a 10⁻³ error rate.",
+      "domain": "quantum_chemistry",
+      "taxonomy": "application",
+      "claim_type": "literature_resource_estimate",
+      "year": 2017,
+      "publication_status": "review",
+      "reproduction_status": "partially_reproduced",
+      "path": "claims/femoco-reiher-2017.json",
+      "sha256": "9fc436d5c2c9688ffbd39da1383b5cbce25b793da52b40582d89699805b86741"
     }
   ]
 }

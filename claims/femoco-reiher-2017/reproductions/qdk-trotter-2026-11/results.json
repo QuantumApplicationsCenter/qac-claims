@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "claim_id": "femoco-reiher-2017",
+  "reproduction_id": "qdk-trotter-2026-11",
+  "generated_at": "2026-11-17T01:40:53+00:00",
+  "producer": {
+    "entrypoint": "notebook.ipynb",
+    "cell_tag": "results-export"
+  },
+  "tooling": {
+    "python": "3.10.22",
+    "packages": {
+      "qdk-chemistry": "2.3.0",
+      "qdk": "1.33.1",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3"
+    }
+  },
+  "inputs": {
+    "hamiltonian": {
+      "kind": "molecular_integrals",
+      "orbitals": 54,
+      "electrons": 54,
+      "source_url": "https://raw.githubusercontent.com/microsoft/qdk-chemistry-data/963bf6d226b877fef31c7a856f3f705a46440295/data/hamiltonians/FeMoco-Reiher2017/FeMoco_S0_charge%2B3_orbsRAS24.16_targetCAS54.54_test3.fcidump",
+      "source_sha256": "84f3a34d61cb1552797cc2574159ec4b6efa641c380631fb4f66be654a34940e",
+      "pauli_coefficient_threshold": 1e-12
+    },
+    "target_precision_hartree": 0.0001,
+    "trial_state": "not_modeled",
+    "trotter": {
+      "order": 2,
+      "trotter_number": 166,
+      "trotter_number_reference_accuracy_hartree": 0.0001,
+      "phase_estimation_constant": 1.5708,
+      "synthesis_t_per_rotation_slope": 1.15,
+      "synthesis_t_per_rotation_offset": 9.2,
+      "error_budget_rule": "variance",
+      "error_budget_phase_estimation_hartree": 6.63587e-05,
+      "error_budget_trotter_hartree": 3.28e-05,
+      "error_budget_synthesis_hartree": 1.06e-05,
+      "logical_t_gate_time_ns": 10
+    }
+  },
+  "logical": {
+    "walk_steps": 6861089,
+    "num_qubits": 110,
+    "t_count": 0,
+    "rotation_count": 172959950743891,
+    "rotation_depth": 172959950743891,
+    "ccz_count": 0,
+    "ccix_count": 0,
+    "measurement_count": 0,
+    "toffoli_count": 0,
+    "pauli_terms": 12604410,
+    "rotations_per_step": 25208819,
+    "t_states_per_rotation": 65.886,
+    "t_count_after_synthesis": 11395639314712002,
+    "runtime_seconds_at_logical_t_rate": 113956393.14712001
+  },
+  "diagnostics": {
+    "algorithm_qubits": 109,
+    "one_norm_hartree": 1863.25,
+    "pauli_terms_over_source_term_count": 2.066,
+    "largest_validated_active_space_orbitals": 8,
+    "source_formula_trotter_steps": 6862749,
+    "source_formula_t_states_per_rotation": 64.666,
+    "source_formula_t_count": 5414195627374800,
+    "source_formula_t_count_sum_rule": 5742466453959200,
+    "t_count_over_source_formula_t_count": 2.105,
+    "logical_rate_runtime_years": 3.611,
+    "runtime_years_error_rate_1e_3": 448.9,
+    "runtime_years_error_rate_1e_6": 103.6,
+    "t_factories_error_rate_1e_3": 15,
+    "t_factories_error_rate_1e_6": 17,
+    "t_states_per_rotation_error_rate_1e_3": 34,
+    "t_states_per_rotation_error_rate_1e_6": 34,
+    "logical_cycle_ns_error_rate_1e_3": 2340
+  },
+  "physical": [
+    {
+      "scenario_id": "surface-code-p1e-3",
+      "architecture": {
+        "physical_error_rate": 0.001,
+        "gate_time_ns": 10,
+        "measurement_time_ns": 10
+      },
+      "code": {
+        "family": "surface",
+        "distance": 39,
+        "distance_source": "selected_by_tool",
+        "cycle_time_ns": 60
+      },
+      "factories": "15\u00d7T",
+      "synthesis": "PSSPC with 34 T states per rotation; round-based 15-to-1 T factories; lattice surgery",
+      "physical_qubits": 2721009,
+      "compute_qubits": 757209,
+      "factory_qubits": 1963800,
+      "memory_qubits": 0,
+      "runtime_seconds": 14165419965.924673,
+      "error_budget": 0.01,
+      "achieved_error": 0.00970799
+    },
+    {
+      "scenario_id": "surface-code-p1e-6",
+      "architecture": {
+        "physical_error_rate": 1e-06,
+        "gate_time_ns": 10,
+        "measurement_time_ns": 10
+      },
+      "code": {
+        "family": "surface",
+        "distance": 9,
+        "distance_source": "selected_by_tool",
+        "cycle_time_ns": 60
+      },
+      "factories": "17\u00d7T",
+      "synthesis": "PSSPC with 34 T states per rotation; round-based 15-to-1 T factories; lattice surgery",
+      "physical_qubits": 181529,
+      "compute_qubits": 40089,
+      "factory_qubits": 141440,
+      "memory_qubits": 0,
+      "runtime_seconds": 3268943069.05954,
+      "error_budget": 0.01,
+      "achieved_error": 0.00532853
+    }
+  ]
+}
