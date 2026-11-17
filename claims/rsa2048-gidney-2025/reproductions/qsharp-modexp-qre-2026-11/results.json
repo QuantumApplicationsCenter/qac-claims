@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "claim_id": "rsa2048-gidney-2025",
+  "reproduction_id": "qsharp-modexp-qre-2026-11",
+  "generated_at": "2026-11-17T03:00:26+00:00",
+  "producer": {
+    "entrypoint": "notebook.ipynb",
+    "cell_tag": "results-export"
+  },
+  "tooling": {
+    "python": "3.10.22",
+    "packages": {
+      "qdk": "1.33.1",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3"
+    }
+  },
+  "inputs": {
+    "factoring": {
+      "kind": "rsa",
+      "modulus_bits": 2048,
+      "algorithm": "approx_modexp of Gidney (2025), Appendix A.1, built as one Q# circuit on the RSA-2048 challenge number",
+      "parameters": {
+        "s": 8,
+        "prime_bit_length": 21,
+        "window_w1": 6,
+        "window_w3": 3,
+        "window_w4": 5,
+        "accumulator_length_f": 33,
+        "input_qubits_m": 1280,
+        "mask_bits": 26,
+        "generator": 3,
+        "num_primes": 20979,
+        "residue_system_deviation_log2": -47.70054160279538,
+        "lookup_table_digest_sha256": "88919aee03944d6f996c382dcfef5b482f1d9f686592bdb6dbc56680d0b67bae",
+        "zero_mask_pairs": 317545,
+        "deviant_shot_rate": 0.01250167191028595,
+        "deviant_shot_rate_percent": 1.25,
+        "deviant_shot_rate_actual_wraparound": 0.010938673311293995,
+        "sampled_exponents": 10000,
+        "sampled_deviation_max": 1.9099711689071667e-06,
+        "sampled_deviation_mean": 1.852637895883444e-06,
+        "deviation_bound_epsilon": 3.663415554910898e-05,
+        "additions_per_shot": 10814888.5,
+        "lookups_per_shot": 7605101.5,
+        "phaseups_per_shot": 1594618,
+        "lookup_circuit": "Appendix A.4 power-product lookup",
+        "phaseup_circuit": "Appendix A.3 power-product phaseup",
+        "addition_circuit": "Q# RippleCarryCGIncByLE",
+        "verified_instances": 3
+      }
+    }
+  },
+  "logical": {
+    "num_qubits": 1436,
+    "ccz_count": 6515767508,
+    "ccix_count": 0,
+    "toffoli_count": 6515767508,
+    "toffoli_count_per_shot": 714923280,
+    "shots_expected": 9.113939481204216
+  },
+  "physical": [
+    {
+      "scenario_id": "paper-layout-rebuilt",
+      "architecture": {
+        "physical_error_rate": 0.001,
+        "gate_time_ns": 100,
+        "measurement_time_ns": 500
+      },
+      "code": {
+        "family": "surface",
+        "distance": 25,
+        "distance_source": "selected_by_tool",
+        "cycle_time_ns": 1000
+      },
+      "factories": "6 factories of magic state cultivation followed by 8T-to-CCZ distillation, 150 rounds per CCZ state (Sec. 3.2)",
+      "synthesis": "Toffolis consumed as CCZ states; operation durations bounded at 2 ms per addition, 2 ms per lookup, and 1 ms per phaseup (Sec. 3.2); input register in 2D-yoked cold storage",
+      "physical_qubits": 931664,
+      "compute_qubits": 283920,
+      "factory_qubits": 97344,
+      "memory_qubits": 550400,
+      "runtime_seconds": 371964.3209407519,
+      "runtime_seconds_per_shot": 38434.598,
+      "error_budget": 0.067,
+      "achieved_error": 0.058268278875574175
+    },
+    {
+      "scenario_id": "qre-yoked-cultivation",
+      "architecture": {
+        "physical_error_rate": 0.001,
+        "gate_time_ns": 100,
+        "measurement_time_ns": 500
+      },
+      "code": {
+        "family": "surface",
+        "distance": 23,
+        "distance_source": "selected_by_tool",
+        "cycle_time_ns": 1000
+      },
+      "factories": "2×CCX (8T-to-CCX, GSJ24 Fig. 24) fed by magic state cultivation (GSJ24)",
+      "synthesis": "Toffolis consumed as CCX magic states through lattice surgery (PSSPC); input register held in surface codes yoked by 2D parity checks",
+      "physical_qubits": 734185,
+      "compute_qubits": 368893,
+      "factory_qubits": 21144,
+      "memory_qubits": 344148,
+      "runtime_seconds": 471969.5432649464,
+      "runtime_seconds_per_shot": 49329.70632,
+      "error_budget": 0.067,
+      "achieved_error": 0.04742167277163696
+    },
+    {
+      "scenario_id": "qre-hot-storage-only",
+      "architecture": {
+        "physical_error_rate": 0.001,
+        "gate_time_ns": 100,
+        "measurement_time_ns": 500
+      },
+      "code": {
+        "family": "surface",
+        "distance": 25,
+        "distance_source": "selected_by_tool",
+        "cycle_time_ns": 1000
+      },
+      "factories": "2×CCX (8T-to-CCX, GSJ24 Fig. 24) fed by magic state cultivation (GSJ24)",
+      "synthesis": "Toffolis consumed as CCX magic states through lattice surgery (PSSPC); every qubit in ordinary surface-code patches",
+      "physical_qubits": 3744413,
+      "compute_qubits": 3723269,
+      "factory_qubits": 21144,
+      "memory_qubits": 0,
+      "runtime_seconds": 511200.2971217744,
+      "runtime_seconds_per_shot": 53619.246,
+      "error_budget": 0.067,
+      "achieved_error": 0.04404874992592023
+    }
+  ]
+}

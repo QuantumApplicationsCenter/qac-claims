@@ -1,0 +1,655 @@
+{
+  "schema_version": "1.0",
+  "id": "rsa2048-gidney-2025",
+  "title": "RSA-2048 factoring resource estimate with approximate residue arithmetic, yoked storage, and magic state cultivation (Gidney, 2025)",
+  "short_title": "RSA-2048 resource estimate (Gidney 2025)",
+  "headline": "A 2048-bit RSA integer could be factored in less than a week with less than a million noisy qubits.",
+  "claim_type": "literature_resource_estimate",
+  "domain": "cryptanalysis",
+  "taxonomy": "application",
+  "source": {
+    "type": "preprint",
+    "title": "How to factor 2048 bit RSA integers with less than a million noisy qubits",
+    "authors": [
+      "Craig Gidney"
+    ],
+    "author_list_complete": true,
+    "year": 2025,
+    "arxiv": "2505.15917",
+    "doi": "10.48550/arXiv.2505.15917"
+  },
+  "assertion": {
+    "what_is_claimed": "Factoring a 2048-bit RSA integer with Ekerå–Håstad period finding over approximate residue arithmetic needs about 6.5e9 expected Toffoli gates and 1,399 logical qubits; on a square grid of qubits with nearest-neighbor connections, a 0.1% gate error rate, a 1 µs surface-code cycle, and a 10 µs reaction time, with idle qubits held in yoked surface codes and Toffoli states made by magic state cultivation, this takes less than a million noisy qubits and less than a week.",
+    "workload": {
+      "system": "RSA-2048 modulus (n = 2048 bits), Ekerå–Håstad parameter s = 8",
+      "target_observable": "factors of a 2048-bit RSA integer",
+      "target_precision": {
+        "value": 1e-15,
+        "unit": "dimensionless",
+        "locator": "Sec. 3.2, p. 18",
+        "note": "Factoring has no numerical precision target. This is the paper's target logical error rate per logical qubit round, chosen so a 12-hour shot has a 93.3% chance of no logical error."
+      }
+    },
+    "method": "Ekerå–Håstad period finding with approximate residue (RNS) arithmetic after Chevignard–Fouque–Schrottenloher (2024), costed as additions, table lookups, and phaseups counted from a reference implementation (Tables 3 and 4)",
+    "architecture_assumed": "Surface code at distance 25 for compute and hot storage, surface codes yoked by 2D parity checks for cold storage, and six factories doing magic state cultivation followed by 8T-to-CCZ distillation"
+  },
+  "assumptions_as_reported": {
+    "physical_error_rate": {
+      "value": 0.001,
+      "unit": "dimensionless",
+      "locator": "Abstract, p. 1",
+      "note": "Uniform depolarizing noise, one error per 1000 gates"
+    },
+    "connectivity": {
+      "value": "square grid of qubits with nearest-neighbor connections",
+      "locator": "Abstract, p. 1"
+    },
+    "surface_code_cycle_time": {
+      "value": 1e-06,
+      "unit": "seconds",
+      "locator": "Abstract, p. 1"
+    },
+    "reaction_time": {
+      "value": 1e-05,
+      "unit": "seconds",
+      "locator": "Abstract, p. 1"
+    },
+    "code_distance": {
+      "value": 25,
+      "unit": "count",
+      "locator": "Sec. 3.2, p. 18"
+    },
+    "target_logical_error_per_qubit_round": {
+      "value": 1e-15,
+      "unit": "dimensionless",
+      "locator": "Sec. 3.2, p. 18"
+    },
+    "hot_storage_physical_qubits_per_logical": {
+      "value": 1352,
+      "unit": "count",
+      "locator": "Sec. 3.2, p. 18",
+      "note": "2(d + 1)^2 at d = 25"
+    },
+    "cold_storage_physical_qubits_per_logical": {
+      "value": 430,
+      "unit": "count",
+      "locator": "Sec. 3.2, p. 18 (read from Fig. 6)",
+      "note": "Surface codes yoked by a 2D parity check code"
+    },
+    "ccz_factories": {
+      "value": 6,
+      "unit": "count",
+      "locator": "Sec. 3.2, p. 18"
+    },
+    "cultivated_t_state_error": {
+      "value": 1e-07,
+      "unit": "dimensionless",
+      "locator": "Sec. 3.2, p. 20"
+    },
+    "rounds_per_ccz_state": {
+      "value": 150,
+      "unit": "count",
+      "locator": "Sec. 3.2, p. 20",
+      "note": "Rounded up from 114.7 rounds for slack"
+    },
+    "ekera_hastad_s": {
+      "value": 8,
+      "unit": "count",
+      "locator": "Table 5, n = 2048 row, p. 17"
+    },
+    "prime_bit_length": {
+      "value": 21,
+      "unit": "bits",
+      "locator": "Table 5, n = 2048 row, p. 17"
+    },
+    "window_w1": {
+      "value": 6,
+      "unit": "count",
+      "locator": "Table 5, n = 2048 row, p. 17"
+    },
+    "window_w3": {
+      "value": 3,
+      "unit": "count",
+      "locator": "Table 5, n = 2048 row, p. 17"
+    },
+    "window_w4": {
+      "value": 5,
+      "unit": "count",
+      "locator": "Table 5, n = 2048 row, p. 17"
+    },
+    "accumulator_length_f": {
+      "value": 33,
+      "unit": "bits",
+      "locator": "Table 5, n = 2048 row, p. 17"
+    },
+    "input_qubits_m": {
+      "value": 1280,
+      "unit": "count",
+      "locator": "Table 5, n = 2048 row, p. 17"
+    },
+    "deviant_shot_rate": {
+      "value": 0.0125,
+      "unit": "dimensionless",
+      "locator": "Table 5, n = 2048 row, p. 17",
+      "note": "Stated as 1.25%"
+    },
+    "expected_shots": {
+      "value": 9.2,
+      "unit": "count",
+      "locator": "Table 5, n = 2048 row, p. 17",
+      "note": "(s + 1)/(1 − Pdeviant)/0.99, per the Table 5 caption"
+    },
+    "qec_scheme": {
+      "value": "surface code, with yoked surface codes for cold storage",
+      "locator": "Sec. 3.2, p. 18"
+    }
+  },
+  "assessment": {
+    "reproduction_status": "fully_reproduced",
+    "summary_plain": "QAC built the paper's whole modular exponentiation as one Q# circuit, checked it against the paper's reference implementation, and counted it on the real RSA-2048 instance with every real lookup table: 1,436 logical qubits and 6.52 × 10⁹ expected Toffolis, against the paper's 1,399 and 6.5 × 10⁹. The paper's own layout model, rebuilt and applied to those counts, gives 931,664 physical qubits and 4.3 days, within its bounds.",
+    "what_this_shows": [
+      "The algorithm of Appendix A.1, built as one circuit, computes exactly what the paper's reference implementation computes on every small instance checked, including the phases of a superposed input.",
+      "On the real RSA-2048 instance, with a real residue system and all of its lookup tables, the circuit needs the Toffoli count of Table 5, and the failed-shot rate recomputed for that residue system equals Table 5's.",
+      "Table 5's qubit count is the long-lived registers; the built circuit's peak, with temporary qubits, is a few percent higher.",
+      "The paper's layout and timing model, rebuilt as code and applied to the circuit's own counts, stays under one million qubits and one week; the qubit count uses part of the slack the paper adds.",
+      "The paper's 12.07 hours per shot is more than its own durations give for the Table 5 operation counts, so the runtime claim has extra margin."
+    ],
+    "what_this_does_not_show": [
+      "The physical model takes its component figures from the work the paper cites (yoked cold storage, magic state cultivation, the CCZ factory); they are not re-simulated here.",
+      "The QDK estimator shows that without yoked storage the same counts need several million qubits, so the claim depends on yoked storage performing as projected under the algorithm's workload, which Sec. 3.2 leaves to future work.",
+      "The failed-shot rate keeps the paper's assumption that masking a fraction S of the output costs a fraction S of shots (Assumption 2); the approximation's own error is measured, the masked period finding is not simulated at full size."
+    ],
+    "findings": [
+      {
+        "aspect": "logical_qubits",
+        "verdict": "within_factor",
+        "note": "The built circuit's peak, which includes temporary qubits; Table 5 counts only the long-lived registers."
+      },
+      {
+        "aspect": "toffoli_count",
+        "verdict": "matches",
+        "note": "Counted from the whole circuit on the real instance with the real tables; within a fraction of a percent of Table 5."
+      },
+      {
+        "aspect": "physical_qubits",
+        "verdict": "matches",
+        "note": "The paper's layout model applied to the circuit's counts, below the stated bound; above the paper's 897,864 because the circuit's peak holds more hot qubits."
+      },
+      {
+        "aspect": "runtime_seconds",
+        "verdict": "matches",
+        "note": "The paper's durations applied to the circuit's operation counts, below the stated bound and below the paper's own 4.96 days."
+      },
+      {
+        "aspect": "code_distance",
+        "verdict": "matches",
+        "note": "The smallest distance meeting the paper's per-round target under its Fig. 6 fit."
+      }
+    ],
+    "classical_status": "not_solved_classically_at_target_accuracy",
+    "classical_status_note": "No 2048-bit RSA integer has been publicly factored by classical means."
+  },
+  "review": {
+    "prepared_by": [
+      {
+        "name": "Davyn Paringkoan",
+        "affiliation": "PlexTech, UC Berkeley",
+        "github": "davynp"
+      }
+    ],
+    "reviewed_by": [],
+    "approved_by": [],
+    "information_cutoff": "2026-11-16"
+  },
+  "publication": {
+    "status": "review"
+  },
+  "links": [
+    {
+      "label": "Publication (arXiv)",
+      "url": "https://arxiv.org/abs/2505.15917"
+    },
+    {
+      "label": "Code and assets (Zenodo)",
+      "url": "https://doi.org/10.5281/zenodo.15347487"
+    },
+    {
+      "label": "Gidney and Ekerå (2021), the earlier 20-million-qubit estimate",
+      "url": "https://doi.org/10.22331/q-2021-04-15-433"
+    },
+    {
+      "label": "Chevignard, Fouque, and Schrottenloher (2024), approximate residue arithmetic",
+      "url": "https://eprint.iacr.org/2024/222"
+    },
+    {
+      "label": "Gidney, Newman, Brooks, and Jones (2025), yoked surface codes",
+      "url": "https://doi.org/10.1038/s41467-025-59714-1"
+    },
+    {
+      "label": "Gidney, Shutty, and Jones (2024), magic state cultivation",
+      "url": "https://arxiv.org/abs/2409.17595"
+    }
+  ],
+  "reported": {
+    "figures": {
+      "logical_qubits": {
+        "value": 1399,
+        "unit": "count",
+        "locator": "Table 5, n = 2048 row, p. 17",
+        "note": "Counts the long-lived registers only: the paper's published estimator computes it as m + (ℓ + len m) + ℓ + f + max(ℓ, f, ℓ + len m). Table 4 also counts the temporary qubits of additions and lookups, so its peak is higher. Sec. 3.2 (p. 18) says the maximum is 1409, reached during loop4 when m + 3f + 2ℓ + len m qubits are active; with the stated parameters that expression gives 1432, and the loop1 row of Table 4 gives 1409."
+      },
+      "toffoli_count": {
+        "value": 6500000000,
+        "unit": "count",
+        "locator": "Table 5, n = 2048 row, p. 17",
+        "qualifier": "rounded",
+        "note": "Stated as 6.5e+09. Expected Toffolis per factoring, not per shot. The paper's published estimator multiplies the per-shot count by (s + 1)/(1 − Pdeviant), about 9.11 shots; the Table 5 caption defines E(shots) = 9.2, which also includes a /0.99 for postprocessing."
+      },
+      "physical_qubits": {
+        "value": 1000000,
+        "unit": "count",
+        "locator": "Abstract, p. 1; Sec. 3.2, p. 20",
+        "qualifier": "upper_bound",
+        "note": "Stated as \"less than a million noisy qubits\". Sec. 3.2 (p. 20) totals the layout at 897,864 physical qubits and reports one million to leave slack for cold-storage streaming."
+      },
+      "runtime_seconds": {
+        "value": 604800,
+        "unit": "seconds",
+        "locator": "Abstract, p. 1; Sec. 3.2, p. 20",
+        "qualifier": "upper_bound",
+        "note": "Stated as \"less than a week\". Sec. 3.2 (p. 20) derives 12.07 hours per shot, an expected 4.63 days (the text multiplies by 9.1 shots), and 4.96 days after dividing by the 93.3% chance of a shot having no logical error, which it rounds up to a week."
+      },
+      "code_distance": {
+        "value": 25,
+        "unit": "count",
+        "locator": "Sec. 3.2, p. 18",
+        "note": "Distance of the hot-storage and compute surface-code patches."
+      }
+    },
+    "notes": [
+      "Transcribed from Gidney, How to factor 2048 bit RSA integers with less than a million noisy qubits, arXiv:2505.15917v1 (2025). Page numbers follow the arXiv PDF.",
+      "The issue asks for the physical-qubit and runtime figures to be recorded as the upper bounds the abstract states; the derived values (897,864 qubits, 4.96 days) are kept in the notes above."
+    ]
+  },
+  "reproductions": [
+    {
+      "id": "qsharp-modexp-qre-2026-11",
+      "tool": {
+        "name": "A Q# circuit for the whole modular exponentiation on the real RSA-2048 instance, the paper's physical model rebuilt as code, and the QDK resource estimator",
+        "role": "The notebook builds the paper's approximate modular exponentiation (Appendix A.1) as one Q# circuit, with the optimized lookup of Appendix A.4 and the phaseup of Appendix A.3, and checks it by simulation on small instances. It then finds a real residue number system for the RSA-2048 challenge number, builds every lookup table of the real circuit with an independent implementation of the paper's precomputation (checked against the paper's published code on the small instances), and counts the circuit at full size: the QDK traces each prime's iteration once with estimate caching, and the Toffoli count of every lookup is corrected to its real table, with the correction checked against Q# on real tables and on whole iterations. It recomputes the failed-shot rate for the real residue system and measures the approximation's actual error on random exponents. For physical costs it applies the layout and timing model of Sec. 3.2, rebuilt as code, to the circuit's own counts, and cross-checks with the QDK resource estimator.",
+        "url": "https://github.com/microsoft/qdk"
+      },
+      "headline_scenario": "paper-layout-rebuilt",
+      "scenarios": {
+        "paper-layout-rebuilt": {
+          "label": "The paper's layout and timing model, rebuilt",
+          "description": "Section 3.2's model as code, applied to the circuit's counts. Hot patches use the smallest distance whose Fig. 6 fit reaches 1e-15 per round; the input register is in 2D-yoked cold storage at Fig. 6's 430 physical qubits per logical qubit; every other qubit at the circuit's peak is hot; a 7 by 18 compute region holds six cultivation-plus-8T-to-CCZ factories and workspace. The model checks the paper's factory period and per-operation duration bounds against the circuit's largest operations, then multiplies the bounds by the circuit's operation counts. As in the paper, the reaction time is covered by the slack in those bounds rather than modeled separately. The comparison table uses this scenario. The architecture's gate and measurement times are recorded for the schema; this model does not use them.",
+          "references": [
+            {
+              "label": "Gidney, Newman, Brooks, and Jones (2025), yoked surface codes",
+              "url": "https://doi.org/10.1038/s41467-025-59714-1"
+            },
+            {
+              "label": "Gidney, Shutty, and Jones (2024), magic state cultivation",
+              "url": "https://arxiv.org/abs/2409.17595"
+            }
+          ]
+        },
+        "qre-yoked-cultivation": {
+          "label": "QDK resource estimator, yoked cold storage",
+          "description": "An independent physical model of the same counts. The input register is declared as memory and held in surface codes yoked by two-dimensional parity checks; the other qubits at the circuit's peak are compute qubits. Toffoli states come from magic state cultivation followed by the 8T-to-CCX factory of Fig. 24 of Gidney, Shutty, and Jones (2024). The estimator chooses code distances and factory counts and uses its own timing."
+        },
+        "qre-hot-storage-only": {
+          "label": "QDK resource estimator, ordinary surface-code storage only",
+          "description": "The same estimator and logical counts, with every qubit in ordinary surface-code patches and no yoked storage. It shows how much of the physical claim rests on yoked storage."
+        }
+      },
+      "figures": {
+        "logical_qubits": {
+          "value": 1436,
+          "unit": "count",
+          "source": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/results.json#/logical/num_qubits"
+        },
+        "toffoli_count": {
+          "value": 6515767508,
+          "unit": "count",
+          "source": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/results.json#/logical/toffoli_count"
+        },
+        "physical_qubits": {
+          "value": 931664,
+          "unit": "count",
+          "source": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/results.json#/physical/0/physical_qubits"
+        },
+        "runtime_seconds": {
+          "value": 371964.3209407519,
+          "unit": "seconds",
+          "source": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/results.json#/physical/0/runtime_seconds"
+        },
+        "code_distance": {
+          "value": 25,
+          "unit": "count",
+          "source": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/results.json#/physical/0/code/distance"
+        }
+      },
+      "deviations_from_reported": [
+        {
+          "aspect": "Primes in the residue number system",
+          "reported": "The number of primes the paper's estimator derives from the window count and the modulus size",
+          "used": "A real residue system for the RSA-2048 challenge number, found and verified against Eq. 17",
+          "why": "A real system must hold the full product and have a wraparound deviation below 2^-f, and the primes that divide a table1 multiplier must be excluded. That takes slightly more primes than the estimator assumes, which raises the Toffoli count slightly."
+        },
+        {
+          "aspect": "Measurement-triggered comparisons",
+          "reported": "In loop4 and unloop3, a comparison runs only when an X-basis measurement returns one",
+          "used": "The circuit follows the measurement outcome when simulated; the full-size count is the mean of a count where these comparisons always run and one where they never do",
+          "why": "The outcomes are uniformly random, so each comparison runs with probability exactly one half."
+        },
+        {
+          "aspect": "Addition circuit",
+          "reported": "Additions cost n Toffolis on n-bit registers in the paper's estimator; Sec. 3.1 cites Gidney (2018)",
+          "used": "The Q# library's version of that adder (RippleCarryCGIncByLE), which costs n − 1 Toffolis; comparisons use the same adder",
+          "why": "It is the adder the paper cites, as the QDK provides it."
+        },
+        {
+          "aspect": "Lookup and phaseup cost",
+          "reported": "2^a − a − 1 Toffolis per lookup and about the square root of 2^a per phaseup (Sec. 3.1)",
+          "used": "The built circuits, counted on the real tables: power products cost 2^k − k − 1 Toffolis for each half of the address, and a lookup saves one Toffoli for every pair of power products whose output mask is zero in the real table",
+          "why": "The circuits are built and counted rather than estimated. The paper's published estimator evaluates slightly different expressions for lookups and phaseups, which accounts for part of the small difference from Table 5."
+        },
+        {
+          "aspect": "Peak logical qubits",
+          "reported": "Table 5 gives the long-lived registers; Sec. 3.2 gives a slightly different peak",
+          "used": "The circuit's own peak, which also counts the temporary qubits of additions, lookups, and comparisons",
+          "why": "The peak of the built circuit is the number the machine must hold."
+        },
+        {
+          "aspect": "Hot logical qubits in the layout",
+          "reported": "131 hot logical qubits during loop4 (Sec. 3.2), from Table 4",
+          "used": "Every qubit at the circuit's peak outside the input register",
+          "why": "The built circuit's peak holds a few more temporary qubits than Sec. 3.2 places in hot storage, which adds hot patches to the layout."
+        },
+        {
+          "aspect": "Runtime per shot",
+          "reported": "12.07 hours per shot (Sec. 3.2)",
+          "used": "The paper's duration bounds (2 ms per addition, 2 ms per lookup, 1 ms per phaseup) multiplied by the circuit's own operation counts",
+          "why": "Section 3.2 says the runtime comes from these durations and Table 3's tallies, but for the Table 5 row they give a shorter time per shot, and so does the paper's published estimator. The 12.07 hours appears to come from a different parameter set, so the rebuilt model is somewhat faster than the paper states."
+        },
+        {
+          "aspect": "Routing and slack",
+          "reported": "One hundred thousand qubits of slack added to the layout's total for the reported one million",
+          "used": "The layout's total without slack",
+          "why": "The slack is a judgment the paper adds on top of its estimate; the record compares against the stated upper bounds."
+        },
+        {
+          "aspect": "Estimator scenarios",
+          "reported": "Six factories, distance 25, and a hand-derived schedule with a 10 µs reaction time",
+          "used": "In the two estimator scenarios, the estimator's own factory models, distances chosen to fit the per-shot error budget, and its own timing, with no separate reaction time",
+          "why": "They are an independent check on the rebuilt layout, not a copy of it.",
+          "references": [
+            {
+              "label": "Gidney, Shutty, and Jones (2024), magic state cultivation",
+              "url": "https://arxiv.org/abs/2409.17595"
+            }
+          ]
+        }
+      ],
+      "interpretation": {
+        "label": "consistent_with_caveats",
+        "statement": "The paper's modular exponentiation, built as one circuit with the optimized lookup it assumes, computes exactly what the paper's reference implementation computes on every small instance checked, phases included. On the real RSA-2048 instance, with a real residue system and every real lookup table, it needs the Toffoli count of Table 5 to within a fraction of a percent, and a peak qubit count a few percent above Table 5, because the peak includes temporary qubits. The failed-shot rate recomputed for the real residue system equals Table 5's, and the approximation's measured error stays far inside the bound. The paper's own layout and timing model, applied to the circuit's counts, stays under one million qubits and one week, with less room to spare on qubits than the paper's slack suggests and more on time. The physical claim rests on component figures the paper takes from cited work, above all yoked cold storage, which the QDK estimator shows is what keeps the count under a million."
+      },
+      "notes": [
+        "The small instances in test_vectors/ were generated with the paper's published code (Zenodo, doi 10.5281/zenodo.15347487, CC BY 4.0): its precomputation of the residue number system and lookup tables, and the outputs of its Appendix A.1 reference implementation. They check the circuit and the independent precomputation; the full-size work does not use the published code.",
+        "The failed-shot rate is the paper's bound S + ε/S (Eq. 43) recomputed for the real residue system, with ε from the number of truncated additions and the wraparound gap. The measured deviation on random exponents is a near-constant offset well below ε; the record keeps the bound, as Table 5 does.",
+        "The expected number of shots is (s + 1) / (1 − failed-shot rate), the factor behind Table 5's Toffoli column; the caption's 9.2 also divides by the 99 percent post-processing success rate.",
+        "The rebuilt layout takes the paper's component figures as inputs, each from the work it cites: the Fig. 6 fits for ordinary and yoked surface-code storage (Gidney, Newman, Brooks, and Jones 2025), the spacetime volume of magic state cultivation and the 8T-to-CCZ factory (Gidney, Shutty, and Jones 2024), and the error suppression of 8T-to-CCZ distillation (Jones 2013).",
+        "For the estimator scenarios, the notebook converts one shot to a full factoring by multiplying by the expected number of shots and dividing by the probability that a shot has no logical error, as Sec. 3.2 does."
+      ],
+      "results": {
+        "schema_version": "1.0",
+        "claim_id": "rsa2048-gidney-2025",
+        "reproduction_id": "qsharp-modexp-qre-2026-11",
+        "generated_at": "2026-11-17T03:00:26+00:00",
+        "producer": {
+          "entrypoint": "notebook.ipynb",
+          "cell_tag": "results-export"
+        },
+        "tooling": {
+          "python": "3.10.22",
+          "packages": {
+            "qdk": "1.33.1",
+            "numpy": "2.2.6",
+            "pandas": "2.3.3"
+          }
+        },
+        "inputs": {
+          "factoring": {
+            "kind": "rsa",
+            "modulus_bits": 2048,
+            "algorithm": "approx_modexp of Gidney (2025), Appendix A.1, built as one Q# circuit on the RSA-2048 challenge number",
+            "parameters": {
+              "s": 8,
+              "prime_bit_length": 21,
+              "window_w1": 6,
+              "window_w3": 3,
+              "window_w4": 5,
+              "accumulator_length_f": 33,
+              "input_qubits_m": 1280,
+              "mask_bits": 26,
+              "generator": 3,
+              "num_primes": 20979,
+              "residue_system_deviation_log2": -47.70054160279538,
+              "lookup_table_digest_sha256": "88919aee03944d6f996c382dcfef5b482f1d9f686592bdb6dbc56680d0b67bae",
+              "zero_mask_pairs": 317545,
+              "deviant_shot_rate": 0.01250167191028595,
+              "deviant_shot_rate_percent": 1.25,
+              "deviant_shot_rate_actual_wraparound": 0.010938673311293995,
+              "sampled_exponents": 10000,
+              "sampled_deviation_max": 1.9099711689071667e-06,
+              "sampled_deviation_mean": 1.852637895883444e-06,
+              "deviation_bound_epsilon": 3.663415554910898e-05,
+              "additions_per_shot": 10814888.5,
+              "lookups_per_shot": 7605101.5,
+              "phaseups_per_shot": 1594618,
+              "lookup_circuit": "Appendix A.4 power-product lookup",
+              "phaseup_circuit": "Appendix A.3 power-product phaseup",
+              "addition_circuit": "Q# RippleCarryCGIncByLE",
+              "verified_instances": 3
+            }
+          }
+        },
+        "logical": {
+          "num_qubits": 1436,
+          "ccz_count": 6515767508,
+          "ccix_count": 0,
+          "toffoli_count": 6515767508,
+          "toffoli_count_per_shot": 714923280,
+          "shots_expected": 9.113939481204216
+        },
+        "physical": [
+          {
+            "scenario_id": "paper-layout-rebuilt",
+            "architecture": {
+              "physical_error_rate": 0.001,
+              "gate_time_ns": 100,
+              "measurement_time_ns": 500
+            },
+            "code": {
+              "family": "surface",
+              "distance": 25,
+              "distance_source": "selected_by_tool",
+              "cycle_time_ns": 1000
+            },
+            "factories": "6 factories of magic state cultivation followed by 8T-to-CCZ distillation, 150 rounds per CCZ state (Sec. 3.2)",
+            "synthesis": "Toffolis consumed as CCZ states; operation durations bounded at 2 ms per addition, 2 ms per lookup, and 1 ms per phaseup (Sec. 3.2); input register in 2D-yoked cold storage",
+            "physical_qubits": 931664,
+            "compute_qubits": 283920,
+            "factory_qubits": 97344,
+            "memory_qubits": 550400,
+            "runtime_seconds": 371964.3209407519,
+            "runtime_seconds_per_shot": 38434.598,
+            "error_budget": 0.067,
+            "achieved_error": 0.058268278875574175
+          },
+          {
+            "scenario_id": "qre-yoked-cultivation",
+            "architecture": {
+              "physical_error_rate": 0.001,
+              "gate_time_ns": 100,
+              "measurement_time_ns": 500
+            },
+            "code": {
+              "family": "surface",
+              "distance": 23,
+              "distance_source": "selected_by_tool",
+              "cycle_time_ns": 1000
+            },
+            "factories": "2×CCX (8T-to-CCX, GSJ24 Fig. 24) fed by magic state cultivation (GSJ24)",
+            "synthesis": "Toffolis consumed as CCX magic states through lattice surgery (PSSPC); input register held in surface codes yoked by 2D parity checks",
+            "physical_qubits": 734185,
+            "compute_qubits": 368893,
+            "factory_qubits": 21144,
+            "memory_qubits": 344148,
+            "runtime_seconds": 471969.5432649464,
+            "runtime_seconds_per_shot": 49329.70632,
+            "error_budget": 0.067,
+            "achieved_error": 0.04742167277163696
+          },
+          {
+            "scenario_id": "qre-hot-storage-only",
+            "architecture": {
+              "physical_error_rate": 0.001,
+              "gate_time_ns": 100,
+              "measurement_time_ns": 500
+            },
+            "code": {
+              "family": "surface",
+              "distance": 25,
+              "distance_source": "selected_by_tool",
+              "cycle_time_ns": 1000
+            },
+            "factories": "2×CCX (8T-to-CCX, GSJ24 Fig. 24) fed by magic state cultivation (GSJ24)",
+            "synthesis": "Toffolis consumed as CCX magic states through lattice surgery (PSSPC); every qubit in ordinary surface-code patches",
+            "physical_qubits": 3744413,
+            "compute_qubits": 3723269,
+            "factory_qubits": 21144,
+            "memory_qubits": 0,
+            "runtime_seconds": 511200.2971217744,
+            "runtime_seconds_per_shot": 53619.246,
+            "error_budget": 0.067,
+            "achieved_error": 0.04404874992592023
+          }
+        ]
+      },
+      "run": {
+        "schema_version": "1.0",
+        "reproduction_id": "qsharp-modexp-qre-2026-11",
+        "executed_at": "2026-11-17T03:00:29+00:00",
+        "executed_by": {
+          "name": "Davyn Paringkoan",
+          "github": "davynp"
+        },
+        "host": {
+          "platform": "macOS-26.2-arm64-arm-64bit",
+          "machine": "arm64"
+        },
+        "duration_seconds": 661.56,
+        "python": "3.10.22",
+        "lockfile": "requirements.lock.txt",
+        "entrypoint": "notebook.ipynb",
+        "entrypoint_sha256": "233bf6c3ddf95c9e1c64944dac0f75e68b6f559ab3f114fb5783420bf5095bf9",
+        "results_sha256": "2548ad4148ca3bff5e35beb8c3cf5adf647e2b6481a807fff5be5151d9361fc0",
+        "lockfile_sha256": "6ac459eb58dfa640e6fe524e18f22fc3677ff4b94554a72181f3b784bd976ec6",
+        "command": "/Users/davyn/Documents/PlexTech/quantum_claims/qac-claims-rsa-repro/.venv/bin/python -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=5400 --ExecutePreprocessor.kernel_name=python3 --output executed.ipynb notebook.ipynb"
+      },
+      "artifacts": {
+        "code": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/notebook.ipynb",
+        "results": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/results.json",
+        "run": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/run.json",
+        "lockfile": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/requirements.lock.txt"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "aspect": "logical_qubits",
+      "unit": "count",
+      "reported": 1399,
+      "reproduced": 1436,
+      "ratio": 1.0264,
+      "reproduction_id": "qsharp-modexp-qre-2026-11"
+    },
+    {
+      "aspect": "toffoli_count",
+      "unit": "count",
+      "reported": 6500000000,
+      "reproduced": 6515767508,
+      "ratio": 1.0024,
+      "reproduction_id": "qsharp-modexp-qre-2026-11"
+    },
+    {
+      "aspect": "physical_qubits",
+      "unit": "count",
+      "reported": 1000000,
+      "reproduced": 931664,
+      "ratio": 0.9317,
+      "reproduction_id": "qsharp-modexp-qre-2026-11"
+    },
+    {
+      "aspect": "runtime_seconds",
+      "unit": "seconds",
+      "reported": 604800,
+      "reproduced": 371964.3209407519,
+      "ratio": 0.615,
+      "reproduction_id": "qsharp-modexp-qre-2026-11"
+    },
+    {
+      "aspect": "code_distance",
+      "unit": "count",
+      "reported": 25,
+      "reproduced": 25,
+      "ratio": 1.0,
+      "reproduction_id": "qsharp-modexp-qre-2026-11"
+    }
+  ],
+  "provenance": {
+    "build": {
+      "tool": "qacclaims",
+      "tool_version": "0.1.0"
+    },
+    "sources": [
+      {
+        "path": "claims/rsa2048-gidney-2025/claim.yaml",
+        "sha256": "408ef663ec8a4d4d2e2629529f97aa88bd70bfe1336cd83ef74f370875e968ad"
+      },
+      {
+        "path": "claims/rsa2048-gidney-2025/estimates/reported.yaml",
+        "sha256": "ac8641732f6420013bf3772712e262c1279568200c83475e638b9f7fd7ddb269"
+      },
+      {
+        "path": "claims/rsa2048-gidney-2025/estimates/reproduction-qsharp-modexp-qre-2026-11.yaml",
+        "sha256": "e2972cc7916f3754d573d2678af030aa042b8981af28bd41ce4fe938cc80a1eb"
+      },
+      {
+        "path": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/results.json",
+        "sha256": "2548ad4148ca3bff5e35beb8c3cf5adf647e2b6481a807fff5be5151d9361fc0"
+      },
+      {
+        "path": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/run.json",
+        "sha256": "2d3f7b960511a3946d189d9e0ef62099f03a0c381b3b69482b7884eecbfb5f3a"
+      },
+      {
+        "path": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/notebook.ipynb",
+        "sha256": "233bf6c3ddf95c9e1c64944dac0f75e68b6f559ab3f114fb5783420bf5095bf9"
+      },
+      {
+        "path": "claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/requirements.lock.txt",
+        "sha256": "6ac459eb58dfa640e6fe524e18f22fc3677ff4b94554a72181f3b784bd976ec6"
+      },
+      {
+        "path": "claims/rsa2048-gidney-2025/narrative.md",
+        "sha256": "385672b7308892aa28dabb5eaa2f7f2d444153d4402247c73744675cfd7bbefe"
+      }
+    ]
+  },
+  "narrative_markdown": "# Reproducing the RSA-2048 resource estimate of Gidney (2025)\n\n*Davyn Paringkoan, PlexTech at UC Berkeley.*\n*Numbers in this page are rendered from the claim record; the record's numbers come from the executed notebook in `reproductions/qsharp-modexp-qre-2026-11/`.*\n\n## The claim\n\n[Gidney (2025)](https://arxiv.org/abs/2505.15917) estimates the cost of factoring a 2048-bit\nRSA integer on a surface-code quantum computer, under the same physical assumptions as the earlier\n[Gidney and Ekerå (2021)](https://doi.org/10.22331/q-2021-04-15-433) estimate of 20 million qubits.\nRead literally, the paper claims:\n\n> A 2048-bit RSA integer could be factored in less than a week with less than a million noisy qubits.\n\nTwo layers of numbers sit behind that sentence.\n\n**Logical counts.** The algorithm does Ekerå–Håstad period finding with approximate residue\narithmetic, following [Chevignard, Fouque, and Schrottenloher (2024)](https://eprint.iacr.org/2024/222).\nNearly all of its work is additions, table lookups, and \"phaseups\", counted from a reference\nimplementation in Tables 3 and 4 of the paper. With the parameters the paper highlights for\nRSA-2048 (s = 8, prime length\nℓ = 21, windows\nw1 = 6, w3 = 3,\nw4 = 5, accumulator length\nf = 33, and\nm = 1,280 input qubits), Table 5 gives\n1,399 logical qubits and\n6.5 × 10⁹ expected Toffoli gates per factoring, over an\nexpected 9.2 shots.\n\n**Physical resources.** The layout splits the machine into compute, hot storage, and cold storage.\nHot storage and compute use distance-25 surface-code\npatches (1,352 physical\nqubits per logical qubit). Cold storage holds the idle input qubits in\n[yoked surface codes](https://doi.org/10.1038/s41467-025-59714-1) at about\n430 physical qubits per\nlogical qubit. 6 factories make Toffoli states with\n[magic state cultivation](https://arxiv.org/abs/2409.17595) followed by 8T-to-CCZ distillation.\nSection 3.2 adds this up to 897,864 physical qubits and 4.96 days, which the abstract reports as\nfewer than 1 million qubits and less than a week.\n\n## What QAC did\n\nThe [notebook](https://github.com/QuantumApplicationsCenter/qac-claims/blob/main/claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/notebook.ipynb)\nbuilds the algorithm as a circuit, runs it on the real RSA-2048 instance, and rebuilds the paper's\nphysical model.\n\n**The whole modular exponentiation as one circuit.** Appendix A.1 of the paper gives a reference\nimplementation of the algorithm, `approx_modexp`, as a sequence of additions, table lookups,\ncomparisons, and \"phaseups\" over seven subroutines. We built it operation for operation as one Q#\ncircuit (`modexp.qs`), including the phase corrections that measurement-based uncomputation of\nlookups leaves behind. The lookups are the optimized ones the paper assumes (Appendix A.4: power\nproducts of the two halves of the address, then one multi-target Toffoli per pair), and the phaseups\nare the construction of Appendix A.3. Additions and comparisons use the library's version of the adder\nSection 3.1 cites. On 3\nsmall instances, with 32-bit and 100-bit moduli, the circuit's output equals the paper's reference\nimplementation for every exponent tried, and every temporary qubit is released in |0⟩. With the\nexponent and the mask in superposition, the final state matches the expected one amplitude by\namplitude, which only happens if every phase correction is right; a deliberately broken variant fails\nthe same check.\n\n**The real instance.** The circuit needs a residue number system: small primes whose product is large\nenough to hold the computation and, modulo N, almost zero (Eq. 17). We wrote our own version of the\npaper's classical precomputation, checked that it rebuilds the published code's tables exactly on the\nsmall instances, and used it to find a residue system for the RSA-2048 challenge number:\n20,979 primes of\n21 bits, slightly more than the paper's estimator\nassumes. It then builds every lookup table the circuit uses on them, several hundred million entries.\n\n**Logical counts.** We counted the circuit with the Table 5 parameters on those primes. Each prime's\niteration is traced once and accounted for every prime, and each lookup's Toffoli count is then\ncorrected to its real table, since a lookup saves a Toffoli wherever its table makes a pair of address\nproducts irrelevant. Both steps are checked against Q#: on tens of thousands of real tables, and on whole\niterations built with real tables. One shot takes\n7.15 × 10⁸ Toffolis and, over\n9.11394 expected shots, a factoring takes\n6.52 × 10⁹, 1.00×\nthe Table 5 value. The circuit's peak is 1,436 logical\nqubits, 3% above Table 5, which counts only the\nlong-lived registers.\n\n**The failed-shot rate.** Masking and approximate arithmetic make some shots fail. The paper bounds\nthe rate by S + ε/S (Eq. 43), where S is the masked fraction of the output and ε bounds the\napproximation's error. Recomputed for the real residue system, the bound gives\n1.25%, the rate behind\nTable 5's shot count. Running the approximate arithmetic on\n10,000 random exponents shows\nits actual error is a nearly constant offset, at most\n1.91 × 10⁻⁶ of N, well\ninside the bound's 3.66 × 10⁻⁵.\n\n**Physical resources: the paper's model, rebuilt.** Section 3.2 derives the physical cost from a\nlayout and a timing model, which we rebuilt as code (`physical_layout.py`) and applied to the circuit's\ncounts. Hot patches use distance 25, the smallest that\nreaches the paper's 10⁻¹⁵ per round under its Fig. 6 fit. The input register sits in yoked cold\nstorage. Every other qubit at the circuit's peak is hot, next to a compute region of six\ncultivation-plus-distillation factories and workspace. The model checks the paper's 150 rounds per CCZ\nstate and its per-operation duration bounds against the circuit's largest operations. It then\nmultiplies those bounds by the circuit's\n10.81 million additions,\n7.61 million lookups, and\n1.59 million phaseups per shot.\nThe result is 931,664 physical qubits,\n10.7 hours per shot, and\n4.3 days per factoring.\n\n**An independent check.** The resource estimator in the [QDK](https://github.com/microsoft/qdk)\n(version 1.33.1) costs the same counts with its own\ncultivation, factory, and yoked-storage models, chooses its own distances, and uses its own timing. It\nneeds 0.73 million physical qubits and\n5.5 days. Without yoked storage, keeping every\nqubit in ordinary surface-code patches, it needs\n3.74 million.\n\n## How to read the comparison\n\nThe Toffoli count agrees with Table 5 to a fraction of a percent\n(1.00×), and the peak qubit count is\n3% higher because it includes temporary qubits.\nThe paper reports its physical cost as bounds, fewer than\n1 million qubits and less than a week, and the rebuilt\nmodel falls inside both, at 0.93× and\n0.6× of the bounds.\n\nTwo details differ from Section 3.2's own numbers. The rebuilt layout needs more qubits than the\npaper's 897,864, because the built circuit's peak holds more hot qubits than Section 3.2 counts, so it\nuses part of the hundred thousand qubits of slack the paper adds before rounding to a million. And it\nruns faster than the paper's 12.07 hours per shot: the paper's own durations applied to the circuit's\noperation counts give 10.7 hours. The\npaper's published estimator gives a similar figure for the Table 5 row, so the 12.07 hours looks like it\ncame from a different parameter set.\n\n## What this does not show, and what comes next\n\n- The physical model takes its component figures from the work the paper cites, as the paper does:\n  the storage fits of Fig. 6, the cost of magic state cultivation, and the 8T-to-CCZ factory. They are\n  not re-simulated here.\n- The physical claim depends on yoked storage: without it, the estimator needs several times more\n  qubits. Section 3.2 leaves detailed simulation of cold storage under the algorithm's workload as\n  future work, and so does this reproduction.\n- The failed-shot rate keeps the paper's assumption that a mask covering a fraction S of the output\n  costs about a fraction S of shots (Assumption 2). The approximation's own error is measured, but\n  masked period finding is not simulated at this size.\n\nThe small test instances were generated with the paper's published code and data on\n[Zenodo](https://doi.org/10.5281/zenodo.15347487) (CC BY 4.0): its precomputation and the\noutputs of its reference implementation. They check the circuit and our own precomputation; the\nfull-size work does not use the published code.\n\n## Reproducing this result\n\nThe [notebook](https://github.com/QuantumApplicationsCenter/qac-claims/blob/main/claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/notebook.ipynb) runs in about 662 seconds on an 11-core laptop, in the\nenvironment pinned by `requirements.lock.txt` (Python 3.10.22).\nFrom a checkout of this repository:\n\n```bash\npython3.10 -m venv .venv && source .venv/bin/activate\npip install -r claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11/requirements.lock.txt\npip install -e \".[execute]\"\nqacclaims execute claims/rsa2048-gidney-2025/reproductions/qsharp-modexp-qre-2026-11\n```\n\nThe last command re-executes the notebook and reports any difference from the committed `results.json`.\n"
+}

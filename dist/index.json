@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-06T18:20:33+00:00",
+  "generated_at": "2026-11-17T03:00:39+00:00",
   "build": {
     "tool": "qacclaims",
     "tool_version": "0.1.0"
@@ -19,6 +19,20 @@
       "reproduction_status": "partially_reproduced",
       "path": "claims/femoco-low-2025.json",
       "sha256": "9bda45e141717900e95a186f72a6f02b7f5e7c415ffa4e0efcbe17d147410333"
+    },
+    {
+      "id": "rsa2048-gidney-2025",
+      "title": "RSA-2048 factoring resource estimate with approximate residue arithmetic, yoked storage, and magic state cultivation (Gidney, 2025)",
+      "short_title": "RSA-2048 resource estimate (Gidney 2025)",
+      "headline": "A 2048-bit RSA integer could be factored in less than a week with less than a million noisy qubits.",
+      "domain": "cryptanalysis",
+      "taxonomy": "application",
+      "claim_type": "literature_resource_estimate",
+      "year": 2025,
+      "publication_status": "review",
+      "reproduction_status": "fully_reproduced",
+      "path": "claims/rsa2048-gidney-2025.json",
+      "sha256": "ba909a8770933557e588931825fb61757c7ba5ba659cba36694ec1dbd3887afe"
     }
   ]
 }
