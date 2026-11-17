@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "reproduction_id": "qsharp-modexp-qre-2026-11",
+  "executed_at": "2026-11-17T03:00:29+00:00",
+  "executed_by": {
+    "name": "Davyn Paringkoan",
+    "github": "davynp"
+  },
+  "host": {
+    "platform": "macOS-26.2-arm64-arm-64bit",
+    "machine": "arm64"
+  },
+  "duration_seconds": 661.56,
+  "python": "3.10.22",
+  "lockfile": "requirements.lock.txt",
+  "entrypoint": "notebook.ipynb",
+  "entrypoint_sha256": "233bf6c3ddf95c9e1c64944dac0f75e68b6f559ab3f114fb5783420bf5095bf9",
+  "results_sha256": "2548ad4148ca3bff5e35beb8c3cf5adf647e2b6481a807fff5be5151d9361fc0",
+  "lockfile_sha256": "6ac459eb58dfa640e6fe524e18f22fc3677ff4b94554a72181f3b784bd976ec6",
+  "command": "/Users/davyn/Documents/PlexTech/quantum_claims/qac-claims-rsa-repro/.venv/bin/python -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=5400 --ExecutePreprocessor.kernel_name=python3 --output executed.ipynb notebook.ipynb"
+}

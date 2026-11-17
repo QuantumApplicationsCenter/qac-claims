@@ -66,96 +66,35 @@
           "additionalProperties": {
             "type": "string"
           },
-          "required": [
-            "qdk-chemistry",
-            "qdk"
-          ]
+          "minProperties": 1,
+          "description": "Exact versions of the packages that produced the numbers (e.g. qdk-chemistry, qdk)."
         }
       }
     },
     "inputs": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "hamiltonian",
-        "target_precision_hartree",
-        "trial_state"
-      ],
-      "properties": {
-        "hamiltonian": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "kind",
-            "orbitals",
-            "electrons"
-          ],
-          "properties": {
-            "kind": {
-              "enum": [
-                "synthetic_dfthc",
-                "molecular_dfthc",
-                "molecular_df"
-              ]
-            },
-            "orbitals": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "electrons": {
-              "type": "integer",
-              "minimum": 1
-            },
-            "R": {
-              "type": "integer"
-            },
-            "B": {
-              "type": "integer"
-            },
-            "C": {
-              "type": "integer"
-            },
-            "lambda_eff": {
-              "type": "number"
-            },
-            "coefficient_bit_precision": {
-              "type": "integer"
-            },
-            "rotation_bit_precision": {
-              "type": "integer"
-            },
-            "seed": {
-              "type": "integer"
-            }
-          }
+      "oneOf": [
+        {
+          "$ref": "#/$defs/chemistryInputs"
         },
-        "target_precision_hartree": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-        "trial_state": {
-          "type": "string"
+        {
+          "$ref": "#/$defs/factoringInputs"
         }
-      }
+      ]
     },
     "logical": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "walk_steps",
         "num_qubits",
-        "t_count",
-        "rotation_count",
-        "rotation_depth",
         "ccz_count",
         "ccix_count",
-        "measurement_count",
         "toffoli_count"
       ],
       "properties": {
         "walk_steps": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Quantum-walk steps (qubitized phase estimation only)."
         },
         "num_qubits": {
           "type": "integer",
@@ -189,8 +128,19 @@
           "type": "integer",
           "minimum": 0,
           "description": "ccz_count + ccix_count"
+        },
+        "shots_expected": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Expected number of shots when the algorithm is repeated; toffoli_count then counts all expected shots."
+        },
+        "toffoli_count_per_shot": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Toffoli gates in one shot, when shots_expected is given."
         }
-      }
+      },
+      "description": "Logical resource counts. walk_steps, t_count, rotation and measurement counts are recorded when the reproduction's tool produces them."
     },
     "physical": {
       "type": "array",
@@ -297,7 +247,8 @@
           },
           "runtime_seconds": {
             "type": "number",
-            "exclusiveMinimum": 0
+            "exclusiveMinimum": 0,
+            "description": "Total runtime of the computation the claim describes (all expected shots, when the algorithm is repeated)."
           },
           "error_budget": {
             "type": "number",
@@ -308,6 +259,129 @@
             "type": "number",
             "minimum": 0,
             "maximum": 1
+          },
+          "runtime_seconds_per_shot": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Runtime of one shot, when the algorithm is repeated."
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "chemistryInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hamiltonian",
+        "target_precision_hartree",
+        "trial_state"
+      ],
+      "properties": {
+        "hamiltonian": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "orbitals",
+            "electrons"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "synthetic_dfthc",
+                "molecular_dfthc",
+                "molecular_df"
+              ]
+            },
+            "orbitals": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "electrons": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "R": {
+              "type": "integer"
+            },
+            "B": {
+              "type": "integer"
+            },
+            "C": {
+              "type": "integer"
+            },
+            "lambda_eff": {
+              "type": "number"
+            },
+            "coefficient_bit_precision": {
+              "type": "integer"
+            },
+            "rotation_bit_precision": {
+              "type": "integer"
+            },
+            "seed": {
+              "type": "integer"
+            }
+          }
+        },
+        "target_precision_hartree": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "trial_state": {
+          "type": "string"
+        }
+      },
+      "description": "Inputs of a chemistry (Hamiltonian simulation) reproduction."
+    },
+    "factoringInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "factoring"
+      ],
+      "description": "Inputs of an integer-factoring reproduction.",
+      "properties": {
+        "factoring": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "modulus_bits",
+            "algorithm",
+            "parameters"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "rsa"
+              ]
+            },
+            "modulus_bits": {
+              "type": "integer",
+              "minimum": 2
+            },
+            "algorithm": {
+              "type": "string",
+              "minLength": 3,
+              "description": "The algorithm being costed, e.g. 'Ekerå–Håstad period finding with approximate residue arithmetic'."
+            },
+            "parameters": {
+              "type": "object",
+              "minProperties": 1,
+              "description": "The algorithm's parameters as the source names them (e.g. s, window sizes).",
+              "propertyNames": {
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "additionalProperties": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              }
+            }
           }
         }
       }

@@ -1,0 +1,201 @@
+schema_version: "1.0"
+id: rsa2048-gidney-2025
+title: RSA-2048 factoring resource estimate with approximate residue arithmetic, yoked storage, and magic state cultivation (Gidney, 2025)
+short_title: RSA-2048 resource estimate (Gidney 2025)
+headline: A 2048-bit RSA integer could be factored in less than a week with less than a million noisy qubits.
+claim_type: literature_resource_estimate
+domain: cryptanalysis
+taxonomy: application
+
+source:
+  type: preprint
+  title: How to factor 2048 bit RSA integers with less than a million noisy qubits
+  authors:
+    - Craig Gidney
+  author_list_complete: true
+  year: 2025
+  arxiv: "2505.15917"
+  doi: 10.48550/arXiv.2505.15917
+
+assertion:
+  what_is_claimed: >-
+    Factoring a 2048-bit RSA integer with Ekerå–Håstad period finding over approximate residue
+    arithmetic needs about 6.5e9 expected Toffoli gates and 1,399 logical qubits; on a square grid
+    of qubits with nearest-neighbor connections, a 0.1% gate error rate, a 1 µs surface-code
+    cycle, and a 10 µs reaction time, with idle qubits held in yoked surface codes and Toffoli
+    states made by magic state cultivation, this takes less than a million noisy qubits and less
+    than a week.
+  workload:
+    system: RSA-2048 modulus (n = 2048 bits), Ekerå–Håstad parameter s = 8
+    target_observable: factors of a 2048-bit RSA integer
+    target_precision:
+      value: 1.0e-15
+      unit: dimensionless
+      locator: "Sec. 3.2, p. 18"
+      note: >-
+        Factoring has no numerical precision target. This is the paper's target logical error
+        rate per logical qubit round, chosen so a 12-hour shot has a 93.3% chance of no logical error.
+  method: >-
+    Ekerå–Håstad period finding with approximate residue (RNS) arithmetic after
+    Chevignard–Fouque–Schrottenloher (2024), costed as additions, table lookups, and phaseups
+    counted from a reference implementation (Tables 3 and 4)
+  architecture_assumed: >-
+    Surface code at distance 25 for compute and hot storage, surface codes yoked by 2D parity
+    checks for cold storage, and six factories doing magic state cultivation followed by
+    8T-to-CCZ distillation
+
+assumptions_as_reported:
+  physical_error_rate:
+    value: 1.0e-3
+    unit: dimensionless
+    locator: "Abstract, p. 1"
+    note: Uniform depolarizing noise, one error per 1000 gates
+  connectivity:
+    value: square grid of qubits with nearest-neighbor connections
+    locator: "Abstract, p. 1"
+  surface_code_cycle_time:
+    value: 1.0e-6
+    unit: seconds
+    locator: "Abstract, p. 1"
+  reaction_time:
+    value: 1.0e-5
+    unit: seconds
+    locator: "Abstract, p. 1"
+  code_distance:
+    value: 25
+    unit: count
+    locator: "Sec. 3.2, p. 18"
+  target_logical_error_per_qubit_round:
+    value: 1.0e-15
+    unit: dimensionless
+    locator: "Sec. 3.2, p. 18"
+  hot_storage_physical_qubits_per_logical:
+    value: 1352
+    unit: count
+    locator: "Sec. 3.2, p. 18"
+    note: 2(d + 1)^2 at d = 25
+  cold_storage_physical_qubits_per_logical:
+    value: 430
+    unit: count
+    locator: "Sec. 3.2, p. 18 (read from Fig. 6)"
+    note: Surface codes yoked by a 2D parity check code
+  ccz_factories:
+    value: 6
+    unit: count
+    locator: "Sec. 3.2, p. 18"
+  cultivated_t_state_error:
+    value: 1.0e-7
+    unit: dimensionless
+    locator: "Sec. 3.2, p. 20"
+  rounds_per_ccz_state:
+    value: 150
+    unit: count
+    locator: "Sec. 3.2, p. 20"
+    note: Rounded up from 114.7 rounds for slack
+  ekera_hastad_s:
+    value: 8
+    unit: count
+    locator: "Table 5, n = 2048 row, p. 17"
+  prime_bit_length:
+    value: 21
+    unit: bits
+    locator: "Table 5, n = 2048 row, p. 17"
+  window_w1:
+    value: 6
+    unit: count
+    locator: "Table 5, n = 2048 row, p. 17"
+  window_w3:
+    value: 3
+    unit: count
+    locator: "Table 5, n = 2048 row, p. 17"
+  window_w4:
+    value: 5
+    unit: count
+    locator: "Table 5, n = 2048 row, p. 17"
+  accumulator_length_f:
+    value: 33
+    unit: bits
+    locator: "Table 5, n = 2048 row, p. 17"
+  input_qubits_m:
+    value: 1280
+    unit: count
+    locator: "Table 5, n = 2048 row, p. 17"
+  deviant_shot_rate:
+    value: 0.0125
+    unit: dimensionless
+    locator: "Table 5, n = 2048 row, p. 17"
+    note: Stated as 1.25%
+  expected_shots:
+    value: 9.2
+    unit: count
+    locator: "Table 5, n = 2048 row, p. 17"
+    note: (s + 1)/(1 − Pdeviant)/0.99, per the Table 5 caption
+  qec_scheme:
+    value: surface code, with yoked surface codes for cold storage
+    locator: "Sec. 3.2, p. 18"
+
+assessment:
+  reproduction_status: fully_reproduced
+  summary_plain: >-
+    QAC built the paper's whole modular exponentiation as one Q# circuit, checked it against the
+    paper's reference implementation, and counted it on the real RSA-2048 instance with every real
+    lookup table: {{ reproductions.0.figures.logical_qubits.value | n }} logical qubits and
+    {{ reproductions.0.figures.toffoli_count.value | sci }} expected Toffolis, against the paper's
+    {{ reported.figures.logical_qubits.value | n }} and {{ reported.figures.toffoli_count.value | sci }}.
+    The paper's own layout model, rebuilt and applied to those counts, gives
+    {{ reproductions.0.figures.physical_qubits.value | n }} physical qubits and
+    {{ reproductions.0.figures.runtime_seconds.value | hours }}, within its bounds.
+  what_this_shows:
+    - The algorithm of Appendix A.1, built as one circuit, computes exactly what the paper's reference implementation computes on every small instance checked, including the phases of a superposed input.
+    - On the real RSA-2048 instance, with a real residue system and all of its lookup tables, the circuit needs the Toffoli count of Table 5, and the failed-shot rate recomputed for that residue system equals Table 5's.
+    - Table 5's qubit count is the long-lived registers; the built circuit's peak, with temporary qubits, is a few percent higher.
+    - The paper's layout and timing model, rebuilt as code and applied to the circuit's own counts, stays under one million qubits and one week; the qubit count uses part of the slack the paper adds.
+    - The paper's 12.07 hours per shot is more than its own durations give for the Table 5 operation counts, so the runtime claim has extra margin.
+  what_this_does_not_show:
+    - The physical model takes its component figures from the work the paper cites (yoked cold storage, magic state cultivation, the CCZ factory); they are not re-simulated here.
+    - The QDK estimator shows that without yoked storage the same counts need several million qubits, so the claim depends on yoked storage performing as projected under the algorithm's workload, which Sec. 3.2 leaves to future work.
+    - The failed-shot rate keeps the paper's assumption that masking a fraction S of the output costs a fraction S of shots (Assumption 2); the approximation's own error is measured, the masked period finding is not simulated at full size.
+  findings:
+    - aspect: logical_qubits
+      verdict: within_factor
+      note: The built circuit's peak, which includes temporary qubits; Table 5 counts only the long-lived registers.
+    - aspect: toffoli_count
+      verdict: matches
+      note: Counted from the whole circuit on the real instance with the real tables; within a fraction of a percent of Table 5.
+    - aspect: physical_qubits
+      verdict: matches
+      note: The paper's layout model applied to the circuit's counts, below the stated bound; above the paper's 897,864 because the circuit's peak holds more hot qubits.
+    - aspect: runtime_seconds
+      verdict: matches
+      note: The paper's durations applied to the circuit's operation counts, below the stated bound and below the paper's own 4.96 days.
+    - aspect: code_distance
+      verdict: matches
+      note: The smallest distance meeting the paper's per-round target under its Fig. 6 fit.
+  classical_status: not_solved_classically_at_target_accuracy
+  classical_status_note: No 2048-bit RSA integer has been publicly factored by classical means.
+
+review:
+  prepared_by:
+    - name: Davyn Paringkoan
+      affiliation: PlexTech, UC Berkeley
+      github: davynp
+  reviewed_by: []
+  approved_by: []
+  information_cutoff: "2026-11-16"
+
+links:
+  - label: Publication (arXiv)
+    url: https://arxiv.org/abs/2505.15917
+  - label: Code and assets (Zenodo)
+    url: https://doi.org/10.5281/zenodo.15347487
+  - label: Gidney and Ekerå (2021), the earlier 20-million-qubit estimate
+    url: https://doi.org/10.22331/q-2021-04-15-433
+  - label: Chevignard, Fouque, and Schrottenloher (2024), approximate residue arithmetic
+    url: https://eprint.iacr.org/2024/222
+  - label: Gidney, Newman, Brooks, and Jones (2025), yoked surface codes
+    url: https://doi.org/10.1038/s41467-025-59714-1
+  - label: Gidney, Shutty, and Jones (2024), magic state cultivation
+    url: https://arxiv.org/abs/2409.17595
+
+publication:
+  status: review
