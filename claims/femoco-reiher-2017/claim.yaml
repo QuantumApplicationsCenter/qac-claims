@@ -1,0 +1,210 @@
+schema_version: "1.0"
+id: femoco-reiher-2017
+title: FeMoCo ground-state energy resource estimate via Trotter-based phase estimation (Reiher et al., 2017)
+short_title: FeMoCo resource estimate (Reiher et al. 2017)
+headline: FeMoCo's ground-state energy could be computed to 0.1 mHa in about 130 days with 111 logical qubits and 1.1 × 10¹⁵ T gates, or about 180 million physical qubits at a 10⁻³ error rate.
+claim_type: literature_resource_estimate
+domain: quantum_chemistry
+taxonomy: application
+
+source:
+  type: journal_article
+  title: Elucidating reaction mechanisms on quantum computers
+  authors:
+    - Markus Reiher
+    - Nathan Wiebe
+    - Krysta M. Svore
+    - Dave Wecker
+    - Matthias Troyer
+  author_list_complete: true
+  year: 2017
+  venue:
+    name: Proceedings of the National Academy of Sciences
+    volume: "114"
+    pages: 7555-7560
+  doi: 10.1073/pnas.1619152114
+  arxiv: "1605.03590"
+
+assertion:
+  what_is_claimed: >-
+    Computing the ground-state energy of FeMoCo structure 1 (54 electrons in 54 spatial
+    orbitals, spin 0, charge +3) to 0.1 mHa by phase estimation on a second-order
+    Trotter–Suzuki step, with rotations executed serially, needs about 1.1e15 T gates and
+    111 logical qubits, and takes about 130 days at one logical T gate per 10 ns (Table 1).
+    With the surface code and physical gates at 100 MHz, the same computation needs about
+    1.8e8 physical qubits at a physical error rate of 1e-3 and about 1.2e6 at 1e-6 (Table 2).
+  workload:
+    system: FeMoCo, structure 1 (spin 0, charge +3)
+    active_space_orbitals: 54
+    active_space_electrons: 54
+    target_observable: ground_state_energy
+    target_precision: { value: 1.0e-4, unit: hartree, locator: Table 1 }
+  method: Second-order Trotter–Suzuki product formula in the Jordan–Wigner representation, with phase estimation, serial term ordering, and repeat-until-success synthesis of rotations into Clifford and T gates
+  architecture_assumed: Surface code with 15-to-1 magic-state distillation in dedicated T factories, physical gates at 100 MHz, and one logical T gate every 10 ns
+
+assumptions_as_reported:
+  target_precision:
+    value: 1.0e-4
+    unit: hartree
+    locator: "Table 1; Resource Estimates section"
+    note: Total error budget shared by phase estimation, the Trotter decomposition, and rotation synthesis
+  logical_t_gate_time:
+    value: 10
+    unit: nanoseconds
+    locator: "Table 1; Resource Estimates section"
+    note: Table 1 of the PNAS version also gives runtimes for 100 ns
+  physical_gate_time:
+    value: 10
+    unit: nanoseconds
+    locator: "Table 2 caption (100 MHz); Resource Estimates section"
+  physical_error_rate:
+    value: 1.0e-3
+    unit: dimensionless
+    locator: Table 2
+    note: Table 2 also covers 1e-6 and 1e-9
+  code_distance:
+    value: 35
+    unit: count
+    locator: "Table 2 (serial rotations, error rate 1e-3)"
+    note: Stated as "35,17"; the second distance is not explained in the table
+  physical_qubits_per_logical_qubit:
+    value: 15313
+    unit: count
+    locator: "Table 2 (serial rotations, error rate 1e-3)"
+  t_factories:
+    value: 202
+    unit: count
+    locator: "Table 2 (serial rotations, error rate 1e-3)"
+  physical_qubits_per_t_factory:
+    value: 8.7e+5
+    unit: count
+    locator: "Table 2 (serial rotations, error rate 1e-3)"
+    qualifier: rounded
+  physical_qubits_at_error_rate_1e_6:
+    value: 1.2e+6
+    unit: count
+    locator: "Table 2 (serial rotations, error rate 1e-6)"
+    qualifier: rounded
+  code_distance_at_error_rate_1e_6:
+    value: 9
+    unit: count
+    locator: "Table 2 (serial rotations, error rate 1e-6)"
+  trotter_order:
+    value: 2
+    unit: count
+    locator: "arXiv:1605.03590v2, Eq. C3"
+  trotter_number:
+    value: 166
+    unit: dimensionless
+    locator: "arXiv:1605.03590v2, Table IV (Rescaled)"
+    note: Steps per inverse hartree for a Trotter error of 0.1 mHa, extrapolated from small molecules
+  phase_estimation_constant:
+    value: 1.5708
+    unit: dimensionless
+    locator: "arXiv:1605.03590v2, Appendix B and Table IV"
+    qualifier: rounded
+    note: Stated as π/2
+  synthesis_t_gates_slope:
+    value: 1.15
+    unit: dimensionless
+    locator: "arXiv:1605.03590v2, Eq. A5 and Table IV"
+  synthesis_t_gates_offset:
+    value: 9.2
+    unit: dimensionless
+    locator: "arXiv:1605.03590v2, Eq. A5 and Table IV"
+  hamiltonian_terms:
+    value: 6.1e+6
+    unit: count
+    locator: "arXiv:1605.03590v2, Appendix E"
+    qualifier: rounded
+    note: The M of Eq. E2, quoted for the 54-orbital basis
+  t_count_with_summed_error_budget:
+    value: 1.2e+15
+    unit: count
+    locator: "arXiv:1605.03590v2, Table IV (Rescaled bound)"
+    qualifier: rounded
+    note: Same calculation as Table 1 with the three errors added linearly
+  magic_state_distillation:
+    value: 15-to-1 distillation of Bravyi and Kitaev
+    locator: "arXiv:1605.03590v2, Appendix A.4"
+  qec_scheme:
+    value: surface code
+    locator: "Table 2; Resource Estimates section"
+  term_ordering:
+    value: Serial; single-qubit rotations are executed one at a time
+    locator: Resource Estimates section
+  trial_state:
+    value: A good trial state for the ground state is assumed to be available
+    locator: Resource Estimates section
+
+assessment:
+  reproduction_status: partially_reproduced
+  summary_plain: >-
+    QAC rebuilt the estimate from the paper's own FeMoCo integrals and cost formula. The
+    logical qubit count agrees: {{ reproductions.0.figures.logical_qubits.value | n }} against
+    {{ reported.figures.logical_qubits.value | n }}. The T count does not: we obtain
+    {{ reproductions.0.figures.t_count.value | sci }} against the paper's
+    {{ reported.figures.t_count.value | sci }}, a factor of
+    {{ comparisons[aspect=t_count].ratio | x }}. With a lattice-surgery surface-code model in
+    place of the paper's, the machine needs
+    {{ reproductions.0.figures.physical_qubits.value | million }} physical qubits but
+    about {{ reproductions.0.results.diagnostics.runtime_years_error_rate_1e_3 | n }} years.
+  what_this_shows:
+    - The paper's logical qubit count follows from its stated ingredients, to within one qubit.
+    - The Jordan–Wigner Hamiltonian built from the paper's integrals has about twice as many Pauli terms as the term count the paper's cost formula uses.
+    - The paper's cost formula, evaluated with the paper's own constants and term count, gives several times more T gates than the paper's tables report.
+    - The physical cost depends strongly on how fast logical T gates can be applied; a lattice-surgery model gives a much smaller but much slower machine than the paper's.
+  what_this_does_not_show:
+    - It does not establish which of the paper's figures or inputs is the source of the T-count difference; the paper's circuits and scripts are not public.
+    - The Trotter number, which sets the number of Trotter steps, is taken from the paper and was not rebuilt.
+    - The full 54-orbital circuit was not compiled; its rotation count comes from a term count and a per-step rule checked on smaller active spaces.
+    - The paper's surface-code model was not rebuilt, so the physical comparison is not like-for-like.
+    - Preparing the trial state is not costed, as in the paper.
+  findings:
+    - aspect: logical_qubits
+      verdict: within_factor
+      note: Spin orbitals, one phase-estimation qubit, and the one synthesis ancilla the paper mentions; the paper lists one more qubit without a breakdown.
+    - aspect: t_count
+      verdict: differs
+      note: About twice the rotations per Trotter step, and the paper's formula does not return its tabulated count even with its own inputs.
+    - aspect: physical_qubits
+      verdict: differs
+      note: Computed with a lattice-surgery model that applies T gates far more slowly, so far fewer T factories are needed.
+    - aspect: runtime_seconds
+      verdict: differs
+      note: Computed with a logical cycle per T gate where the paper assumes one T gate per physical gate time, on top of the larger T count.
+    - aspect: code_distance
+      verdict: within_factor
+      note: Selected by the resource estimator for a longer computation than the paper's.
+  classical_status: unknown
+  classical_status_note: Not assessed in this reproduction. The record for the same active space, femoco-low-2025, lists not_solved_classically_at_target_accuracy with a review pending.
+
+review:
+  prepared_by:
+    - name: Yash Kumar
+      affiliation: PlexTech, UC Berkeley
+      github: yashkumar-cmd
+    - name: Jolin Wang
+      affiliation: PlexTech, UC Berkeley
+      github: joliniscool
+    - name: Daniel Ng
+      affiliation: PlexTech, UC Berkeley
+      github: NgYiHong
+  reviewed_by: []
+  approved_by: []
+  information_cutoff: "2026-11-16"
+
+links:
+  - label: Publication (DOI)
+    url: https://doi.org/10.1073/pnas.1619152114
+  - label: Preprint (arXiv)
+    url: https://arxiv.org/abs/1605.03590
+  - label: FeMoCo integrals of Reiher et al. (microsoft/qdk-chemistry-data)
+    url: https://github.com/microsoft/qdk-chemistry-data/tree/main/data/hamiltonians/FeMoco-Reiher2017
+  - label: QDK Chemistry
+    url: https://github.com/microsoft/qdk-chemistry
+  - label: QDK (resource estimator)
+    url: https://github.com/microsoft/qdk
+
+publication:
+  status: review

@@ -95,7 +95,8 @@
               "enum": [
                 "synthetic_dfthc",
                 "molecular_dfthc",
-                "molecular_df"
+                "molecular_df",
+                "molecular_integrals"
               ]
             },
             "orbitals": {
@@ -126,6 +127,21 @@
             },
             "seed": {
               "type": "integer"
+            },
+            "source_url": {
+              "type": "string",
+              "pattern": "^https://",
+              "description": "Where the reproduction fetched the molecular integrals (kind molecular_integrals)."
+            },
+            "source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "description": "SHA-256 of the integral file, checked by the reproduction before use."
+            },
+            "pauli_coefficient_threshold": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Pauli terms with a smaller absolute coefficient are dropped."
             }
           }
         },
@@ -135,6 +151,63 @@
         },
         "trial_state": {
           "type": "string"
+        },
+        "trotter": {
+          "type": "object",
+          "description": "Inputs of a product-formula (Trotter-Suzuki) phase-estimation cost model. Present only for Trotter-based reproductions.",
+          "additionalProperties": false,
+          "required": [
+            "order",
+            "trotter_number",
+            "phase_estimation_constant"
+          ],
+          "properties": {
+            "order": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "trotter_number": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Steps per unit of evolution time (1/Hartree) that keep the Trotter error at the reference accuracy."
+            },
+            "trotter_number_reference_accuracy_hartree": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "phase_estimation_constant": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "alpha in M = alpha / (epsilon * t): applications of the step unitary needed to resolve the energy to epsilon."
+            },
+            "synthesis_t_per_rotation_slope": {
+              "type": "number",
+              "description": "gamma in T gates per rotation = gamma * log2(1 / synthesis error) + delta."
+            },
+            "synthesis_t_per_rotation_offset": {
+              "type": "number",
+              "description": "delta in T gates per rotation = gamma * log2(1 / synthesis error) + delta."
+            },
+            "error_budget_rule": {
+              "type": "string"
+            },
+            "error_budget_phase_estimation_hartree": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "error_budget_trotter_hartree": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "error_budget_synthesis_hartree": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "logical_t_gate_time_ns": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
         }
       }
     },
@@ -155,7 +228,8 @@
       "properties": {
         "walk_steps": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "description": "Applications of the step unitary inside phase estimation: quantum-walk steps for qubitization, Trotter steps for product formulas."
         },
         "num_qubits": {
           "type": "integer",
@@ -189,7 +263,42 @@
           "type": "integer",
           "minimum": 0,
           "description": "ccz_count + ccix_count"
+        },
+        "pauli_terms": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Non-identity Pauli terms in the qubit Hamiltonian (Trotter-based reproductions)."
+        },
+        "rotations_per_step": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Arbitrary-angle rotations in one application of the step unitary (Trotter-based reproductions)."
+        },
+        "t_states_per_rotation": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Average T gates per arbitrary-angle rotation under the synthesis model named in the inputs."
+        },
+        "t_count_after_synthesis": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "T gates after every rotation is compiled to Clifford+T: t_count plus the T gates from rotation_count."
+        },
+        "runtime_seconds_at_logical_t_rate": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "t_count_after_synthesis times inputs.trotter.logical_t_gate_time_ns: the source's logical-level runtime convention, with no error-correction model."
         }
+      }
+    },
+    "diagnostics": {
+      "type": "object",
+      "description": "Named cross-check values the reproduction computes so that a narrative can quote them. They are not headline figures and are never compared with the source automatically.",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "number"
       }
     },
     "physical": {

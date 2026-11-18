@@ -1,0 +1,100 @@
+schema_version: "1.0"
+kind: reproduction
+claim_id: femoco-reiher-2017
+reproduction_id: qdk-trotter-2026-11
+results_file: reproductions/qdk-trotter-2026-11/results.json
+tool:
+  name: QDK Chemistry and the QDK resource estimator
+  role: QDK Chemistry maps the paper's FeMoCo integrals to Pauli terms on truncated active spaces and compiles second-order Trotter steps for them, which fixes the rotation count per step; the paper's cost formula turns that count into Trotter steps and T gates; the QDK resource estimator converts the logical counts into physical qubits and runtime.
+  url: https://github.com/microsoft/qdk-chemistry
+headline_scenario: surface-code-p1e-3
+scenarios:
+  surface-code-p1e-3:
+    label: Surface code, physical error rate 1e-3
+    description: Rotated surface code with lattice surgery, round-based 15-to-1 T factories, and PSSPC rotation synthesis, at a physical error rate of 1e-3 with 10 ns gates and measurements. The resource estimator chooses the code distance and the number of factories. The comparison table uses this scenario.
+    references:
+      - label: Beverland et al., Assessing requirements to scale to practical quantum advantage (PSSPC and the round-based factories)
+        url: https://arxiv.org/abs/2211.07629
+      - label: "Bravyi and Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (15-to-1 distillation)"
+        url: https://arxiv.org/abs/quant-ph/0403025
+  surface-code-p1e-6:
+    label: Surface code, physical error rate 1e-6
+    description: The same model and logical circuit at a physical error rate of 1e-6, the second error rate of the paper's Table 2 that this record compares.
+    references:
+      - label: Beverland et al., Assessing requirements to scale to practical quantum advantage (PSSPC and the round-based factories)
+        url: https://arxiv.org/abs/2211.07629
+figure_map:
+  logical_qubits: "#/logical/num_qubits"
+  t_count: "#/logical/t_count_after_synthesis"
+  physical_qubits: "#/physical/0/physical_qubits"
+  runtime_seconds: "#/physical/0/runtime_seconds"
+  code_distance: "#/physical/0/code/distance"
+deviations_from_reported:
+  - aspect: Rotations per Trotter step
+    reported: The cost formula (Eq. E2) uses twice the paper's own count of Hamiltonian terms for the 54-orbital basis, quoted in Appendix E without a derivation
+    used: Every Pauli term of the Jordan–Wigner Hamiltonian built from the paper's integrals, counted with a closed form that matches the QDK Chemistry qubit mapper term for term on truncated active spaces
+    why: The paper's formula treats each term as one single-qubit rotation, and each Pauli term needs one rotation. We could not determine how the paper's smaller count was obtained, and thresholding small terms does not reproduce it.
+  - aspect: Circuit construction
+    reported: The full Trotter circuit was built in LIQUi|> and its gates were counted
+    used: Second-order Trotter steps compiled by QDK Chemistry for truncated active spaces of the same integrals; the rotation count of the full step follows from the Pauli-term count by a rule that holds exactly for every compiled circuit
+    why: LIQUi|> and the paper's circuits are not public, and compiling the full step in QDK Chemistry needs more memory than a laptop has.
+  - aspect: Error-budget split
+    reported: The split among phase estimation, Trotter error, and synthesis is found by calculus on a simplified cost (Eq. E3) and then used in Eq. E2
+    used: The same simplified cost is minimized on a fixed grid of budget fractions, and the T gates per rotation are rounded to three decimals
+    why: A fixed grid and fixed rounding make the result identical on every platform, which the registry's weekly rerun requires. The effect on the T count is far below one percent.
+  - aspect: Logical qubit count
+    reported: A total for the serial case, without a breakdown
+    used: The spin orbitals, one phase-estimation qubit, and the one ancilla the paper says its rotation synthesis needs
+    why: These are the qubits the paper's text accounts for. The paper's total is one higher.
+  - aspect: Error-correction cost model
+    reported: A surface-code costing that follows the paper's Ref. 48, with a main processor and dedicated T factories
+    used: The QDK resource estimator with the rotated surface code, lattice surgery, and round-based 15-to-1 T factories
+    why: These are the models available in the resource estimator. The paper gives the outputs of its costing but not enough of the model to rebuild it.
+    references:
+      - label: Beverland et al., Assessing requirements to scale to practical quantum advantage
+        url: https://arxiv.org/abs/2211.07629
+      - label: "Horsman et al., Surface code quantum computing by lattice surgery"
+        url: https://arxiv.org/abs/1111.4022
+  - aspect: Logical T-gate rate
+    reported: One logical T gate every 10 ns, the same as the physical gate time, with enough T factories to supply that rate
+    used: One logical cycle per T state, that is, a code distance's worth of syndrome-extraction rounds
+    why: The lattice-surgery model of the resource estimator has no faster mode. This is the main reason the physical figures differ from the paper's in both directions.
+  - aspect: Rotation synthesis in the physical estimate
+    reported: Repeat-until-success synthesis with the average T cost of Eq. A5
+    used: PSSPC synthesis, searching up to eighty T states per rotation instead of the default maximum of twenty
+    why: The resource estimator synthesizes rotations this way. With the default range no configuration meets the error budget for this many rotations. The logical T count reported here still uses the paper's Eq. A5.
+  - aspect: Measurement time
+    reported: Not stated; physical gates take 10 ns
+    used: Measurements take the same time as gates
+    why: The resource estimator needs a measurement time, and the paper gives a single physical time scale.
+  - aspect: Failure probability
+    reported: Not stated
+    used: A total failure probability of one percent for the whole run
+    why: The resource estimator needs an error budget. One percent is the value used in the registry's existing FeMoCo record.
+  - aspect: Code distance
+    reported: Stated in Table 2 as an outcome of the paper's analysis
+    used: Chosen by the resource estimator, taking the trade-off with the smallest product of physical qubits and runtime
+    why: The resource estimator returns several trade-offs between qubits and runtime; a fixed rule is needed to pick one.
+  - aspect: Estimating one Trotter step at a time
+    reported: Not applicable
+    used: The resource estimator costs one Trotter step with the failure budget divided by the number of steps, and the runtime is multiplied by the number of steps
+    why: The resource estimator stores runtime as a 64-bit count of nanoseconds, which overflows for a computation this long. The notebook checks on a shorter run that both ways give the same machine.
+interpretation:
+  label: inconsistent
+  statement: >-
+    The logical qubit count is reproduced, but the T count is not. Our count is about an order
+    of magnitude above the paper's, and the difference has two identified parts. The
+    Jordan–Wigner Hamiltonian built from the paper's integrals has about twice as many Pauli
+    terms as the term count in the paper's formula. Separately, the paper's formula evaluated
+    with the paper's own constants and term count gives several times more T gates than the
+    paper's tables. We did not find the cause of either and did not adjust inputs to remove
+    them. The physical estimates use a lattice-surgery model in which a T gate takes a logical
+    cycle; the paper assumes a T gate per physical gate time. That choice alone makes our
+    machine much smaller and much slower than the paper's, so the physical comparison shows
+    the dependence on architecture and does not test the paper's Table 2.
+notes:
+  - The Trotter number, which fixes the number of Trotter steps, is taken from the paper's Table IV. The paper obtains it by rescaling a rigorous bound with data from small molecules, and that calculation is not rebuilt here.
+  - Phase estimation is costed as in the paper's Lemma 2, in which the control qubit flips the sign of each rotation through Clifford gates, so a controlled step has as many rotations as an uncontrolled one. QDK Chemistry's stock controlled mapper uses two rotations per term; the notebook shows both counts.
+  - The integrals are the paper's original structure-1 file, fetched from a pinned commit of microsoft/qdk-chemistry-data and checked against a SHA-256 digest before use.
+  - The resource estimator is given the qubits the Trotter circuit uses, without the paper's synthesis ancilla, because PSSPC synthesis accounts for its own workspace.
+  - The runtime compared with the paper is the physical runtime of the headline scenario. The runtime at the paper's own rate of one logical T gate per 10 ns is recorded in results.json as runtime_seconds_at_logical_t_rate.
