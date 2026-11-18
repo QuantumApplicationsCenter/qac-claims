@@ -171,9 +171,7 @@
             "type": "object",
             "additionalProperties": false,
             "required": [
-              "physical_error_rate",
-              "gate_time_ns",
-              "measurement_time_ns"
+              "physical_error_rate"
             ],
             "properties": {
               "physical_error_rate": {
@@ -188,8 +186,25 @@
               "measurement_time_ns": {
                 "type": "number",
                 "exclusiveMinimum": 0
+              },
+              "reaction_time_ns": {
+                "type": "number",
+                "exclusiveMinimum": 0
               }
-            }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "gate_time_ns",
+                  "measurement_time_ns"
+                ]
+              },
+              {
+                "required": [
+                  "reaction_time_ns"
+                ]
+              }
+            ]
           },
           "code": {
             "type": "object",
@@ -267,6 +282,64 @@
           }
         }
       }
+    },
+    "logical_variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "inputs",
+          "logical"
+        ],
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "inputs": {
+            "$ref": "#/$defs/chemistryInputs"
+          },
+          "logical": {
+            "$ref": "#/properties/logical"
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "walk_steps",
+        "toffolis_per_walk",
+        "toffoli_count",
+        "peak_data_qubits",
+        "stage_count"
+      ],
+      "description": "Half-angle layout counts, distinct from the table implementation in logical.",
+      "properties": {
+        "walk_steps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "toffolis_per_walk": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "toffoli_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "peak_data_qubits": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stage_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
     }
   },
   "$defs": {
@@ -292,7 +365,8 @@
               "enum": [
                 "synthetic_dfthc",
                 "molecular_dfthc",
-                "molecular_df"
+                "molecular_df",
+                "thc_cost_model"
               ]
             },
             "orbitals": {
@@ -323,8 +397,33 @@
             },
             "seed": {
               "type": "integer"
+            },
+            "thc_rank": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "lambda_value": {
+              "type": "number",
+              "exclusiveMinimum": 0
             }
-          }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "thc_cost_model"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "thc_rank",
+                  "lambda_value"
+                ]
+              }
+            }
+          ]
         },
         "target_precision_hartree": {
           "type": "number",
@@ -366,7 +465,7 @@
             "algorithm": {
               "type": "string",
               "minLength": 3,
-              "description": "The algorithm being costed, e.g. 'Ekerå–Håstad period finding with approximate residue arithmetic'."
+              "description": "The algorithm being costed, e.g. 'Eker\u00e5\u2013H\u00e5stad period finding with approximate residue arithmetic'."
             },
             "parameters": {
               "type": "object",
