@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "reproduction_id": "openfermion-thc-layout-2026-11",
+  "executed_at": "2026-11-23T05:34:33+00:00",
+  "executed_by": {
+    "name": "Mahnoor Khan",
+    "automation": "Codex-assisted layout-model execution"
+  },
+  "host": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "machine": "AMD64"
+  },
+  "duration_seconds": 28.77,
+  "python": "3.10.22",
+  "lockfile": "requirements.lock.txt",
+  "entrypoint": "notebook.ipynb",
+  "entrypoint_sha256": "7c744bf1b1ef5d57016d0d45045522e5dc5d4c21bff951faa43b5b1a36a11798",
+  "results_sha256": "fd2e782637befb1d6ee8fd500b90d61f6586e91d2955c5644efad72af97b89fb",
+  "lockfile_sha256": "f29a9a0391c1d9700a34cbe999c346a25d9e0bddb71584f72f48aa03cceae7ea",
+  "command": "C:\\Users\\mahno\\OneDrive\\Desktop\\PlexTech\\qac-claims\\.venv\\Scripts\\python.exe -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=120 --ExecutePreprocessor.kernel_name=python3 --output executed.ipynb notebook.ipynb"
+}

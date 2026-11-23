@@ -1,11 +1,25 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-11-06T18:20:33+00:00",
+  "generated_at": "2026-11-23T05:35:05+00:00",
   "build": {
     "tool": "qacclaims",
     "tool_version": "0.1.0"
   },
   "claims": [
+    {
+      "id": "femoco-lee-2021",
+      "title": "FeMoCo ground-state energy resource estimate via tensor hypercontraction (Lee et al., 2021)",
+      "short_title": "FeMoCo THC resource estimate (Lee et al. 2021)",
+      "headline": "FeMoCo could be simulated with about four million physical qubits in under four days under the paper's hardware assumptions.",
+      "domain": "quantum_chemistry",
+      "taxonomy": "application",
+      "claim_type": "literature_resource_estimate",
+      "year": 2021,
+      "publication_status": "review",
+      "reproduction_status": "partially_reproduced",
+      "path": "claims/femoco-lee-2021.json",
+      "sha256": "3b4c49dce596ab64e86477494f46a1b4ccce5fd7b63a077bcc170acd02891f8a"
+    },
     {
       "id": "femoco-low-2025",
       "title": "FeMoCo ground-state energy resource estimate via spectral amplification and DFTHC (Low et al., 2025)",

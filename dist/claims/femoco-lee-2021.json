@@ -1,0 +1,690 @@
+{
+  "schema_version": "1.0",
+  "id": "femoco-lee-2021",
+  "title": "FeMoCo ground-state energy resource estimate via tensor hypercontraction (Lee et al., 2021)",
+  "short_title": "FeMoCo THC resource estimate (Lee et al. 2021)",
+  "headline": "FeMoCo could be simulated with about four million physical qubits in under four days under the paper's hardware assumptions.",
+  "claim_type": "literature_resource_estimate",
+  "domain": "quantum_chemistry",
+  "taxonomy": "application",
+  "source": {
+    "type": "journal_article",
+    "title": "Even More Efficient Quantum Computations of Chemistry Through Tensor Hypercontraction",
+    "authors": [
+      "Joonho Lee",
+      "Dominic W. Berry",
+      "Craig Gidney",
+      "William J. Huggins",
+      "Jarrod R. McClean",
+      "Nathan Wiebe",
+      "Ryan Babbush"
+    ],
+    "author_list_complete": true,
+    "year": 2021,
+    "venue": {
+      "name": "PRX Quantum",
+      "volume": "2",
+      "article": "030305"
+    },
+    "doi": "10.1103/PRXQuantum.2.030305",
+    "arxiv": "2011.03494v3"
+  },
+  "assertion": {
+    "what_is_claimed": "Lee et al. report 2,142 logical qubits and approximately 5.3 billion Toffoli gates for the Reiher FeMoCo model at THC rank 350. A separate space-optimized surface-code implementation uses approximately 6.7 billion Toffolis, about four million physical qubits, and about three days; the abstract gives under four days. The Li model is a distinct logical comparison.",
+    "workload": {
+      "system": "FeMoCo (Reiher active space; Li logical variants recorded separately)",
+      "active_space_orbitals": 54,
+      "active_space_electrons": 54,
+      "target_observable": "ground_state_energy",
+      "target_precision": {
+        "value": 0.0016,
+        "unit": "hartree",
+        "locator": "Eq. (25) discussion, p. 14",
+        "note": "Total energy tolerance; phase-estimation allocation is 0.001 Ha."
+      }
+    },
+    "method": "Non-orthogonal tensor hypercontraction, qubitization and quantum phase estimation",
+    "architecture_assumed": "Surface-code layout with four CCZ factories and AutoCCZ fixup areas; physical gate error rate 0.1%, cycle 1 microsecond, reaction time 10 microseconds"
+  },
+  "assumptions_as_reported": {
+    "physical_error_rate": {
+      "value": 0.001,
+      "unit": "dimensionless",
+      "locator": "Sec. IV C, p. 26"
+    },
+    "surface_code_cycle_time": {
+      "value": 1e-06,
+      "unit": "seconds",
+      "locator": "Sec. IV C, p. 26"
+    },
+    "reaction_time": {
+      "value": 1e-05,
+      "unit": "seconds",
+      "locator": "Sec. IV C, p. 26"
+    },
+    "data_code_distance": {
+      "value": 31,
+      "unit": "count",
+      "locator": "Fig. 10, p. 28; p. 31"
+    },
+    "factory_level_one_distance": {
+      "value": 19,
+      "unit": "count",
+      "locator": "p. 31, Routing and distilling"
+    },
+    "factory_level_two_distance": {
+      "value": 31,
+      "unit": "count",
+      "locator": "p. 31, Routing and distilling"
+    },
+    "ccz_factories": {
+      "value": 4,
+      "unit": "count",
+      "locator": "p. 31, Routing and distilling"
+    },
+    "total_failure_budget": {
+      "value": 0.01,
+      "unit": "dimensionless",
+      "locator": "p. 31, Routing and distilling"
+    },
+    "aggregate_toffoli_rate": {
+      "value": "25 kHz combined Toffoli throughput across four CCZ factories",
+      "locator": "p. 31, Routing and distilling"
+    },
+    "total_energy_tolerance": {
+      "value": 0.0016,
+      "unit": "hartree",
+      "locator": "Eq. (25) discussion, p. 14"
+    },
+    "phase_estimation_error": {
+      "value": 0.001,
+      "unit": "hartree",
+      "locator": "Eq. (25) discussion, p. 14"
+    },
+    "hamiltonian_approximation_error": {
+      "value": 0.0006,
+      "unit": "hartree",
+      "locator": "Eq. (25) discussion, p. 14"
+    },
+    "reiher_thc_rank": {
+      "value": 350,
+      "unit": "count",
+      "locator": "Table IV, p. 24"
+    },
+    "reiher_lambda": {
+      "value": 306.3,
+      "unit": "hartree",
+      "locator": "Table IV, p. 24"
+    },
+    "coefficient_bit_precision": {
+      "value": 10,
+      "unit": "bits",
+      "locator": "Tables IV and V captions, p. 24"
+    },
+    "reiher_rotation_bit_precision": {
+      "value": 16,
+      "unit": "bits",
+      "locator": "Table IV caption, p. 24"
+    },
+    "layout_toffoli_count": {
+      "value": 6700000000.0,
+      "unit": "count",
+      "locator": "p. 31, Routing and distilling",
+      "qualifier": "rounded"
+    },
+    "layout_runtime_alternative": {
+      "value": 302400.0,
+      "unit": "seconds",
+      "locator": "p. 31, Estimate at optimistic error rates",
+      "qualifier": "approximate",
+      "note": "Later comparison refers to 3.5 days, whereas the preceding layout paragraph says 3 days; not silently reconciled."
+    },
+    "abstract_runtime_bound": {
+      "value": 345600,
+      "unit": "seconds",
+      "locator": "Abstract, p. 1",
+      "qualifier": "upper_bound",
+      "note": "Stated as under four days."
+    },
+    "li_spatial_orbitals": {
+      "value": 76,
+      "unit": "count",
+      "locator": "Sec. IV A, p. 23; 152 spin orbitals"
+    },
+    "li_electrons": {
+      "value": 113,
+      "unit": "count",
+      "locator": "Sec. IV A, p. 23"
+    },
+    "li_requested_rank": {
+      "value": 350,
+      "unit": "count",
+      "locator": "Table V, p. 24, M=350 row"
+    },
+    "li_requested_lambda": {
+      "value": 1279.0,
+      "unit": "hartree",
+      "locator": "Table V, p. 24, M=350 row"
+    },
+    "li_rotation_bit_precision": {
+      "value": 20,
+      "unit": "bits",
+      "locator": "Table V caption, p. 24"
+    },
+    "li_requested_logical_qubits": {
+      "value": 2194,
+      "unit": "count",
+      "locator": "Table V, p. 24, M=350 row"
+    },
+    "li_requested_toffoli_count": {
+      "value": 32000000000.0,
+      "unit": "count",
+      "locator": "Table V, p. 24, M=350 row",
+      "qualifier": "rounded"
+    },
+    "li_recommended_rank": {
+      "value": 450,
+      "unit": "count",
+      "locator": "Table V and recommendation below table, p. 24"
+    },
+    "li_recommended_lambda": {
+      "value": 1201.5,
+      "unit": "hartree",
+      "locator": "Table V, p. 24, M=450 row"
+    },
+    "li_recommended_logical_qubits": {
+      "value": 2196,
+      "unit": "count",
+      "locator": "Table V, p. 24, M=450 row"
+    },
+    "li_recommended_toffoli_count": {
+      "value": 32000000000.0,
+      "unit": "count",
+      "locator": "Table V, p. 24, M=450 row",
+      "qualifier": "rounded"
+    },
+    "optimistic_physical_qubits": {
+      "value": 1000000,
+      "unit": "count",
+      "locator": "p. 31, Estimate at optimistic error rates",
+      "qualifier": "approximate"
+    },
+    "optimistic_runtime": {
+      "value": 129600,
+      "unit": "seconds",
+      "locator": "p. 31, Estimate at optimistic error rates",
+      "qualifier": "approximate"
+    }
+  },
+  "assessment": {
+    "reproduction_status": "partially_reproduced",
+    "summary_plain": "OpenFermion reproduces the analytic logical counts. A separate half-angle stage schedule, the cited CCZ-factory formulas and a custom QDK ISA reconstruct the published physical resource model: 3.91 million physical qubits and 3 days. This is conditional on the paper's floorplan, code distances and phenomenological error model; it is not a gate-by-gate simulation or independent layout optimization.",
+    "what_this_shows": [
+      "The published THC inputs reproduce the analytic logical counts closely in OpenFermion.",
+      "The half-angle-loading subroutine schedule independently generates the layout operation count and live-qubit profile from the algorithm inputs.",
+      "The published floorplan and cited factory/reliability model, evaluated through a custom QDK resource ISA, agree closely with the rounded primary hardware claims."
+    ],
+    "what_this_does_not_show": [
+      "No chemical energy, tensor approximation accuracy, initial-state overlap, or quantum advantage is independently established.",
+      "The floorplan and code distances are accepted from the paper; routability, optimality and protection distances are not independently derived.",
+      "The custom QDK ISA costs subroutine macros; it is not QDK Chemistry compiling a full gate-level THC circuit.",
+      "Factory warmup, initial-state preparation, finite-batch scheduling and a routed Clifford trace are not independently modeled."
+    ],
+    "findings": [
+      {
+        "aspect": "logical_qubits",
+        "verdict": "matches",
+        "note": "Analytic total includes the system register; Reiher and the separately labeled Li cases match their table rows."
+      },
+      {
+        "aspect": "toffoli_count",
+        "verdict": "within_factor",
+        "note": "Analytic count agrees closely with the rounded Table IV figure; layout count is kept separate."
+      },
+      {
+        "aspect": "physical_qubits",
+        "verdict": "within_factor",
+        "note": "Main CCZ-layout resource model uses the published footprint and cited factory dimensions; it agrees closely with the rounded physical count, conditional on that geometry."
+      },
+      {
+        "aspect": "runtime_seconds",
+        "verdict": "within_factor",
+        "note": "Half-angle stage schedule and the independently calculated factory tick give a runtime close to the primary three-day claim; later three-and-a-half-day wording is retained as ambiguous."
+      },
+      {
+        "aspect": "code_distance",
+        "verdict": "not_compared",
+        "note": "Data code distance is imposed from the paper, not independently selected."
+      }
+    ],
+    "classical_status": "unknown",
+    "classical_status_note": "Current classical solvability at the stated accuracy has not been assessed in this reproduction."
+  },
+  "review": {
+    "prepared_by": [
+      {
+        "name": "Mahnoor Khan",
+        "affiliation": "PlexTech, UC Berkeley"
+      },
+      {
+        "name": "Stella Zhao",
+        "affiliation": "PlexTech, UC Berkeley"
+      }
+    ],
+    "reviewed_by": [],
+    "approved_by": [],
+    "information_cutoff": "2026-11-17"
+  },
+  "publication": {
+    "status": "review",
+    "notes": "Custom QDK resource model and the small THC schema extension await maintainer review."
+  },
+  "links": [
+    {
+      "label": "Publication (DOI)",
+      "url": "https://doi.org/10.1103/PRXQuantum.2.030305"
+    },
+    {
+      "label": "Paper version used",
+      "url": "https://arxiv.org/pdf/2011.03494v3"
+    },
+    {
+      "label": "Tracking issue",
+      "url": "https://github.com/QuantumApplicationsCenter/qac-claims/issues/2"
+    },
+    {
+      "label": "OpenFermion THC source",
+      "url": "https://github.com/quantumlib/OpenFermion/blob/v1.7.1/src/openfermion/resource_estimates/thc/compute_cost_thc.py"
+    }
+  ],
+  "reported": {
+    "figures": {
+      "logical_qubits": {
+        "value": 2142,
+        "unit": "count",
+        "locator": "Table IV, p. 24, Reiher M=350"
+      },
+      "toffoli_count": {
+        "value": 5300000000,
+        "unit": "count",
+        "locator": "Table IV, p. 24, Reiher M=350",
+        "qualifier": "rounded",
+        "note": "5.3 billion, analytic table implementation; distinct from the layout count."
+      },
+      "physical_qubits": {
+        "value": 4000000,
+        "unit": "count",
+        "locator": "Fig. 10, p. 28; p. 31",
+        "qualifier": "approximate",
+        "note": "Physical estimate for the separate space-optimized Reiher layout."
+      },
+      "runtime_seconds": {
+        "value": 259200,
+        "unit": "seconds",
+        "locator": "p. 31, Routing and distilling",
+        "qualifier": "approximate",
+        "note": "About three days. The abstract says under four days; the later optimistic comparison refers to 3.5 days."
+      },
+      "code_distance": {
+        "value": 31,
+        "unit": "count",
+        "locator": "Fig. 10, p. 28; p. 31",
+        "note": "Data code distance; factory first-level distance differs."
+      }
+    },
+    "notes": [
+      "Transcribed from arXiv:2011.03494v3. Table IV logical figures and the separate space-optimized layout are distinct implementations.",
+      "The 6.7 billion layout Toffolis and Li table-row targets are retained with locators under assumptions_as_reported because the schema has one primary value per figure.",
+      "No direct physical comparison is mapped: the QDK scenario does not reconstruct the layout."
+    ]
+  },
+  "reproductions": [
+    {
+      "id": "openfermion-thc-layout-2026-11",
+      "tool": {
+        "name": "OpenFermion and QDK with a custom Lee-layout resource ISA",
+        "role": "OpenFermion computes table counts and half-angle subroutine stages; custom QDK architecture costs those stages using the cited factory, reaction-time and storage-error formulas.",
+        "url": "https://github.com/quantumlib/OpenFermion"
+      },
+      "headline_scenario": "lee-ccz-layout-main",
+      "scenarios": {
+        "lee-ccz-layout-main": {
+          "label": "Published CCZ-layout resource model",
+          "description": "Main physical-error-rate case with published floorplan, imposed data/factory distances, four CCZ factories, computed factory interval and reaction-time constraint."
+        },
+        "lee-ccz-layout-optimistic": {
+          "label": "Optimistic CCZ-layout resource model",
+          "description": "Improved physical-error-rate case using the paper's optimistic distances and unchanged rectangular floorplan. Factory geometry is recomputed."
+        }
+      },
+      "figures": {
+        "logical_qubits": {
+          "value": 2142,
+          "unit": "count",
+          "source": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/results.json#/logical/num_qubits"
+        },
+        "toffoli_count": {
+          "value": 5250145120,
+          "unit": "count",
+          "source": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/results.json#/logical/toffoli_count"
+        },
+        "physical_qubits": {
+          "value": 3907584,
+          "unit": "count",
+          "source": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/results.json#/physical/0/physical_qubits"
+        },
+        "runtime_seconds": {
+          "value": 258797.10373125,
+          "unit": "seconds",
+          "source": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/results.json#/physical/0/runtime_seconds"
+        },
+        "code_distance": {
+          "value": 31,
+          "unit": "count",
+          "source": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/results.json#/physical/0/code/distance"
+        }
+      },
+      "deviations_from_reported": [
+        {
+          "aspect": "Factorization validation",
+          "reported": "Optimized molecular factors and a chemical-accuracy assessment",
+          "used": "Published THC dimensions, normalization and bit settings accepted",
+          "why": "The task reconstructs resource costing; molecular factors and their energy-error bounds are not independently recomputed."
+        },
+        {
+          "aspect": "Modeling level",
+          "reported": "Circuit constructions and a hand-designed surface-code layout",
+          "used": "OpenFermion subroutine resource schedule evaluated through custom QDK macro instructions",
+          "why": "The installed chemistry package does not supply this exact gate-level pipeline; macro costs explicitly reconstruct the cited resource model rather than silently substituting another algorithm."
+        },
+        {
+          "aspect": "Rounding of loop inputs",
+          "reported": "Approximate phase-estimation loop count and reported per-loop Toffolis",
+          "used": "Formula-derived walk count and the installed half-angle schedule output, including its single extra Toffoli per loop",
+          "why": "Retaining calculated values avoids tuning the inputs to match rounded paper outputs."
+        },
+        {
+          "aspect": "Factory-rate rounding",
+          "reported": "Rounded aggregate throughput stated in the text",
+          "used": "Rate derived from the cited factory footprint/depth formulas and factory count",
+          "why": "The primary model computes the throughput rather than entering the desired rate as an output target."
+        },
+        {
+          "aspect": "Failure accounting",
+          "reported": "Reliability justified with a referenced spreadsheet and layout analysis",
+          "used": "Cited ancillary-script CCZ failure formulas plus a conservative union bound for every nonfactory patch over every cycle",
+          "why": "This is transparent and avoids double-counting factory storage errors, but does not reproduce every spreadsheet detail or routed measurement path."
+        },
+        {
+          "aspect": "Transient effects",
+          "reported": "Steady-state factory production and an overall approximate layout runtime",
+          "used": "No separate warmup, initial-state preparation or finite-batch startup/drain correction",
+          "why": "These are not resolved by the stage-cost schedule and are left explicit rather than invented."
+        }
+      ],
+      "interpretation": {
+        "label": "consistent_with_caveats",
+        "statement": "The logical counts and the reconstructed primary physical resource model agree closely with the reported figures. Physical agreement is conditional on the published floorplan, imposed distances and referenced phenomenological error formulas; it is not independent gate-level compilation or proof of layout feasibility."
+      },
+      "notes": [
+        "Primary logical counts describe the table implementation; physical scenarios use the separate half-angle layout counts in results.json#/layout.",
+        "Nonfactory compute qubits include routing and AutoCCZ fixup space. The floorplan and code distances are accepted from the paper.",
+        "Gate inventories not calculated by the analytic method are omitted. The primary runtime target is the main layout paragraph; later inconsistent wording is retained as a caveat."
+      ],
+      "results": {
+        "schema_version": "1.0",
+        "claim_id": "femoco-lee-2021",
+        "reproduction_id": "openfermion-thc-layout-2026-11",
+        "generated_at": "2026-11-23T05:34:31+00:00",
+        "producer": {
+          "entrypoint": "notebook.ipynb",
+          "cell_tag": "results-export"
+        },
+        "tooling": {
+          "python": "3.10.22",
+          "packages": {
+            "openfermion": "1.7.1",
+            "cirq-core": "1.5.0",
+            "qdk": "1.33.1",
+            "qdk-chemistry": "2.3.0",
+            "numpy": "2.2.6",
+            "scipy": "1.15.3",
+            "pandas": "2.3.3",
+            "jsonschema": "4.26.0"
+          }
+        },
+        "inputs": {
+          "hamiltonian": {
+            "kind": "thc_cost_model",
+            "orbitals": 54,
+            "electrons": 54,
+            "thc_rank": 350,
+            "lambda_value": 306.3,
+            "coefficient_bit_precision": 10,
+            "rotation_bit_precision": 16
+          },
+          "target_precision_hartree": 0.001,
+          "trial_state": "not_prepared_in_analytic_resource_cost_model"
+        },
+        "logical": {
+          "walk_steps": 481135,
+          "num_qubits": 2142,
+          "toffoli_count": 5250145120,
+          "ccz_count": 5250145120,
+          "ccix_count": 0
+        },
+        "physical": [
+          {
+            "scenario_id": "lee-ccz-layout-main",
+            "architecture": {
+              "physical_error_rate": 0.001,
+              "reaction_time_ns": 10000
+            },
+            "code": {
+              "family": "surface",
+              "distance": 31,
+              "distance_source": "imposed",
+              "cycle_time_ns": 1000
+            },
+            "factories": "4 CCZ factories; distances 19/31",
+            "synthesis": "OpenFermion half-angle THC stages; custom Lee-layout QDK ISA; phase-gradient costs included",
+            "physical_qubits": 3907584,
+            "compute_qubits": 2924544,
+            "factory_qubits": 983040,
+            "memory_qubits": 0,
+            "runtime_seconds": 258797.10373125,
+            "error_budget": 0.01,
+            "achieved_error": 0.004382512913209443
+          },
+          {
+            "scenario_id": "lee-ccz-layout-optimistic",
+            "architecture": {
+              "physical_error_rate": 0.0001,
+              "reaction_time_ns": 10000
+            },
+            "code": {
+              "family": "surface",
+              "distance": 15,
+              "distance_source": "imposed",
+              "cycle_time_ns": 1000
+            },
+            "factories": "4 CCZ factories; distances 9/15",
+            "synthesis": "OpenFermion half-angle THC stages; custom Lee-layout QDK ISA; phase-gradient costs included",
+            "physical_qubits": 976896,
+            "compute_qubits": 747520,
+            "factory_qubits": 229376,
+            "memory_qubits": 0,
+            "runtime_seconds": 125224.40503125,
+            "error_budget": 0.01,
+            "achieved_error": 0.0019188564698590317
+          }
+        ],
+        "logical_variants": [
+          {
+            "case_id": "li-m350",
+            "inputs": {
+              "hamiltonian": {
+                "kind": "thc_cost_model",
+                "orbitals": 76,
+                "electrons": 113,
+                "thc_rank": 350,
+                "lambda_value": 1279.0,
+                "coefficient_bit_precision": 10,
+                "rotation_bit_precision": 20
+              },
+              "target_precision_hartree": 0.001,
+              "trial_state": "not_prepared_in_analytic_resource_cost_model"
+            },
+            "logical": {
+              "walk_steps": 2009049,
+              "num_qubits": 2194,
+              "toffoli_count": 31982051031,
+              "ccz_count": 31982051031,
+              "ccix_count": 0
+            }
+          },
+          {
+            "case_id": "li-m450",
+            "inputs": {
+              "hamiltonian": {
+                "kind": "thc_cost_model",
+                "orbitals": 76,
+                "electrons": 113,
+                "thc_rank": 450,
+                "lambda_value": 1201.5,
+                "coefficient_bit_precision": 10,
+                "rotation_bit_precision": 20
+              },
+              "target_precision_hartree": 0.001,
+              "trial_state": "not_prepared_in_analytic_resource_cost_model"
+            },
+            "logical": {
+              "walk_steps": 1887312,
+              "num_qubits": 2196,
+              "toffoli_count": 31938980976,
+              "ccz_count": 31938980976,
+              "ccix_count": 0
+            }
+          }
+        ],
+        "layout": {
+          "walk_steps": 481135,
+          "toffolis_per_walk": 13881,
+          "toffoli_count": 6678634935,
+          "peak_data_qubits": 685,
+          "stage_count": 88
+        }
+      },
+      "run": {
+        "schema_version": "1.0",
+        "reproduction_id": "openfermion-thc-layout-2026-11",
+        "executed_at": "2026-11-23T05:34:33+00:00",
+        "executed_by": {
+          "name": "Mahnoor Khan",
+          "automation": "Codex-assisted layout-model execution"
+        },
+        "host": {
+          "platform": "Windows-10-10.0.26200-SP0",
+          "machine": "AMD64"
+        },
+        "duration_seconds": 28.77,
+        "python": "3.10.22",
+        "lockfile": "requirements.lock.txt",
+        "entrypoint": "notebook.ipynb",
+        "entrypoint_sha256": "7c744bf1b1ef5d57016d0d45045522e5dc5d4c21bff951faa43b5b1a36a11798",
+        "results_sha256": "fd2e782637befb1d6ee8fd500b90d61f6586e91d2955c5644efad72af97b89fb",
+        "lockfile_sha256": "f29a9a0391c1d9700a34cbe999c346a25d9e0bddb71584f72f48aa03cceae7ea",
+        "command": "C:\\Users\\mahno\\OneDrive\\Desktop\\PlexTech\\qac-claims\\.venv\\Scripts\\python.exe -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=120 --ExecutePreprocessor.kernel_name=python3 --output executed.ipynb notebook.ipynb"
+      },
+      "artifacts": {
+        "code": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/notebook.ipynb",
+        "results": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/results.json",
+        "run": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/run.json",
+        "lockfile": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/requirements.lock.txt"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "aspect": "logical_qubits",
+      "unit": "count",
+      "reported": 2142,
+      "reproduced": 2142,
+      "ratio": 1.0,
+      "reproduction_id": "openfermion-thc-layout-2026-11"
+    },
+    {
+      "aspect": "toffoli_count",
+      "unit": "count",
+      "reported": 5300000000,
+      "reproduced": 5250145120,
+      "ratio": 0.9906,
+      "reproduction_id": "openfermion-thc-layout-2026-11"
+    },
+    {
+      "aspect": "physical_qubits",
+      "unit": "count",
+      "reported": 4000000,
+      "reproduced": 3907584,
+      "ratio": 0.9769,
+      "reproduction_id": "openfermion-thc-layout-2026-11"
+    },
+    {
+      "aspect": "runtime_seconds",
+      "unit": "seconds",
+      "reported": 259200,
+      "reproduced": 258797.10373125,
+      "ratio": 0.9984,
+      "reproduction_id": "openfermion-thc-layout-2026-11"
+    },
+    {
+      "aspect": "code_distance",
+      "unit": "count",
+      "reported": 31,
+      "reproduced": 31,
+      "ratio": 1.0,
+      "reproduction_id": "openfermion-thc-layout-2026-11"
+    }
+  ],
+  "provenance": {
+    "build": {
+      "tool": "qacclaims",
+      "tool_version": "0.1.0"
+    },
+    "sources": [
+      {
+        "path": "claims/femoco-lee-2021/claim.yaml",
+        "sha256": "d315318c1ec1169ad6c6abb8e0ad40ff5d56749a32b753fafea6718d12672f5d"
+      },
+      {
+        "path": "claims/femoco-lee-2021/estimates/reported.yaml",
+        "sha256": "6c6c3efa77acf4f25f84f8774c48a2a9d2bc2a7fe3cb416c5e655804afd42985"
+      },
+      {
+        "path": "claims/femoco-lee-2021/estimates/reproduction-openfermion-thc-layout-2026-11.yaml",
+        "sha256": "ac7df734d3fe6a4342bb5d963220d1eb62620bc6abec25f1656fd252f2a2720f"
+      },
+      {
+        "path": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/results.json",
+        "sha256": "fd2e782637befb1d6ee8fd500b90d61f6586e91d2955c5644efad72af97b89fb"
+      },
+      {
+        "path": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/run.json",
+        "sha256": "e9f2d77343c3a0f1bc7186baf74799277b082a0560de2a078c74b4002aede063"
+      },
+      {
+        "path": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/notebook.ipynb",
+        "sha256": "7c744bf1b1ef5d57016d0d45045522e5dc5d4c21bff951faa43b5b1a36a11798"
+      },
+      {
+        "path": "claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/requirements.lock.txt",
+        "sha256": "f29a9a0391c1d9700a34cbe999c346a25d9e0bddb71584f72f48aa03cceae7ea"
+      },
+      {
+        "path": "claims/femoco-lee-2021/narrative.md",
+        "sha256": "9ff3643821142cf5081f66cdfe93b184d4aa4d1f25659e00aa0bfdfbacf9c242"
+      }
+    ]
+  },
+  "narrative_markdown": "# Reproducing the FeMoCo THC resource model of Lee et al.\n\n*Mahnoor and Stella, PlexTech (UC Berkeley). Draft for QAC review.*\n\n## The claim\n\n[The paper](https://arxiv.org/pdf/2011.03494v3) reports THC-based logical resources\nand a separate space-optimized physical implementation for the Reiher FeMoCo active space.\n\n> FeMoCo could be simulated with about four million physical qubits in under four days under the paper's hardware assumptions.\n\nTable IV reports 2,142 logical qubits and\n5.3 × 10⁹ Toffolis. The physical layout instead uses\n6.7 × 10⁹ Toffolis and reports about\n4 million physical qubits and\n3 days (Fig. 10 and p. 31).\nThese are different implementations and must not be interchanged.\n\nThe energy tolerance is 0.0016 Ha,\nwith 0.001 Ha allocated to phase estimation\nand 0.0006 Ha to Hamiltonian approximation\n(Eq. (25), p. 14). Published molecular approximation settings are inputs to this reproduction.\n\n## Logical counts\n\nOpenFermion 1.7.1 produces\n2,142 logical qubits and\n5.25 × 10⁹ Toffolis for the table implementation.\nLi at the requested rank 350 gives\n2,194 qubits and\n3.2 × 10¹⁰ Toffolis,\nagainst Table V's 2,194 and\n3.2 × 10¹⁰.\nThe recommended Li rank 450 remains separate:\n2,196 qubits and\n3.19 × 10¹⁰ Toffolis.\n\n## Reconstructing the physical resource model\n\nOpenFermion's half-angle schedule reconstructs the Figure 11 subroutines from the\nalgorithm inputs, giving 88 stages,\n685 peak live data qubits,\nand 13,881 Toffolis per loop.\nThe paper's approximate per-loop value differs by a single operation; we retain the computed value.\nEquation (45) gives 481,135 loops, for\n6.68 × 10⁹ layout Toffolis.\n\nThe factory geometry, depth and CCZ error formulas follow the ancillary script cited as\nRef. 95 by Lee. Factory throughput is calculated from those formulas rather than imposed\nas the paper's rounded output rate. The slower of factory supply and reaction time sets\nthe operation tick; a code-beat regime check is enforced for the QROM operations.\n\nA custom QDK ISA gives each stage this derived duration and a failure bound from CCZ\ndistillation and nonfactory storage. QDK repeats the stage sequence and estimates its\nresources. The complete published rectangular floorplan is reserved, including routing\nand AutoCCZ fixup space. The data code distance remains an imposed input.\n\n| Physical scenario | Paper qubits | Model qubits | Paper runtime | Model runtime |\n| --- | ---: | ---: | --- | --- |\n| Main | 4 million | 3,907,584 | 3 days | 3 days |\n| Optimistic error rate | About 1 million (p. 31) | 976,896 | About 36 hours (p. 31) | 34.8 hours |\n\nThe main hardware failure union bound is 0.00438251,\nbelow the allowed 0.01.\nThe optimistic case gives 0.00191886.\nThese use the cited phenomenological formulas, not experimentally established reliability.\nThe paper also later refers to 3.5 days;\nwe retain that textual ambiguity without adjusting inputs to match it.\n\n## What this establishes and what it does not\n\nThis is a resource-level reconstruction conditional on the paper's floorplan, distances\nand error model. It reproduces the primary rounded resource figures closely and improves\nsubstantially on the earlier aggregate serial-Toffoli proxy. The earlier exploratory version is archived outside the submission.\n\nThe calculation is not QDK Chemistry compiling a full gate-level THC circuit. QDK evaluates\nour cited subroutine macro costs; it does not independently verify them. We do not prove\nroutability or optimize the footprint, revalidate chemical accuracy, determine trial-state\noverlap, or independently select code distances. A routed Clifford trace, factory warmup,\ninitial-state preparation and finite-batch scheduling effects are outside this steady-state model.\nPhysical agreement therefore must not be described as experimental validation or quantum advantage.\n\n## Reproducing the calculation\n\nPython 3.10.22 and exact package versions are recorded with the executed\nnotebook. The recorded run took 29 seconds on its recorded host.\nWith that environment activated:\n\n```bash\npython -m pip install -r claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11/requirements.lock.txt\npython -m pip install -e \".[execute]\"\nqacclaims execute claims/femoco-lee-2021/reproductions/openfermion-thc-layout-2026-11\n```\n\nThe final cell exports calculated values; `qacclaims validate` checks the schema. The package lockfile pins the implementation versions.\nGate inventories not determined by the analytic calculation are omitted. The schema extension and custom resource model await\nmaintainer review; reviewer and approver fields remain empty.\n"
+}

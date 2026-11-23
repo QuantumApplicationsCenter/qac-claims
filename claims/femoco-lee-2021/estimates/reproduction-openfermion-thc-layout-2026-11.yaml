@@ -1,0 +1,68 @@
+schema_version: '1.0'
+kind: reproduction
+claim_id: femoco-lee-2021
+reproduction_id: openfermion-thc-layout-2026-11
+results_file: reproductions/openfermion-thc-layout-2026-11/results.json
+tool:
+  name: OpenFermion and QDK with a custom Lee-layout resource ISA
+  role: OpenFermion computes table counts and half-angle subroutine stages; custom QDK architecture costs those
+    stages using the cited factory, reaction-time and storage-error formulas.
+  url: https://github.com/quantumlib/OpenFermion
+headline_scenario: lee-ccz-layout-main
+scenarios:
+  lee-ccz-layout-main:
+    label: Published CCZ-layout resource model
+    description: Main physical-error-rate case with published floorplan, imposed data/factory distances, four CCZ
+      factories, computed factory interval and reaction-time constraint.
+  lee-ccz-layout-optimistic:
+    label: Optimistic CCZ-layout resource model
+    description: Improved physical-error-rate case using the paper's optimistic distances and unchanged rectangular
+      floorplan. Factory geometry is recomputed.
+figure_map:
+  logical_qubits: '#/logical/num_qubits'
+  toffoli_count: '#/logical/toffoli_count'
+  physical_qubits: '#/physical/0/physical_qubits'
+  runtime_seconds: '#/physical/0/runtime_seconds'
+  code_distance: '#/physical/0/code/distance'
+deviations_from_reported:
+- aspect: Factorization validation
+  reported: Optimized molecular factors and a chemical-accuracy assessment
+  used: Published THC dimensions, normalization and bit settings accepted
+  why: The task reconstructs resource costing; molecular factors and their energy-error bounds are not independently
+    recomputed.
+- aspect: Modeling level
+  reported: Circuit constructions and a hand-designed surface-code layout
+  used: OpenFermion subroutine resource schedule evaluated through custom QDK macro instructions
+  why: The installed chemistry package does not supply this exact gate-level pipeline; macro costs explicitly reconstruct
+    the cited resource model rather than silently substituting another algorithm.
+- aspect: Rounding of loop inputs
+  reported: Approximate phase-estimation loop count and reported per-loop Toffolis
+  used: Formula-derived walk count and the installed half-angle schedule output, including its single extra Toffoli
+    per loop
+  why: Retaining calculated values avoids tuning the inputs to match rounded paper outputs.
+- aspect: Factory-rate rounding
+  reported: Rounded aggregate throughput stated in the text
+  used: Rate derived from the cited factory footprint/depth formulas and factory count
+  why: The primary model computes the throughput rather than entering the desired rate as an output target.
+- aspect: Failure accounting
+  reported: Reliability justified with a referenced spreadsheet and layout analysis
+  used: Cited ancillary-script CCZ failure formulas plus a conservative union bound for every nonfactory patch over
+    every cycle
+  why: This is transparent and avoids double-counting factory storage errors, but does not reproduce every spreadsheet
+    detail or routed measurement path.
+- aspect: Transient effects
+  reported: Steady-state factory production and an overall approximate layout runtime
+  used: No separate warmup, initial-state preparation or finite-batch startup/drain correction
+  why: These are not resolved by the stage-cost schedule and are left explicit rather than invented.
+interpretation:
+  label: consistent_with_caveats
+  statement: The logical counts and the reconstructed primary physical resource model agree closely with the reported
+    figures. Physical agreement is conditional on the published floorplan, imposed distances and referenced phenomenological
+    error formulas; it is not independent gate-level compilation or proof of layout feasibility.
+notes:
+- Primary logical counts describe the table implementation; physical scenarios use the separate half-angle layout
+  counts in results.json#/layout.
+- Nonfactory compute qubits include routing and AutoCCZ fixup space. The floorplan and code distances are accepted
+  from the paper.
+- Gate inventories not calculated by the analytic method are omitted. The primary runtime target is the main layout
+  paragraph; later inconsistent wording is retained as a caveat.
