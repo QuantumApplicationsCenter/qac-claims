@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "claim_id": "femoco-lee-2021",
+  "reproduction_id": "openfermion-thc-layout-2026-11",
+  "generated_at": "2026-11-23T05:34:31+00:00",
+  "producer": {
+    "entrypoint": "notebook.ipynb",
+    "cell_tag": "results-export"
+  },
+  "tooling": {
+    "python": "3.10.22",
+    "packages": {
+      "openfermion": "1.7.1",
+      "cirq-core": "1.5.0",
+      "qdk": "1.33.1",
+      "qdk-chemistry": "2.3.0",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "pandas": "2.3.3",
+      "jsonschema": "4.26.0"
+    }
+  },
+  "inputs": {
+    "hamiltonian": {
+      "kind": "thc_cost_model",
+      "orbitals": 54,
+      "electrons": 54,
+      "thc_rank": 350,
+      "lambda_value": 306.3,
+      "coefficient_bit_precision": 10,
+      "rotation_bit_precision": 16
+    },
+    "target_precision_hartree": 0.001,
+    "trial_state": "not_prepared_in_analytic_resource_cost_model"
+  },
+  "logical": {
+    "walk_steps": 481135,
+    "num_qubits": 2142,
+    "toffoli_count": 5250145120,
+    "ccz_count": 5250145120,
+    "ccix_count": 0
+  },
+  "physical": [
+    {
+      "scenario_id": "lee-ccz-layout-main",
+      "architecture": {
+        "physical_error_rate": 0.001,
+        "reaction_time_ns": 10000
+      },
+      "code": {
+        "family": "surface",
+        "distance": 31,
+        "distance_source": "imposed",
+        "cycle_time_ns": 1000
+      },
+      "factories": "4 CCZ factories; distances 19/31",
+      "synthesis": "OpenFermion half-angle THC stages; custom Lee-layout QDK ISA; phase-gradient costs included",
+      "physical_qubits": 3907584,
+      "compute_qubits": 2924544,
+      "factory_qubits": 983040,
+      "memory_qubits": 0,
+      "runtime_seconds": 258797.10373125,
+      "error_budget": 0.01,
+      "achieved_error": 0.004382512913209443
+    },
+    {
+      "scenario_id": "lee-ccz-layout-optimistic",
+      "architecture": {
+        "physical_error_rate": 0.0001,
+        "reaction_time_ns": 10000
+      },
+      "code": {
+        "family": "surface",
+        "distance": 15,
+        "distance_source": "imposed",
+        "cycle_time_ns": 1000
+      },
+      "factories": "4 CCZ factories; distances 9/15",
+      "synthesis": "OpenFermion half-angle THC stages; custom Lee-layout QDK ISA; phase-gradient costs included",
+      "physical_qubits": 976896,
+      "compute_qubits": 747520,
+      "factory_qubits": 229376,
+      "memory_qubits": 0,
+      "runtime_seconds": 125224.40503125,
+      "error_budget": 0.01,
+      "achieved_error": 0.0019188564698590317
+    }
+  ],
+  "logical_variants": [
+    {
+      "case_id": "li-m350",
+      "inputs": {
+        "hamiltonian": {
+          "kind": "thc_cost_model",
+          "orbitals": 76,
+          "electrons": 113,
+          "thc_rank": 350,
+          "lambda_value": 1279.0,
+          "coefficient_bit_precision": 10,
+          "rotation_bit_precision": 20
+        },
+        "target_precision_hartree": 0.001,
+        "trial_state": "not_prepared_in_analytic_resource_cost_model"
+      },
+      "logical": {
+        "walk_steps": 2009049,
+        "num_qubits": 2194,
+        "toffoli_count": 31982051031,
+        "ccz_count": 31982051031,
+        "ccix_count": 0
+      }
+    },
+    {
+      "case_id": "li-m450",
+      "inputs": {
+        "hamiltonian": {
+          "kind": "thc_cost_model",
+          "orbitals": 76,
+          "electrons": 113,
+          "thc_rank": 450,
+          "lambda_value": 1201.5,
+          "coefficient_bit_precision": 10,
+          "rotation_bit_precision": 20
+        },
+        "target_precision_hartree": 0.001,
+        "trial_state": "not_prepared_in_analytic_resource_cost_model"
+      },
+      "logical": {
+        "walk_steps": 1887312,
+        "num_qubits": 2196,
+        "toffoli_count": 31938980976,
+        "ccz_count": 31938980976,
+        "ccix_count": 0
+      }
+    }
+  ],
+  "layout": {
+    "walk_steps": 481135,
+    "toffolis_per_walk": 13881,
+    "toffoli_count": 6678634935,
+    "peak_data_qubits": 685,
+    "stage_count": 88
+  }
+}

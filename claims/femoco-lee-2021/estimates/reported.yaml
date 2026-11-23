@@ -1,0 +1,37 @@
+schema_version: '1.0'
+kind: reported
+claim_id: femoco-lee-2021
+figures:
+  logical_qubits:
+    value: 2142
+    unit: count
+    locator: Table IV, p. 24, Reiher M=350
+  toffoli_count:
+    value: 5300000000
+    unit: count
+    locator: Table IV, p. 24, Reiher M=350
+    qualifier: rounded
+    note: 5.3 billion, analytic table implementation; distinct from the layout count.
+  physical_qubits:
+    value: 4000000
+    unit: count
+    locator: Fig. 10, p. 28; p. 31
+    qualifier: approximate
+    note: Physical estimate for the separate space-optimized Reiher layout.
+  runtime_seconds:
+    value: 259200
+    unit: seconds
+    locator: p. 31, Routing and distilling
+    qualifier: approximate
+    note: About three days. The abstract says under four days; the later optimistic comparison refers to 3.5 days.
+  code_distance:
+    value: 31
+    unit: count
+    locator: Fig. 10, p. 28; p. 31
+    note: Data code distance; factory first-level distance differs.
+notes:
+- Transcribed from arXiv:2011.03494v3. Table IV logical figures and the separate space-optimized layout are distinct
+  implementations.
+- The 6.7 billion layout Toffolis and Li table-row targets are retained with locators under assumptions_as_reported
+  because the schema has one primary value per figure.
+- 'No direct physical comparison is mapped: the QDK scenario does not reconstruct the layout.'

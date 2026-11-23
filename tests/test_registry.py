@@ -136,3 +136,34 @@ def test_script_reproduction_runs_and_records_its_entrypoint(tmp_path):
     assert load_json(repro / "results.json")["value"] == 42
     diffs, _ = execute(tmp_path, repro, python=sys.executable)
     assert diffs == []
+
+
+def _results_errors(results):
+    validator = Draft202012Validator(load_schema(ROOT, "results"))
+    return [e.message for e in validator.iter_errors(results)]
+
+
+def test_results_schema_accepts_factoring_inputs():
+    results = load_json(REPRO / "results.json")
+    results["inputs"] = {
+        "factoring": {
+            "kind": "rsa",
+            "modulus_bits": 2048,
+            "algorithm": "Ekerå–Håstad period finding with approximate residue arithmetic",
+            "parameters": {"s": 8, "prime_bit_length": 21, "window_w1": 6},
+        }
+    }
+    for key in ("walk_steps", "t_count", "rotation_count", "rotation_depth", "measurement_count"):
+        results["logical"].pop(key)
+    results["logical"]["shots_expected"] = 9.1
+    results["logical"]["toffoli_count_per_shot"] = results["logical"]["toffoli_count"] // 10
+    results["physical"][0]["runtime_seconds_per_shot"] = results["physical"][0]["runtime_seconds"] / 9.1
+    assert _results_errors(results) == []
+
+
+def test_results_schema_rejects_inputs_of_neither_kind():
+    results = load_json(REPRO / "results.json")
+    results["inputs"] = {"factoring": {"kind": "rsa", "modulus_bits": 2048}}  # missing algorithm and parameters
+    assert _results_errors(results)
+    results["inputs"] = {"hamiltonian": results.get("inputs", {}).get("hamiltonian"), "factoring": {}}
+    assert _results_errors(results)
